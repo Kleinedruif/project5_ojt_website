@@ -1,14 +1,128 @@
 <html>
 	<head>      
         <title>Ome Joops Tour</title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-        <link rel="stylesheet" href="/stylesheets/style.css">
+        
         <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>      
-	</head>
-	<body>	
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="/stylesheets/style.css">    
+    </head>
+	<body>	       
 		<div class="container">
-            {{{body}}}
+            <div class="page-header row">
+                <h1>Example page header <small>Subtext for header</small></h1>
+            </div>
+            
+            <div class="row">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/">Ome Joop's Tour</a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                {{#if showRanking}}
+                                    <li class="active"><a href="/">Ranking <!--<span class="sr-only">(current)</span>--></a></li>
+                                {{else}}
+                                    <li><a href="/">Ranking <!--<span class="sr-only">(current)</span>--></a></li>
+                                {{/if}}
+                                {{#if showData}}
+                                    <li class="active"><a href="/data">Data <!--<span class="sr-only">(current)</span>--></a></li>
+                                {{else}}
+                                    <li><a href="/data">Data <!--<span class="sr-only">(current)</span>--></a></li>
+                                {{/if}}
+                            </ul>
+                        
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">Logout?</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Select kind <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <li><a href="#">Child1</a></li>
+                                        <li><a href="#">Child2</a></li>
+                                        <li><a href="#">Child3</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>    
+            </div>
+            <div class="row">
+                <div class="col-lg-9">
+                    {{{body}}}
+                </div>
+                <div class="col-lg-3">
+                    Hier kijken of de gebruiker als is ingelogd of niet via \{{{ \#if veriable naam die via render wordt meegegeven }}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3 class="panel-title"><strong>Sign In </strong></h3></div>
+                        <div class="panel-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Username or Email</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password <a href="/sessions/forgot_password">(forgot password)</a></label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                </div>
+                            <button type="submit" class="btn btn-sm btn-default">Sign in</button>
+                            </form>
+                        </div>
+                    </div>
+                    anders iets anders laten zien?
+                </div>
+            </div>
+            
+            <div id="footer" class="row">    
+                <h3 class="footertext">About Us:</h3>
+                footer van het internet af gehaald, als mockup     
+                <br><br>
+                <div class="col-md-4">
+                    <center>
+                        <img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains">
+                        <br>
+                        <h4 class="footertext">Programmer</h4>
+                        <p class="footertext">You can thank all the crazy programming here to this guy.<br>
+                    </center>
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        <img src="http://oi60.tinypic.com/2z7enpc.jpg" class="img-circle" alt="...">
+                        <br>
+                        <h4 class="footertext">Artist</h4>
+                        <p class="footertext">All the images here are hand drawn by this man.<br>
+                    </center>
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        <img src="http://oi61.tinypic.com/307n6ux.jpg" class="img-circle" alt="...">
+                        <br>
+                        <h4 class="footertext">Designer</h4>
+                        <p class="footertext">This pretty site and the copy it holds are all thanks to this guy.<br>
+                    </center>
+                </div>
+            </div>
+            <div class="row">
+                <p><center><a href="#">Contact Stuff Here</a> <p class="footertext">Copyright 2014</p></center></p>
+            </div>
 		</div>
 	</body>
 </html>
