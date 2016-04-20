@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>      
         <title>Ome Joops Tour</title>
@@ -13,15 +14,17 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         
-        <link rel="stylesheet" href="/stylesheets/style.css">    
+        <link rel="stylesheet" href="/stylesheets/style.css"> 
+        <script src="/javascripts/index.js"></script>   
     </head>
 	<body>	       
-		<div class="container">
-            <div class="page-header row">
-                <h1>Example page header <small>Subtext for header</small></h1>
-            </div>
+        <div class="container">		
             
-            <div class="row">
+            <div class="page-header row" id="header">
+                <h1 id="mainTitle">Ome Joop's Tour <small id="subTitle">Jeugderonde door Nederland sinds 1950</small></h1>
+            </div> <!-- END HEADER -->
+            
+            <div class="row" id="navBar">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
                         <!-- Brand and toggle get grouped for better mobile display -->
@@ -38,91 +41,116 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                {{#if showRanking}}
-                                    <li class="active"><a href="/">Ranking <!--<span class="sr-only">(current)</span>--></a></li>
+                                {{#if mainActive}}
+                                    <li class="active"><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>
                                 {{else}}
-                                    <li><a href="/">Ranking <!--<span class="sr-only">(current)</span>--></a></li>
+                                    <li><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>
                                 {{/if}}
-                                {{#if showData}}
-                                    <li class="active"><a href="/data">Data <!--<span class="sr-only">(current)</span>--></a></li>
+                                {{#if dataActive}}
+                                    <li class="active"><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
                                 {{else}}
-                                    <li><a href="/data">Data <!--<span class="sr-only">(current)</span>--></a></li>
+                                    <li><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
                                 {{/if}}
                             </ul>
                         
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#">Logout?</a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Select kind <span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                        <li><a href="#">Child1</a></li>
-                                        <li><a href="#">Child2</a></li>
-                                        <li><a href="#">Child3</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div><!-- /.navbar-collapse -->
-                    </div><!-- /.container-fluid -->
+                            {{#if logedIn}}
+                                <ul class="nav navbar-nav navbar-right">                             
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <span id="selectedChild">
+                                                {{#if data}}
+                                                    {{{data.firstName}}} {{{data.lastName}}}
+                                                {{else}}
+                                                    Selecteer kind
+                                                {{/if}}
+                                            </span>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            {{#each childs}}
+                                                <li><a href="/data/{{this.id}}">{{this.name}}</a></li>
+                                            {{/each}}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            {{/if}}
+                        </div>
+                    </div>
                 </nav>    
-            </div>
-            <div class="row">
+            </div> <!-- END NAVBAR -->
+            
+            <div class="row" id="body">
+                
+                <!-- DATA FROM BACKEND -->
                 <div class="col-lg-9">
                     {{{body}}}
                 </div>
+                
+                <!-- SIDEBAR -->
                 <div class="col-lg-3">
-                    Hier kijken of de gebruiker als is ingelogd of niet via \{{{ \#if veriable naam die via render wordt meegegeven }}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><h3 class="panel-title"><strong>Sign In </strong></h3></div>
-                        <div class="panel-body">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Username or Email</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password <a href="/sessions/forgot_password">(forgot password)</a></label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                            <button type="submit" class="btn btn-sm btn-default">Sign in</button>
-                            </form>
-                        </div>
+                    {{#if logedIn}}
+                        <h3>Logout</h3>
+                        <div class="panel panel-default">         
+                            <div class="panel-body">    
+                                <button class="btn btn-sm btn-default" onClick="window.location.href = '/logout'">Logout</button>
+                            </div>
+                        </div>    
+                    {{else}}
+                        <h3>Login</h3>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Username or Email</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Password <a href="/sessions/forgot_password">(forgot password)</a></label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    </div>
+                                <button type="submit" class="btn btn-sm btn-default">Sign in</button>
+                                </form>
+                            </div>
+                  
                     </div>
-                    anders iets anders laten zien?
+                    {{/if}}
+                </div> <!-- END SIDEBAR -->
+            </div> <!-- END BODY -->  
+                
+            <br>
+            
+            <div class="row" id="footer"> 
+                <div class="col-lg-4">
+                    <center>
+                        <h4 class="footertext">Twitter</h4>
+                        <p class="footertext">Twitterfeed<br></p>   
+                    </center>
                 </div>
+                <div class="col-lg-4">
+                    <center>
+                        <h4 class="footertext">Afbeeldingen</h4>
+                        <p class="footertext">Lijst van afbeeldingen<br></p>   
+                    </center>
+                </div>
+                <div class="col-lg-4">
+                    <center>
+                        <h4 class="footertext">Adres</h4>
+                        <p class="footertext">
+                            Joop's Tour <br>
+                            Postbus 711 <br>
+                            6800 AS Arnhem <br>
+                            NL87INGB0003828305  <br>
+                            KVK 41049788 <br>
+                            secretariaat@omejoopstour.nl <br>
+                        </p>                   
+                    </center>
+                </div>       
+            </div> <!-- END FOOTER -->
+            
+            <div class="row">
+                <p><center><p class="footertext">Copyright 2016: Groep J</p></center></p>
             </div>
             
-            <div id="footer" class="row">    
-                <h3 class="footertext">About Us:</h3>
-                footer van het internet af gehaald, als mockup     
-                <br><br>
-                <div class="col-md-4">
-                    <center>
-                        <img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains">
-                        <br>
-                        <h4 class="footertext">Programmer</h4>
-                        <p class="footertext">You can thank all the crazy programming here to this guy.<br>
-                    </center>
-                </div>
-                <div class="col-md-4">
-                    <center>
-                        <img src="http://oi60.tinypic.com/2z7enpc.jpg" class="img-circle" alt="...">
-                        <br>
-                        <h4 class="footertext">Artist</h4>
-                        <p class="footertext">All the images here are hand drawn by this man.<br>
-                    </center>
-                </div>
-                <div class="col-md-4">
-                    <center>
-                        <img src="http://oi61.tinypic.com/307n6ux.jpg" class="img-circle" alt="...">
-                        <br>
-                        <h4 class="footertext">Designer</h4>
-                        <p class="footertext">This pretty site and the copy it holds are all thanks to this guy.<br>
-                    </center>
-                </div>
-            </div>
-            <div class="row">
-                <p><center><a href="#">Contact Stuff Here</a> <p class="footertext">Copyright 2014</p></center></p>
-            </div>
-		</div>
+		</div> <!-- END CONTAINER -->
 	</body>
 </html>
