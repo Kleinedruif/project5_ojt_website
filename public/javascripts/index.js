@@ -20,13 +20,14 @@ function storeSelectedChild(){
         $('#selectedChild').text(localStorage.getItem("childName"));
     }
     
+    // Store the id of selected child 
     if (childId != undefined && childId != null && childId != ''){
         localStorage.setItem("childId", childId);
     } 
 }
 
 function bindButtons(){
-    // When navigated to data, check if an child is already selected, if it load that child, else load the first
+    // When navigated to data, check if an child is already selected, if it is then load that child, else load default
     $("#navData").on('click', function(){
         if (localStorage.getItem("childId") != undefined && localStorage.getItem("childId") != null){
             window.location.href = "/data/" + localStorage.getItem("childId");

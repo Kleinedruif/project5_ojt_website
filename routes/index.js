@@ -3,6 +3,7 @@ var router = express.Router();
 
 // User is now detault loggedIn
 
+// Dummy data
 var childList = [{id: 1, name: 'Piet Verlouw'}, {id: 2, name: 'Geert Verlouw'}];
 var childInformation = [{
     // general data
@@ -44,19 +45,22 @@ var childInformation = [{
 // childlist shows the dropdown menu with all the childs, hold dummy data with name and id
 // childInformation is array holding dummy data with child information
 
-/* GET home page. */
+// GET home page.
 router.get('/', function(req, res, next) {   
     res.render('index', {mainActive: true, logedIn: true, childs: childList});
 });
 
+// GET data page.
 router.get('/data', function(req, res, next) {   
     res.render('data', {dataActive: true, data: childInformation[0], logedIn: true, childs: childList});
 });
 
+// GET data page with id.
 router.get('/data/:id', function(req, res, next) {    
     var childId = req.params.id;
     
     var information;
+    // Find the child with the id
     childInformation.forEach(function(element) {
         if (element.id == childId){
             information = element;

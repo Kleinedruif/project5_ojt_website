@@ -1,3 +1,4 @@
+/* css mainPage main.hbs */
 body {
     font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-image: url("../images/background.jpg");
@@ -41,16 +42,12 @@ body {
     
 }
 
-#medicalTable td, #generalTable td {
-    overflow: hidden;
-    width:30%;
-}
 
+/* navbar css */
 .container-fluid {
     background-color: #C92828; 
 }
 
-/* navbar */
 .navbar-default {
     background-color: #C92828;
     border-color: #C92828;
@@ -131,3 +128,13 @@ body {
         color: #333;
     }
 }
+/* end navbar css */
+/* end css main.hbs */
+
+
+/* css data.hbs */
+#medicalTable td, #generalTable td {
+    overflow: hidden;
+    width:30%;
+}
+/* end css data.hbs
