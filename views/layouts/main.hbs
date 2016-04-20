@@ -14,7 +14,11 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         
-        <script src="/javascripts/index.js"></script>   
+        <!-- if not loggedin, scripts not needed -->
+        {{#if logedIn}}
+            <script src="/javascripts/index.js"></script>   
+        {{/if}}
+
         <link rel="stylesheet" href="/css/style.css">
     </head>
 	<body>	       
@@ -46,13 +50,18 @@
                                 {{else}}
                                     <li><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>
                                 {{/if}}
-                                {{#if dataActive}}
-                                    <li class="active"><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
-                                {{else}}
-                                    <li><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
+                                <!-- only show this when loggedin -->
+                                {{#if logedIn}}
+                                    {{#if dataActive}}
+                                        <li class="active"><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
+                                    {{else}}
+                                        <li><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
+                                    {{/if}}
                                 {{/if}}
+                          
                             </ul>
                         
+                            <!-- only show this when loggedin -->
                             {{#if logedIn}}
                                 <ul class="nav navbar-nav navbar-right">                             
                                     <li class="dropdown">
@@ -83,12 +92,18 @@
                 
                 <!-- DATA FROM BACKEND -->
                 <div class="col-lg-9">
-                    {{{body}}}
+                    <!-- only show this when loggedin -->
+                    {{#if logedIn}}
+                        {{{body}}}
+                    {{else}}
+                        Niet ingelogd
+                    {{/if}}
                 </div>
                 
                 <!-- SIDEBAR -->
                 <div class="col-lg-3">
                     {{#if logedIn}}
+                        <!-- if loggedin -->
                         <h3>Logout</h3>
                         <div class="panel panel-default">         
                             <div class="panel-body">    
@@ -96,6 +111,7 @@
                             </div>
                         </div>    
                     {{else}}
+                        <!-- if not loggedin -->
                         <h3>Login</h3>
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -123,7 +139,7 @@
                 <div class="col-lg-4">
                     <center>
                         <h4 class="footertext">Twitter</h4>
-                        <p class="footertext">Twitterfeed<br></p>   
+                        <p class="footertext">Twitterfeed?<br></p>   
                     </center>
                 </div>
                 <div class="col-lg-4">
