@@ -133,7 +133,7 @@ body {
 
 /* css data.hbs */
 #medicalTable td, #generalTable td {
-    overflow: hidden;
+    overflow: hidden; 
 }
 
 .dataTableSecondRow {
