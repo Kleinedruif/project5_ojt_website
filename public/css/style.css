@@ -2,7 +2,7 @@
 body {
     font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color: gainsboro;
-    /*background-image: url("../images/background.jpg");
+   /* background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;*/
 }
@@ -134,6 +134,9 @@ body {
 /* css data.hbs */
 #medicalTable td, #generalTable td {
     overflow: hidden;
-    width:30%;
+}
+
+.dataTableSecondRow {
+    width:70%;
 }
 /* end css data.hbs

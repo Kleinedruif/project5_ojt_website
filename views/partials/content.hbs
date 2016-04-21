@@ -1,7 +1,7 @@
 <div class="row" id="body">
     
     <!-- DATA FROM BACKEND -->
-    <div class="col-lg-9">
+    <div class="col-lg-12">
         <!-- only show this when loggedin -->
         {{#if logedIn}}
             {{{body}}}
@@ -9,36 +9,4 @@
             Niet ingelogd
         {{/if}}
     </div>
-    
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-        {{#if logedIn}}
-            <!-- if loggedin -->
-            <h3>Logout</h3>
-            <div class="panel panel-default">         
-                <div class="panel-body">    
-                    <button class="btn btn-sm btn-default" onClick="window.location.href = '/logout'">Logout</button>
-                </div>
-            </div>    
-        {{else}}
-            <!-- if not loggedin -->
-            <h3>Login</h3>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="emailInput">Gebruikersnaam of Email</label>
-                            <input type="email" class="form-control" id="emailInput" placeholder="Vul in email">
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordInput">Wachtwoord <a href="/sessions/forgot_password">(wachtwoord vergeten)</a></label>
-                            <input type="password" class="form-control" id="passwordInput" placeholder="Wachtwoord">
-                        </div>
-                    <button type="submit" class="btn btn-sm btn-default">Login</button>
-                    </form>
-                </div>
-        
-        </div>
-        {{/if}}
-    </div> <!-- END SIDEBAR -->
 </div> <!-- END BODY -->  

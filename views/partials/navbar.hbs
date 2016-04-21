@@ -34,7 +34,7 @@
             
                 <!-- only show this when loggedin -->
                 {{#if logedIn}}
-                    <ul class="nav navbar-nav navbar-right">                             
+                    <ul class="nav navbar-nav navbar-right">                        
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span id="selectedChild">
@@ -52,6 +52,7 @@
                                 {{/each}}
                             </ul>
                         </li>
+                        <li><a href="/logout">Uitloggen <span class="sr-only">(current)</span></a></li>     
                     </ul>
                 {{/if}}
             </div>
