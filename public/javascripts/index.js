@@ -30,9 +30,9 @@ function bindButtons(){
     // When navigated to data, check if an child is already selected, if it is then load that child, else load default
     $("#navData").on('click', function(){
         if (localStorage.getItem("childId") != undefined && localStorage.getItem("childId") != null){
-            window.location.href = "/data/" + localStorage.getItem("childId");
+            window.location.href = "/deelnemers/" + localStorage.getItem("childId") + "/gegevens";
         } else {
-            window.location.href = "/data/"
+            window.location.href = "/deelnemers/"
         }
     });
 }

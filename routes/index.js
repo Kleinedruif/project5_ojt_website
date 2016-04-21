@@ -51,12 +51,12 @@ router.get('/', function(req, res, next) {
 });
 
 // GET data page.
-router.get('/data', function(req, res, next) {   
+router.get('/deelnemers/gegevens', function(req, res, next) {   
     res.render('data', {dataActive: true, data: childInformation[0], logedIn: true, childs: childList});
 });
 
 // GET data page with id.
-router.get('/data/:id', function(req, res, next) {    
+router.get('/deelnemers/:id/gegevens', function(req, res, next) {    
     var childId = req.params.id;
     
     var information;

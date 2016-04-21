@@ -1,9 +1,10 @@
 /* css mainPage main.hbs */
 body {
     font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background-image: url("../images/background.jpg");
+    background-color: gainsboro;
+    /*background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed;*/
 }
 
 #header {
