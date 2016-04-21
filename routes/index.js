@@ -40,19 +40,19 @@ var childInformation = [{
 }];
 
 
-// rankingActive - shows what is active in menu bar
+// pageRoute - needed to show in menu bar what page is active
 // logedIn is if logedin or not to show login form or logout button
 // childlist shows the dropdown menu with all the childs, hold dummy data with name and id
 // childInformation is array holding dummy data with child information
 
 // GET home page.
 router.get('/', function(req, res, next) {   
-    res.render('index', {mainActive: true, logedIn: true, childs: childList});
+    res.render('index', {pageRoute: 'index', mainActive: true, logedIn: true, childs: childList});
 });
 
 // GET data page.
 router.get('/deelnemers/gegevens', function(req, res, next) {   
-    res.render('data', {dataActive: true, data: childInformation[0], logedIn: true, childs: childList});
+    res.render('data', {pageRoute: 'data', data: childInformation[0], logedIn: true, childs: childList});
 });
 
 // GET data page with id.
@@ -67,7 +67,7 @@ router.get('/deelnemers/:id/gegevens', function(req, res, next) {
         }
     }, this);
     
-    res.render('data', {dataActive: true, data: information, logedIn: true, childs: childList});
+    res.render('data', {pageRoute: 'data', data: information, logedIn: true, childs: childList});
 });
 
 module.exports = router;

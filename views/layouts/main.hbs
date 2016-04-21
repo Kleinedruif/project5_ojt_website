@@ -22,151 +22,18 @@
         <link rel="stylesheet" href="/css/style.css">
     </head>
 	<body>	       
-        <div class="container">		
+        <div class="container">		                   
             
-            <div class="page-header row" id="header">
-                <h1 id="mainTitle">Ome Joop's Tour <small id="subTitle">Jeugderonde door Nederland sinds 1950</small></h1>
-            </div> <!-- END HEADER -->
+            {{> header}}
             
-            <div class="row" id="navBar">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/">Ome Joop's Tour</a>
-                        </div>
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                {{#if mainActive}}
-                                    <li class="active"><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>
-                                {{else}}
-                                    <li><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>
-                                {{/if}}
-                                <!-- only show this when loggedin -->
-                                {{#if logedIn}}
-                                    {{#if dataActive}}
-                                        <li class="active"><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
-                                    {{else}}
-                                        <li><a id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
-                                    {{/if}}
-                                {{/if}}
-                          
-                            </ul>
-                        
-                            <!-- only show this when loggedin -->
-                            {{#if logedIn}}
-                                <ul class="nav navbar-nav navbar-right">                             
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                            <span id="selectedChild">
-                                                {{#if data}}
-                                                    {{{data.firstName}}} {{{data.lastName}}}
-                                                {{else}}
-                                                    Selecteer kind
-                                                {{/if}}
-                                            </span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                            {{#each childs}}
-                                                <li><a href="/deelnemers/{{this.id}}/gegevens">{{this.name}}</a></li>
-                                            {{/each}}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            {{/if}}
-                        </div>
-                    </div>
-                </nav>    
-            </div> <!-- END NAVBAR -->
+            {{> navbar}}
             
-            <div class="row" id="body">
-                
-                <!-- DATA FROM BACKEND -->
-                <div class="col-lg-9">
-                    <!-- only show this when loggedin -->
-                    {{#if logedIn}}
-                        {{{body}}}
-                    {{else}}
-                        Niet ingelogd
-                    {{/if}}
-                </div>
-                
-                <!-- SIDEBAR -->
-                <div class="col-lg-3">
-                    {{#if logedIn}}
-                        <!-- if loggedin -->
-                        <h3>Logout</h3>
-                        <div class="panel panel-default">         
-                            <div class="panel-body">    
-                                <button class="btn btn-sm btn-default" onClick="window.location.href = '/logout'">Logout</button>
-                            </div>
-                        </div>    
-                    {{else}}
-                        <!-- if not loggedin -->
-                        <h3>Login</h3>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="emailInput">Gebruikersnaam of Email</label>
-                                        <input type="email" class="form-control" id="emailInput" placeholder="Vul in email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="passwordInput">Wachtwoord <a href="/sessions/forgot_password">(wachtwoord vergeten)</a></label>
-                                        <input type="password" class="form-control" id="passwordInput" placeholder="Wachtwoord">
-                                    </div>
-                                <button type="submit" class="btn btn-sm btn-default">Login</button>
-                                </form>
-                            </div>
-                  
-                    </div>
-                    {{/if}}
-                </div> <!-- END SIDEBAR -->
-            </div> <!-- END BODY -->  
+            {{> content}}
                 
             <br>
             
-            <div class="row" id="footer"> 
-                <div class="col-lg-4">
-                    <center>
-                        <h4 class="footertext">Twitter</h4>
-                        <p class="footertext">Twitterfeed?<br></p>   
-                    </center>
-                </div>
-                <div class="col-lg-4">
-                    <center>
-                        <h4 class="footertext">Afbeeldingen</h4>
-                        <p class="footertext">Lijst van afbeeldingen<br></p>   
-                    </center>
-                </div>
-                <div class="col-lg-4">
-                    <center>
-                        <h4 class="footertext">Adres</h4>
-                        <p class="footertext">
-                            Joop's Tour <br>
-                            Postbus 711 <br>
-                            6800 AS Arnhem <br>
-                            NL87INGB0003828305  <br>
-                            KVK 41049788 <br>
-                            secretariaat@omejoopstour.nl <br>
-                        </p>                   
-                    </center>
-                </div>       
-            </div> <!-- END FOOTER -->
-            
-            <div class="row">
-                <p><center><p class="footertext">Copyright 2016: Groep J</p></center></p>
-            </div>
-            
+            {{> footer}}
+          
 		</div> <!-- END CONTAINER -->
 	</body>
 </html>
