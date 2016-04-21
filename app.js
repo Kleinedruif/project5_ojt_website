@@ -38,6 +38,12 @@ app.use(cookieParser('rvVMGxB3axNvTJ9wA3LKKA4X'));
 app.use(session({secret: 'rvVMGxB3axNvTJ9wA3LKKA4X', resave: false, saveUninitialized: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// For testing purposes, user is always logged in.
+app.use(function(req, res, next) {
+    req.session.authenticated = true;
+    return next();
+})
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
