@@ -13,8 +13,10 @@ var config = require('./modules/config');
 
 var app = express();
 
+// This modules holds the helper functions for hbs
 var helpers = require('./modules/hbs-helpers');
 
+// Set the engine
 app.engine("hbs", exphbs({
     defaultLayout: "main",
     extname: ".hbs",
@@ -23,11 +25,6 @@ app.engine("hbs", exphbs({
     layoutsDir: "views/layouts/"
 }));
 app.set("view engine", "hbs");
-
-/*
-// View engine setup
-app.engine('hbs', exphbs({extname:'hbs', defaultLayout:'main.hbs'}));
-app.set('view engine', 'hbs');*/
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

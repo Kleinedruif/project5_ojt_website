@@ -48,27 +48,46 @@ var childInformation = [{
 
 // GET home page.
 router.get('/', function(req, res, next) {   
-    res.render('index', {pageRoute: 'index', mainActive: true, logedIn: true, childs: childList});
-});
-
-// GET data page.
-router.get('/deelnemers/gegevens', function(req, res, next) {   
-    res.render('data', {pageRoute: 'data', data: childInformation[0], logedIn: true, childs: childList});
+    var selectedChild = null;
+    if (req.session.selectedChild != undefined){
+        selectedChild = req.session.selectedChild
+    }
+    
+    res.render('index', {pageRoute: 'index', mainActive: true, logedIn: true, childs: childList, selectedChild: selectedChild});
 });
 
 // GET data page with id.
 router.get('/deelnemers/:id/gegevens', function(req, res, next) {    
     var childId = req.params.id;
-    
+        
     var information;
-    // Find the child with the id
-    childInformation.forEach(function(element) {
-        if (element.id == childId){
-            information = element;
+    if (childId == 0){
+        // Check if id is already stored
+        if (req.session.selectedChild != undefined && req.session.selectedChild.id != 0){
+            // Find the child with the id
+            childInformation.forEach(function(element) {
+                if (element.id == req.session.selectedChild.id){
+                    information = element;
+                }
+            }, this);
+        } 
+        // When no id stored, no kind is selected so get the first
+        else {
+            information = childInformation[0];
         }
-    }, this);
+    } else {
+        // Find the child with the id
+        childInformation.forEach(function(element) {
+            if (element.id == childId){
+                information = element;
+            }
+        }, this);
+    }
     
-    res.render('data', {pageRoute: 'data', data: information, logedIn: true, childs: childList});
+    var name = information.firstName + " " + information.lastName;
+    req.session.selectedChild = {id: childId, name: name};
+    
+    res.render('data', {pageRoute: 'data', data: information, logedIn: true, childs: childList, selectedChild: req.session.selectedChild});
 });
 
 router.get('/login', auth.requireNotLoggedIn, function(req, res, next) {
