@@ -1,12 +1,10 @@
 <div class="row" id="body">
     
     <!-- DATA FROM BACKEND -->
-    <div class="col-lg-12">
-        <!-- only show this when loggedin -->
-        {{#if logedIn}}
-            {{{body}}}
-        {{else}}
-            Niet ingelogd
-        {{/if}}
-    </div>
+    <!-- only show this when loggedin -->
+    {{#if logedIn}}
+        {{{body}}}
+    {{else}}
+        Niet ingelogd
+    {{/if}}
 </div> <!-- END BODY -->  

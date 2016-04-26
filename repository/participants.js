@@ -52,6 +52,65 @@ module.exports = {
         req.childList = childList;
         return next();
     },
+    getRanking: function(req, res, next){     
+        var sortBy = req.params.sortBy;
+        // Create rankings based on on score from individual rankings
+        var teamRankings = getTeamRankings(ranking);
+        // Check how to sort the list
+        switch(sortBy){
+            case 'scoreAsc': ranking.sort(sort_by('score', true, parseInt)); teamRankings.sort(sort_by('score', true, parseInt)); break;
+            case 'scoreDesc': ranking.sort(sort_by('score', false, parseInt)); teamRankings.sort(sort_by('score', false, parseInt)); break;
+            default: ranking.sort(sort_by('score', true, parseInt)); teamRankings.sort(sort_by('score', true, parseInt)); 
+        }
+        //ranking.sort(sort_by('score', false, parseInt));
+        res.render('ranking', {pageRoute: 'ranking', particRanking: ranking, teamRanking: teamRankings, logedIn: true, childs: childList, selectedChild: req.session.selectedChild});
+    },
+}
+
+// Retrieve team rankings
+function getTeamRankings(rankings){
+    var teamRankings = [];
+    // Loop over all the individual participants
+    rankings.forEach(function(element) {
+        // Check if team is already added
+        var team = checkIfTeamExists(teamRankings, element.teamId);
+        if (team == null){
+            // Push the new team to the list
+            teamRankings.push({name: element.teamName, score: element.score, id: element.teamId});
+        } else {
+            // Add extra scores
+            team.score = parseInt(team.score) + parseInt(element.score);
+        }
+    }, this);
+    
+    return teamRankings;
+}
+
+// Check if team already exists in the list with the id
+function checkIfTeamExists(rankings, id){
+    // Loop over all the items
+    for (var i = 0; i < rankings.length; i++) {
+        // If id matches, return that team
+        if (rankings[i].id == id) {
+            return rankings[i];
+        }
+    }
+    return null;
+}
+
+// Sort a list
+var sort_by = function(field, reverse, primer){  
+    var key = primer ? 
+        function(x) {return primer(x[field])} : 
+        function(x) {return x[field]};
+
+    // Check if ascending or descensing
+    reverse = !reverse ? 1 : -1;
+    
+    // Check what value is bigger and return the results to the sort function
+    return function (a, b) {
+        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+    } 
 }
 
 // Dummy data
@@ -89,3 +148,12 @@ var childInformation = [{
     classifications: 'Diploma A en is bezig met B',
     extra: '-'
 }];
+
+// Dummy ranking data
+var ranking = [{name: 'Piet', id: 1, score: '14', teamName: 'Groep Geel', teamId: '1'}, 
+    {name: 'Geert', id: 2, score: '13', teamName: 'Groep Geel', teamId: '1'}, 
+    {name: 'Klaas', id: 3, score: '9', teamName: 'Groep Groen', teamId: '2'}, 
+    {name: 'Anneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', id: 4, score: '20', teamName: 'Groep Groen', teamId: '2'},
+    {name: 'Myrthe', id: 5, score: '18', teamName: 'Groep Blauw', teamId: '3'}, 
+    {name: 'Paula', id: 6, score: '2', teamName: 'Groep Blauw', teamId: '3'}
+];

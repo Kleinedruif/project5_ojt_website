@@ -1,7 +1,7 @@
 /* css mainPage main.hbs */
 body {
     font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background-color: #FAFAFA;
+    background-color: #C4C4C4;
    /* background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;*/
@@ -136,7 +136,19 @@ body {
     overflow: hidden; 
 }
 
-.dataTableSecondRow {
-    width:70%;
+/* end css data.hbs
+
+/* css ranking.hbs */
+#rankingTable, #teamRankingTable {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
 }
+
+.tableRow {
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;    
+}
+
 /* end css data.hbs

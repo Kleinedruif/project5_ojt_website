@@ -14,6 +14,8 @@ router.get('/', partic.getChildInformation, function(req, res, next) {
 // GET data page with id, participants handles everything and renders the page
 router.get('/deelnemers/:id/gegevens', partic.getChildPage);
 
+router.get('/ranking/:sortBy', partic.getRanking);
+
 router.get('/login', auth.requireNotLoggedIn, function(req, res, next) {
     
 })

@@ -1,0 +1,56 @@
+<div class='row col-lg-12'>
+    <h3>Ranking</h3>
+    <select onchange="javascript:location.href = '/ranking/' + this.value;">
+        <option selected="selected">Sorteren op</option>
+        <option value="scoreAsc">Score oplopend</option>
+        <option value="scoreDesc">Score aflopend</option>
+    </select>
+    <br><br>
+</div>
+<div class='row'>
+    <div class="col-lg-6">
+        <h4>Ranking deelnemers</h4>
+        <table id='rankingTable' class="table table-striped">
+            <thead>
+                <th>Naam</th>
+                <th>Team</th>
+                <th>Score</th>
+            </thead>
+            <colgroup>
+                <col style="width:45%" />
+                <col style="width:45%" />
+                <col style="width:10%" />
+            </colgroup>
+            <tbody>
+                {{#each particRanking}}
+                    <tr>
+                        <td class="tableRow">{{{this.name}}}</td>
+                        <td class="tableRow">{{{this.teamName}}}</td>
+                        <td class="tableRow">{{{this.score}}}</td>
+                    </tr>
+                {{/each}}         
+            </tbody>
+        </table>
+    </div>
+     <div class="col-lg-6">
+        <h4>Ranking teams</h4>
+        <table id='teamRankingTable' class="table table-striped">
+            <thead>
+                <th>Teamnaam</th>
+                <th>Score</th>
+            </thead>
+            <colgroup>
+                <col style="width:90%" />
+                <col style="width:10%" />
+            </colgroup>
+            <tbody>
+                {{#each teamRanking}}
+                    <tr>
+                        <td class="tableRow">{{{this.name}}}</td>
+                        <td class="tableRow">{{{this.score}}}</td>
+                    </tr>
+                {{/each}}         
+            </tbody>
+        </table>
+    </div>
+</div>
