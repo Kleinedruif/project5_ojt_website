@@ -52,16 +52,24 @@ module.exports = {
         req.childList = childList;
         return next();
     },
-    getRanking: function(req, res, next){     
-        var sortBy = req.params.sortBy;
+    // Retrieving ranking page
+    getRanking: function(req, res, next){   
+        var sortBy = req.params.sortBy;     
+        
         // Create rankings based on on score from individual rankings
         var teamRankings = getTeamRankings(ranking);
-        // Check how to sort the list
-        switch(sortBy){
-            case 'scoreAsc': ranking.sort(sort_by('score', true, parseInt)); teamRankings.sort(sort_by('score', true, parseInt)); break;
-            case 'scoreDesc': ranking.sort(sort_by('score', false, parseInt)); teamRankings.sort(sort_by('score', false, parseInt)); break;
-            default: ranking.sort(sort_by('score', true, parseInt)); teamRankings.sort(sort_by('score', true, parseInt)); 
+        
+        // Check if sort is set to "aflopend"
+        if (sortBy != undefined && sortBy == "aflopend"){ 
+            ranking.sort(sort_by('score', false, parseInt)); 
+            teamRankings.sort(sort_by('score', false, parseInt));
+        } 
+        // In al other cases sort ascending
+        else {
+            ranking.sort(sort_by('score', true, parseInt)); 
+            teamRankings.sort(sort_by('score', true, parseInt));
         }
+
         //ranking.sort(sort_by('score', false, parseInt));
         res.render('ranking', {pageRoute: 'ranking', particRanking: ranking, teamRanking: teamRankings, logedIn: true, childs: childList, selectedChild: req.session.selectedChild});
     },
