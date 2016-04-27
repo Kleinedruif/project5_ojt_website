@@ -10,16 +10,17 @@
 <div class='row'>
     <div class="col-lg-6">
         <h4>Ranking deelnemers</h4>
-        <table id='rankingTable' class="table table-striped">
+        <div id="scrollContainer">
+        <table id='rankingTable' class="table table-striped scroll">
             <thead>
                 <th>Naam</th>
                 <th>Team</th>
-                <th>Score</th>
+                <th>Punten</th>
             </thead>
             <colgroup>
-                <col style="width:45%" />
-                <col style="width:45%" />
-                <col style="width:10%" />
+                <col style="width:44%" />
+                <col style="width:44%" />
+                <col style="width:12%" />
             </colgroup>
             <tbody>
                 {{#each particRanking}}
@@ -31,20 +32,41 @@
                 {{/each}}         
             </tbody>
         </table>
+        </div>
     </div>
-     <div class="col-lg-6">
+     <div class="col-lg-6">    
         <h4>Ranking teams</h4>
-        <table id='teamRankingTable' class="table table-striped">
+        <table id='teamRankingTable' class="table table-striped scroll">
             <thead>
                 <th>Teamnaam</th>
-                <th>Score</th>
+                <th>Punten</th>
             </thead>
             <colgroup>
-                <col style="width:90%" />
-                <col style="width:10%" />
+                <col style="width:88%" />
+                <col style="width:12%" />
             </colgroup>
             <tbody>
                 {{#each teamRanking}}
+                    <tr>
+                        <td class="tableRow">{{{this.name}}}</td>
+                        <td class="tableRow">{{{this.score}}}</td>
+                    </tr>
+                {{/each}}         
+            </tbody>
+        </table>
+        
+        <h4>Ranking meisjes/jongens</h4>
+        <table id='genderRankingTable' class="table table-striped scroll">
+            <thead>
+                <th>meisjes/jongens</th>
+                <th>Punten</th>
+            </thead>
+            <colgroup>
+                <col style="width:88%" />
+                <col style="width:12%" />
+            </colgroup>
+            <tbody>
+                {{#each gnderRanking}}
                     <tr>
                         <td class="tableRow">{{{this.name}}}</td>
                         <td class="tableRow">{{{this.score}}}</td>
