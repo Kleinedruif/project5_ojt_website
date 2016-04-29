@@ -139,4 +139,8 @@ body {
 .dataTableSecondRow {
     width:70%;
 }
-/* end css data.hbs
+/* end css data.hbs */
+
+.error-block {
+    color: red;
+}
