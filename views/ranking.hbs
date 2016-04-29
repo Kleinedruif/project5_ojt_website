@@ -1,17 +1,38 @@
 <div class='row col-lg-12'>
-    <h3>Ranking</h3>
-    <select onchange="javascript:location.href = '/ranking/' + this.value;">
-        <option selected="selected">Sorteren op</option>
+    <h3>Ranglijst</h3>
+    <select id="selectSort">
         <option value="oplopend">Score oplopend</option>
-        <option value="aflopend">Score aflopend</option>
+        {{#if (if_ql sortOrder "aflopend")}}
+            <option selected value="aflopend">Score aflopend</option>
+        {{else}}
+            <option value="aflopend">Score aflopend</option>
+        {{/if}}
     </select>
+    <select id="selectGender">
+        {{#if (if_ql sortGender "beide")}}
+            <option selected value="beide">Sorteer op jongens/meisjes</option>
+        {{else}}
+            <option value="beide">Sorteer op jongens/meisjes</option>
+        {{/if}}
+        {{#if (if_ql sortGender "jongens")}}
+            <option selected value="jongens">Sorteer op jongens</option>
+        {{else}}
+            <option value="jongens">Sorteer op jongens</option>
+        {{/if}}
+        {{#if (if_ql sortGender "meisjes")}}
+            <option selected value="meisjes">Sorteer op meisjes</option>
+        {{else}}
+            <option value="meisjes">Sorteer op meisjes</option>
+        {{/if}}
+    </select>
+    <button id='sortButton'>Filter</button>
     <br><br>
 </div>
 <div class='row'>
     <div class="col-lg-6">
-        <h4>Ranking deelnemers</h4>
+        <h4>Ranglijst deelnemers</h4>
         <div id="scrollContainer">
-        <table id='rankingTable' class="table table-striped scroll">
+        <table id='rankingTable' class="table table-striped">
             <thead>
                 <th>Naam</th>
                 <th>Team</th>
@@ -23,20 +44,20 @@
                 <col style="width:12%" />
             </colgroup>
             <tbody>
-                {{#each particRanking}}
+                {{#each participantsRanking}}
                     <tr>
-                        <td class="tableRow">{{{this.name}}}</td>
-                        <td class="tableRow">{{{this.teamName}}}</td>
-                        <td class="tableRow">{{{this.score}}}</td>
+                        <td class="tableRow">{{this.name}}</td>
+                        <td class="tableRow">{{this.teamName}}</td>
+                        <td class="tableRow">{{this.score}}</td>
                     </tr>
-                {{/each}}         
+                {{/each}}
             </tbody>
         </table>
         </div>
     </div>
-     <div class="col-lg-6">    
-        <h4>Ranking teams</h4>
-        <table id='teamRankingTable' class="table table-striped scroll">
+     <div class="col-lg-6">
+        <h4>Ranglijst teams</h4>
+        <table id='teamRankingTable' class="table table-striped">
             <thead>
                 <th>Teamnaam</th>
                 <th>Punten</th>
@@ -48,17 +69,17 @@
             <tbody>
                 {{#each teamRanking}}
                     <tr>
-                        <td class="tableRow">{{{this.name}}}</td>
-                        <td class="tableRow">{{{this.score}}}</td>
+                        <td class="tableRow">{{this.name}}</td>
+                        <td class="tableRow">{{this.score}}</td>
                     </tr>
-                {{/each}}         
+                {{/each}}
             </tbody>
         </table>
-        
-        <h4>Ranking meisjes/jongens</h4>
-        <table id='genderRankingTable' class="table table-striped scroll">
+
+        <h4>Ranglijst meisjes/jongens</h4>
+        <table id='genderRankingTable' class="table table-striped">
             <thead>
-                <th>meisjes/jongens</th>
+                <th>Meisjes/jongens</th>
                 <th>Punten</th>
             </thead>
             <colgroup>
@@ -66,13 +87,18 @@
                 <col style="width:12%" />
             </colgroup>
             <tbody>
-                {{#each gnderRanking}}
+                {{#each genderRanking}}
                     <tr>
-                        <td class="tableRow">{{{this.name}}}</td>
-                        <td class="tableRow">{{{this.score}}}</td>
+                         {{#if (if_ql this.score "0")}}
+                        {{else}}
+                            <td class="tableRow">{{this.name}}</td>
+                            <td class="tableRow">{{this.score}}</td>
+                        {{/if}}
                     </tr>
-                {{/each}}         
+                {{/each}}
             </tbody>
         </table>
     </div>
 </div>
+
+<script src="/javascripts/ranking.js"></script>

@@ -20,7 +20,7 @@ var helpers = require('./modules/hbs-helpers');
 app.engine("hbs", exphbs({
     defaultLayout: "main",
     extname: ".hbs",
-    helpers: helpers,    
+    helpers: helpers,
     partialsDir: "views/partials/",
     layoutsDir: "views/layouts/"
 }));
@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     req.session.authenticated = true;
     return next();
-})
+});
 
 app.use('/', routes);
 
