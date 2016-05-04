@@ -47,13 +47,13 @@ var childInformation = [{
 // childInformation is array holding dummy data with child information
 
 // GET home page.
-router.get('/', function(req, res, next) {   
-    res.render('index', {pageRoute: 'index', mainActive: true, logedIn: true, childs: childList});
+router.get('/', function(req, res, next) {
+    render('index', req, res, { pageRoute: 'index', mainActive: true, logedIn: true, childs: childList, message: req.flash('message') });
 });
 
 // GET data page.
 router.get('/deelnemers/gegevens', function(req, res, next) {   
-    res.render('data', {pageRoute: 'data', data: childInformation[0], logedIn: true, childs: childList});
+    render('data', req, res, {pageRoute: 'data', data: childInformation[0], logedIn: true, childs: childList});
 });
 
 // GET data page with id.
@@ -68,11 +68,59 @@ router.get('/deelnemers/:id/gegevens', function(req, res, next) {
         }
     }, this);
     
-    res.render('data', {pageRoute: 'data', data: information, logedIn: true, childs: childList});
+    render('data', req, res, {pageRoute: 'data', data: information, logedIn: true, childs: childList});
 });
 
-router.get('/login', auth.requireNotLoggedIn, function(req, res, next) {
+router.get('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
+    render('login', req, res);
+});
+
+router.post('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
+    //Form validation
+    var errors = {};
+    if (!req.body.hasOwnProperty('username') || req.body.username.trim() == '') {
+        errors.username = 'Vul alstublieft een gebruikernaam in.';
+    }
+    if (!req.body.hasOwnProperty('password') || req.body.password.trim() == '') {
+        errors.password = 'Vul alstublieft een wachtwoord in.';
+    }
     
-})
+    if (Object.keys(errors).length > 0) {
+        req.flash('errors', errors);
+        res.redirect('/inloggen');
+        return;
+    }
+    
+    auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {
+        // TODO check success
+        
+        req.flash('message', 'Login succesvol');
+        res.redirect('/');
+        return;
+    });
+});
+
+router.get('/uitloggen', /*auth.requireLoggedIn??, */ function(req, res, next) {
+    auth.logout(req);
+    
+    req.flash('message', 'U bent uitgelogd');
+    res.redirect('/');
+});
+
+// Renders certain view, with csrf, loggedIn and flash message already given.
+var render = function(view, req, res, variables) {
+    if (!variables) {
+        variables = {};
+    }
+    
+    var errors = req.flash('errors');
+    if (errors) {
+        errors = errors[0];
+    }
+    
+    variables.__proto__ = { csrf: req.session.csrf, loggedIn: req.session.authenticated == true, message: req.flash('message'), errors: errors }
+    
+    res.render(view, variables);
+}
 
 module.exports = router;
