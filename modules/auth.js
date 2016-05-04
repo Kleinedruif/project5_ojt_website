@@ -15,7 +15,7 @@ module.exports = {
         if (!req.session.authenticated) {
             return next();
         }
-        
+
         req.flash('message', 'U bent al ingelogd.');
         res.redirect('/');
     },
@@ -31,4 +31,4 @@ module.exports = {
     logout: function(req) {
         req.session.authenticated = false;
     }
-}
+};

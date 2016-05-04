@@ -16,21 +16,18 @@ var csrf = require('./modules/csrf');
 
 var app = express();
 
+// This modules holds the helper functions for hbs
 var helpers = require('./modules/hbs-helpers');
 
+// Set the engine
 app.engine("hbs", exphbs({
     defaultLayout: "main",
     extname: ".hbs",
-    helpers: helpers,    
+    helpers: helpers,
     partialsDir: "views/partials/",
     layoutsDir: "views/layouts/"
 }));
 app.set("view engine", "hbs");
-
-/*
-// View engine setup
-app.engine('hbs', exphbs({extname:'hbs', defaultLayout:'main.hbs'}));
-app.set('view engine', 'hbs');*/
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -41,6 +38,7 @@ app.use(cookieParser('rvVMGxB3axNvTJ9wA3LKKA4X'));
 app.use(session({secret: 'rvVMGxB3axNvTJ9wA3LKKA4X', resave: false, saveUninitialized: false}));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Validate CSRF token
 app.use(csrf);
