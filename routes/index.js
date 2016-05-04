@@ -72,12 +72,10 @@ router.get('/deelnemers/:id/gegevens', function(req, res, next) {
 });
 
 router.get('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
-    console.log('get /inloggen');
     render('login', req, res);
 });
 
 router.post('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
-    console.log('post /inloggen');
     //Form validation
     var errors = {};
     if (!req.body.hasOwnProperty('username') || req.body.username.trim() == '') {
@@ -86,9 +84,6 @@ router.post('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
     if (!req.body.hasOwnProperty('password') || req.body.password.trim() == '') {
         errors.password = 'Vul alstublieft een wachtwoord in.';
     }
-    
-    console.log(errors);
-    console.log(Object.keys(errors).length);
     
     if (Object.keys(errors).length > 0) {
         req.flash('errors', errors);
@@ -122,7 +117,7 @@ var render = function(view, req, res, variables) {
     if (errors) {
         errors = errors[0];
     }
-    console.log(errors);
+    
     variables.__proto__ = { csrf: req.session.csrf, loggedIn: req.session.authenticated == true, message: req.flash('message'), errors: errors }
     
     res.render(view, variables);
