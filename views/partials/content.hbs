@@ -1,10 +1,8 @@
 <div class="row" id="body">
-    
-    <!-- DATA FROM BACKEND -->
-    <!-- only show this when loggedin -->
-    {{#if logedIn}}
-        {{{body}}}
-    {{else}}
-        Niet ingelogd
+
+    {{#if message}}
+        {{ message }}
     {{/if}}
+    
+    {{{body}}}
 </div> <!-- END BODY -->  

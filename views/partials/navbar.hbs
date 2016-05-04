@@ -22,7 +22,7 @@
                     {{/if}}
                     
                     <!-- only show this when loggedin -->
-                    {{#if logedIn}}
+                    {{#if loggedIn}}
                         {{#if (if_ql pageRoute "data")}}
                             <li class="active"><a href="/deelnemers/0/gegevens" id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
                         {{else}}
@@ -38,8 +38,8 @@
                 </ul>
             
                 <!-- only show this when loggedin -->
-                {{#if logedIn}}
-                    <ul class="nav navbar-nav navbar-right">                        
+                <ul class="nav navbar-nav navbar-right">                        
+                    {{#if loggedIn}}
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span id="selectedChild">
@@ -57,9 +57,19 @@
                                 {{/each}}
                             </ul>
                         </li>
-                        <li><a href="/logout">Uitloggen <span class="sr-only">(current)</span></a></li>     
-                    </ul>
-                {{/if}}
+                        <li>
+                            <a href="/uitloggen">
+                                Uitloggen <span class="sr-only">(current)</span>
+                            </a>
+                        </li>     
+                    {{else}}
+                        <li>
+                            <a href="/inloggen">
+                                Inloggen <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    {{/if}}
+                </ul>
             </div>
         </div>
     </nav>    

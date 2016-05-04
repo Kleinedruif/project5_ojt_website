@@ -5,11 +5,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
+// Custom modules
 var config = require('./modules/config');
+var csrf = require('./modules/csrf');
 
 var app = express();
 
@@ -33,19 +36,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('rvVMGxB3axNvTJ9wA3LKKA4X'));
 app.use(session({secret: 'rvVMGxB3axNvTJ9wA3LKKA4X', resave: false, saveUninitialized: false}));
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// For testing purposes, user is always logged in.
-app.use(function(req, res, next) {
-    req.session.authenticated = true;
-    return next();
-});
+
+// Validate CSRF token
+app.use(csrf);
+
+//// For testing purposes, user is always logged in.
+//app.use(function(req, res, next) {
+    //req.session.authenticated = true;
+    //return next();
+//})
 
 app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var err = new Error('De pagina is niet gevonden');
     err.status = 404;
     next(err);
 });

@@ -151,3 +151,10 @@ body {
     white-space:nowrap;
 }
 /* end css ranking.hbs
+
+/* end css data.hbs */
+
+.error-block {
+    color: red;
+}
+

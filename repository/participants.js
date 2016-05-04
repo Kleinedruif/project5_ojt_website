@@ -37,7 +37,7 @@ module.exports = {
         // childlist shows the dropdown menu with all the childs, hold dummy data with name and id
         // information is array holding all the childs information
         // selectedChild is the child selected, holds name and id
-        return res.render('data', {pageRoute: 'data', data: information, logedIn: true, childs: childList, selectedChild: req.session.selectedChild});
+        return res.render('data', {pageRoute: 'data', data: information, loggedIn: true, childs: childList, selectedChild: req.session.selectedChild});
     },
     // Retrieve the list and store the data in the request
     getChildInformation: function(req, res, next){
@@ -53,13 +53,13 @@ module.exports = {
         return next();
     },
     // Retrieving ranking page
-    getRanking: function(req, res, next){
+    getRanking: function(sortOrder, sortGender){
         // Set default sort vaules
-        var sortOrder = 'oplopend';
-        var sortGender = 'beide';
+        //var sortOrder = 'oplopend';
+       // var sortGender = 'beide';
         // Retrieve values from query filter
-        if (req.query.sorteer){ sortOrder = req.query.sorteer; }
-        if (req.query.geslacht){ sortGender = req.query.geslacht; }
+       // if (req.query.sorteer){ sortOrder = req.query.sorteer; }
+       // if (req.query.geslacht){ sortGender = req.query.geslacht; }
 
         // Create rankings based on on score from individual rankings
         var rankings = getRankings(dummyRankings, sortGender);
@@ -81,7 +81,7 @@ module.exports = {
         }
 
         // Render the ranking page
-        res.render('ranking', {pageRoute: 'ranking', participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings, logedIn: true, childs: childList, sortOrder: sortOrder, sortGender: sortGender, selectedChild: req.session.selectedChild});
+        return { participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings, childs: childList }
     }
 };
 
