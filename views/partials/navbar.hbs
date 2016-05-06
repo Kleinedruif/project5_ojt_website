@@ -22,41 +22,16 @@
                     {{/if}}
                     
                     <!-- only show this when loggedin -->
-                    {{#if loggedIn}}
-                        {{#if (if_ql pageRoute "data")}}
-                            <li class="active"><a href="/deelnemers/0/gegevens" id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
-                        {{else}}
-                            <li><a href="/deelnemers/0/gegevens" id="navData">Gegevens <span class="sr-only">(current)</span></a></li>         
-                        {{/if}}
-                        {{#if (if_ql pageRoute "ranking")}}
-                            <li class="active"><a href="/ranglijst" id="navData">Ranglijst <span class="sr-only">(current)</span></a></li>
-                        {{else}}
-                            <li><a href="/ranglijst" id="navData">Ranglijst <span class="sr-only">(current)</span></a></li>         
-                        {{/if}}
+                    {{#if loggedIn}}                                   
+                        <li class="{{#if (if_ql pageRoute "data")}}active{{/if}}"><a href="/deelnemers/0/gegevens" id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "ranking")}}active{{/if}}"><a href="/ranglijst" id="navData">Ranglijst <span class="sr-only">(current)</span></a></li>
                     {{/if}}
                 
                 </ul>
             
                 <!-- only show this when loggedin -->
                 <ul class="nav navbar-nav navbar-right">                        
-                    {{#if loggedIn}}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span id="selectedChild">
-                                    {{#if selectedChild}}
-                                        {{{selectedChild.name}}}
-                                    {{else}}
-                                        Selecteer kind
-                                    {{/if}}
-                                </span>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                {{#each childs}}
-                                    <li><a href="/deelnemers/{{this.id}}/gegevens">{{this.name}}</a></li>
-                                {{/each}}
-                            </ul>
-                        </li>
+                    {{#if loggedIn}}                       
                         <li>
                             <a href="/uitloggen">
                                 Uitloggen <span class="sr-only">(current)</span>
