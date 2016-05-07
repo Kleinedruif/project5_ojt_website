@@ -8,15 +8,15 @@ module.exports = {
 
         // Check if sort is set to "aflopend"
         if (sortOrder !== undefined && sortOrder == "aflopend"){
-            participantsRankings.sort(sort_by('score', false, parseInt));
-            teamRankings.sort(sort_by('score', false, parseInt));
-            genderRankings.sort(sort_by('score', false, parseInt));
-        }
-        // In al other cases sort ascending
-        else {
             participantsRankings.sort(sort_by('score', true, parseInt));
             teamRankings.sort(sort_by('score', true, parseInt));
             genderRankings.sort(sort_by('score', true, parseInt));
+        }
+        // In al other cases sort ascending
+        else {
+            participantsRankings.sort(sort_by('score', false, parseInt));
+            teamRankings.sort(sort_by('score', false, parseInt));
+            genderRankings.sort(sort_by('score', false, parseInt));
         }
        
         return { participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings }
