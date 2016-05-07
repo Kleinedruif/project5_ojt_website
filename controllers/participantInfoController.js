@@ -40,7 +40,7 @@ module.exports = {
         // childlist shows the dropdown menu with all the childs, hold dummy data with name and id
         // information is array holding all the childs information
         // selectedChild is the child selected, holds name and id
-        mainController.render('data', req, res, {pageRoute: 'data', data: information, childs: childInformationList });
+        mainController.render('participantInfo', req, res, {pageRoute: 'participantInfo', data: information, childs: childInformationList });
     }
 };
 
