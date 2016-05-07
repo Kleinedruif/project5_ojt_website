@@ -1,7 +1,13 @@
 <div class="row" id="body">
 
     {{#if message}}
-        {{ message }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="message-block">
+                    {{ message }}
+                </div>
+            </div>
+        </div>
     {{/if}}
     
     {{{body}}}
