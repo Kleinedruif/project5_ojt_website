@@ -7,10 +7,6 @@ body {
     background-attachment: fixed;*/
 }
 
-#header {
-    /*padding-top: 125px;*/
-}
-
 #header #mainTitle{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 50px;
@@ -24,7 +20,7 @@ body {
 
 #body {
     padding-left: 20px;
-   /* padding-right: 10px;*/
+    padding-right: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: white;
@@ -37,10 +33,6 @@ body {
     padding-bottom: 10px;
     background-color: #C92828;
     color: white;
-}
-
-.container {
-
 }
 
 .singleLine {

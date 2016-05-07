@@ -1,7 +1,6 @@
 var express = require('express');
 var auth = require('../modules/auth');
 var router = express.Router();
-//var partic = require('../repository/participants');
 var participantInfoController = require('../controllers/participantInfoController');
 var rankingsController = require('../controllers/rankingsController');
 var mainController = require('../controllers/mainController');
@@ -10,10 +9,10 @@ var request = require('request');
 // User is now detault loggedIn
 
 // GET data page with id, participants handles everything and renders the page
-router.get('/deelnemers/:id/gegevens', participantInfoController.getChildInformationPage);
+router.get('/deelnemers/:id/gegevens', auth.requireLoggedIn, participantInfoController.getChildInformationPage);
 
 // The ranking page
-router.get('/ranglijst/',  rankingsController.getRankingsPage);
+router.get('/ranglijst/', auth.requireLoggedIn, rankingsController.getRankingsPage);
 
 // Main page
 router.get('/', function(req, res, next) {
