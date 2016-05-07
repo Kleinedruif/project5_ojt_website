@@ -1,0 +1,112 @@
+<div class='row col-md-12'>
+    <h3>Ranglijst</h3>
+    <div>
+        <div class="styled-select slate floatLeft">
+            <select class="styled-select slate" id="selectSort">
+                {{#if (if_ql sortOrder "aflopend")}}
+                    <option selected value="aflopend">Score aflopend</option>
+                    <option value="oplopend">Score oplopend</option>
+                {{else}}
+                    <option value="aflopend">Score aflopend</option>
+                    <option selected value="oplopend">Score oplopend</option>
+                {{/if}}
+            </select>
+        </div>
+        <div class="styled-select slate floatLeft">
+            <select id="selectGender">
+                {{#if (if_ql sortGender "beide")}}
+                    <option selected value="beide">Jongens/meisjes</option>
+                {{else}}
+                    <option value="beide">Jongens/meisjes</option>
+                {{/if}}
+                {{#if (if_ql sortGender "jongens")}}
+                    <option selected value="jongens">Jongens</option>
+                {{else}}
+                    <option value="jongens">Jongens</option>
+                {{/if}}
+                {{#if (if_ql sortGender "meisjes")}}
+                    <option selected value="meisjes">Meisjes</option>
+                {{else}}
+                    <option value="meisjes">Meisjes</option>
+                {{/if}}
+            </select>
+        </div>
+        <button id='sortButton' class='btn-info btn-sm floatLeft'>Verversen</button>
+    </div>
+    <br><br>
+    <hr>
+</div>
+<div class='row'>
+    <div class="col-md-6">
+        <h4>Ranglijst deelnemers</h4>
+        <div id="scrollContainer">
+        <table id='rankingTable' class="table table-striped">
+            <thead>
+                <th>Naam</th>
+                <th>Team</th>
+                <th>Punten</th>
+            </thead>
+            <colgroup>
+                <col style="width:44%" />
+                <col style="width:44%" />
+                <col style="width:12%" />
+            </colgroup>
+            <tbody>
+                {{#each participantsRanking}}
+                    <tr>
+                        <td class="tableRow">{{this.name}}</td>
+                        <td class="tableRow">{{this.teamName}}</td>
+                        <td class="tableRow">{{this.score}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        </div>
+    </div>
+     <div class="col-md-6">
+        <h4>Ranglijst teams</h4>
+        <table id='teamRankingTable' class="table table-striped">
+            <thead>
+                <th>Teamnaam</th>
+                <th>Punten</th>
+            </thead>
+            <colgroup>
+                <col style="width:88%" />
+                <col style="width:12%" />
+            </colgroup>
+            <tbody>
+                {{#each teamRanking}}
+                    <tr>
+                        <td class="tableRow">{{this.name}}</td>
+                        <td class="tableRow">{{this.score}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <h4>Ranglijst meisjes/jongens</h4>
+        <table id='genderRankingTable' class="table table-striped">
+            <thead>
+                <th>Meisjes/jongens</th>
+                <th>Punten</th>
+            </thead>
+            <colgroup>
+                <col style="width:88%" />
+                <col style="width:12%" />
+            </colgroup>
+            <tbody>
+                {{#each genderRanking}}
+                    <tr>
+                         {{#if (if_ql this.score "0")}}
+                        {{else}}
+                            <td class="tableRow">{{this.name}}</td>
+                            <td class="tableRow">{{this.score}}</td>
+                        {{/if}}
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/javascripts/ranking.js"></script>

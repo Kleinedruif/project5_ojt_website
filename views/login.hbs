@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Inloggen
+            </div>
+            <div class="panel-body">
+                <p>
+                    Om gebruik te maken van deze site moet u inloggen.<br/> 
+                    Gebruik de inloggegevens die u gekregen heeft bij het aanmelden van uw kind voor Ome Joop's Tour.
+                </p>
+                
+                <form action="/inloggen" method="post">
+                    <input type="hidden" name="_csrf" value="{{csrf}}">
+                    
+                    <div class="form-group {{#if errors.username}}error-block{{/if}}">
+                        <label for="username">Gebruikersnaam</label>
+                        <input class="form-control" type="text" name="username" placeholder="Gebruikersnaam">
+                        
+                        <span>{{{ errors.username }}}</span>
+                    </div>
+                    
+                    <div class="form-group {{#if errors.password}}error-block{{/if}}">
+                        <label for="password">Wachtwoord</label>
+                        <input class="form-control" type="password" name="password" placeholder="Wachtwoord">
+                        
+                        <span>{{{ errors.password }}}</span>
+                    </div>
+                    
+                    <input type="submit" class="btn btn-default" value="Inloggen">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
