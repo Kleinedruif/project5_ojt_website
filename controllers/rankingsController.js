@@ -4,7 +4,8 @@ var mainController = require('./mainController');
 module.exports = {
     // Retrieve ranking page
     getRankingsPage: function(req, res, next){
-        var sortOrder = 'oplopend';
+        // default values
+        var sortOrder = 'aflopend';
         var sortGender = 'beide';
         // Retrieve sort order
         if (req.query.sorteer){ sortOrder = req.query.sorteer; }

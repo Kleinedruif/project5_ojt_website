@@ -3,11 +3,12 @@
     <div>
         <div class="styled-select slate floatLeft">
             <select class="styled-select slate" id="selectSort">
-                <option value="oplopend">Score oplopend</option>
                 {{#if (if_ql sortOrder "aflopend")}}
                     <option selected value="aflopend">Score aflopend</option>
+                    <option value="oplopend">Score oplopend</option>
                 {{else}}
                     <option value="aflopend">Score aflopend</option>
+                    <option selected value="oplopend">Score oplopend</option>
                 {{/if}}
             </select>
         </div>
@@ -32,8 +33,9 @@
         </div>
         <button id='sortButton' class='btn-info btn-sm floatLeft'>Verversen</button>
     </div>
+    <br><br>
+    <hr>
 </div>
-<hr>
 <div class='row'>
     <div class="col-md-6">
         <h4>Ranglijst deelnemers</h4>

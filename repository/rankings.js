@@ -7,7 +7,7 @@ module.exports = {
         var participantsRankings = rankings.participants;
 
         // Check if sort is set to "aflopend"
-        if (sortOrder !== undefined && sortOrder == "aflopend"){
+        if (sortOrder == undefined || sortOrder == "aflopend"){
             participantsRankings.sort(sort_by('score', true, parseInt));
             teamRankings.sort(sort_by('score', true, parseInt));
             genderRankings.sort(sort_by('score', true, parseInt));
@@ -18,7 +18,7 @@ module.exports = {
             teamRankings.sort(sort_by('score', false, parseInt));
             genderRankings.sort(sort_by('score', false, parseInt));
         }
-       
+
         return { participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings }
     }   
 };
