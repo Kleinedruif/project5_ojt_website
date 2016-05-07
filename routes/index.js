@@ -41,18 +41,22 @@ router.post('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
     }
     
     auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {
-        // TODO check success
+        if (!success) {
+            req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
+            res.redirect('/inloggen');
+            return;
+        }
         
-        req.flash('message', 'Login succesvol');
+        req.flash('message', 'U bent ingelogd.');
         res.redirect('/');
         return;
     });
 });
 
-router.get('/uitloggen', /*auth.requireLoggedIn??, */ function(req, res, next) {
+router.get('/uitloggen', auth.requireLoggedIn, function(req, res, next) {
     auth.logout(req);
     
-    req.flash('message', 'U bent uitgelogd');
+    req.flash('message', 'U bent uitgelogd.');
     res.redirect('/');
 });
 

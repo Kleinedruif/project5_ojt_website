@@ -22,6 +22,9 @@ module.exports = {
     
     // Try to login the user. Executes callback and as parameter returns successfulness of login.
     login: function(req, username, password, callback) {
+        username = username.trim();
+        password = password.trim();
+        
         req.session.authenticated = true;       // TODO change from testing
         
         callback(true);                         // TODO change from testing
