@@ -12,7 +12,7 @@ module.exports = {
             errors = errors[0];
         }
         
-        variables.__proto__ = { csrf: req.session.csrf, loggedIn: req.session.authenticated == true, msgCount: req.msgCount, message: req.flash('message'), errors: errors}
+        variables.__proto__ = { csrf: req.session.csrf, loggedIn: req.session.authenticated == true, socketToken: req.session.socketToken, msgCount: req.msgCount, message: req.flash('message'), errors: errors}
         
         res.render(view, variables);
     }

@@ -1,15 +1,23 @@
 module.exports = {
     // Return the list below
-    getMessages: function(){
-        return messages.sort(function(a,b){
+    getMessages: function(username){
+        var filteredMessages = [{}];
+        // Retrieve only messages with username
+        messages.forEach(function(element) {
+            if (element.to == username)
+                filteredMessages.push(element);
+        }, this);
+        
+        return filteredMessages.sort(function(a,b){
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
             return new Date(b.date) - new Date(a.date);
-        });;
+        });
     },
     addMessage: function(msg){
         messages.push(msg);
     },
+    // Get ammount of messages (will be unread eventually)
     getMessageCount: function(username){
         var count = 0;
         messages.forEach(function(element) {

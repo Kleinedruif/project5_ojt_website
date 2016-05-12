@@ -6,6 +6,7 @@ var rankingsController = require('../controllers/rankingsController');
 var messageController = require('../controllers/messageController');
 var mainController = require('../controllers/mainController');
 var request = require('request');
+var jwt = require('jsonwebtoken');
 
 
 module.exports = function(io) {
@@ -56,6 +57,10 @@ module.exports = function(io) {
             req.session.username = req.body.username.trim();
             
             req.flash('message', 'U bent ingelogd.');
+
+            var token = jwt.sign({username: req.session.username}, "desecretmoethetzelfdezijnalsopdeinlogpostroute", { expiresIn: 60*5 });
+            req.session.socketToken = token;
+            
             res.redirect('/');
             return;
         });

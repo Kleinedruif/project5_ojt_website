@@ -24,6 +24,7 @@ var io = socketIo();
 app.io = io;
 
 var routes = require('./routes/index')(io);
+var messages = require('./routes/messages')(io);
 
 // This modules holds the helper functions for hbs
 var helpers = require('./modules/hbs-helpers');
@@ -57,7 +58,7 @@ app.use(csrf);
 //     return next();
 // });
 
-var messages = require('./routes/messages')(io, app);
+
 app.use('/', routes);
 
 // socket.io events

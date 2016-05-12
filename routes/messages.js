@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var clientIo = require("socket.io-client");
+var socketioJwt = require('socketio-jwt');
 
 var auth = require('../modules/auth');
 var messageController = require('../controllers/messageController');
 var mainController = require('../controllers/mainController');
 
 
-module.exports = function(io, app) {
+module.exports = function(io) {
     
     //http://stackoverflow.com/questions/4753957/socket-io-authentication
     // console.log(app.cookie);
@@ -39,11 +40,18 @@ module.exports = function(io, app) {
     //     accept(null, true);
     // });
     
+    //https://auth0.com/blog/2014/01/15/auth-with-socket-io/
+    
+    io.set('authorization', socketioJwt.authorize({
+        secret: 'desecretmoethetzelfdezijnalsopdeinlogpostroute',
+        handshake: true
+    }));
+    
     io.sockets.on('connection', function(socket) {
-        messageController.addConnection(socket.handshake.query.token, socket.id);      
-        console.log("Username: " + socket.handshake.query.token + " id: " + socket.id);
+        messageController.addConnection(socket.client.request.decoded_token.username, socket.id);      
+        console.log("Name: " + socket.client.request.decoded_token.username + " id: " + socket.id);
         socket.on('disconnect', function(){
-            messageController.removeConnection(socket.handshake.query.token)
+            messageController.removeConnection(socket.client.request.decoded_token.username)
         });
     });
     

@@ -1,4 +1,5 @@
 var config = require('./config');
+var crypto = require('crypto');
 
 module.exports = {
     // The user must be logged in to access this route.

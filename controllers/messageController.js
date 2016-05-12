@@ -31,23 +31,23 @@ var redis = require("redis"),
         });
 */
 
-// Stores all the connections
+// Stores all the connections and tokens
 var connectionList = {};
 
 // Add connection
-exports.addConnection = function(username, socketId){     
-    return connectionList[username] = { socketId: socketId };; 
+exports.addConnection = function(username, socketId){
+    return connectionList[username] = { socketId: socketId };
 }
 
 // Remove conection
-exports.removeConnection = function(username){    
+exports.removeConnection = function(username){
     return delete connectionList[username]; 
 }
 
 // Get message page
 exports.getMessagePage = function(){
     return function(req, res, next) {      
-        return mainController.render('messages', req, res, {pageRoute: 'messages', messages: messageRepo.getMessages() });      
+        return mainController.render('messages', req, res, {pageRoute: 'messages', messages: messageRepo.getMessages(req.session.username) });      
     };
 };
 
@@ -60,9 +60,15 @@ exports.getMessageCount = function(){
     };
 };
 
+exports.registerSocket = function(req){
+    tokenList[req.session.socketToken] = { username: req.session.username };
+}
+
 // When news messages comes in, this will handle it
 exports.recieveMessage = function(io, data){
     var nameTo = data.to;
+    console.log('message recieved?');
+    console.log(connectionList);
     if (connectionList[data.to] != undefined){
         console.log(connectionList[nameTo]);
         var socketId = connectionList[nameTo].socketId;
