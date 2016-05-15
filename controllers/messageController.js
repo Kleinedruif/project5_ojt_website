@@ -108,7 +108,8 @@ exports.sendMessage = function(io){
             json: true,  
             body: data
         }, function (error, response, body){
-            console.log(response.body);
+            //console.log(response.body);
+			console.log(error);
         });
 
         return res.redirect("/berichten");       
