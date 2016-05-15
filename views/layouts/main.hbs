@@ -14,9 +14,13 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         
+        <!-- Socket io -->
+        <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+        
         <!-- if not loggedin, scripts not needed -->
-        {{#if logedIn}}
-            <script src="/javascripts/index.js"></script>   
+        {{#if loggedIn}}
+            <script src="/javascripts/index.js"></script>     
+            <script src="/javascripts/messages.js"></script> 
         {{/if}}
 
         <link rel="stylesheet" href="/css/style.css">
@@ -37,3 +41,5 @@
 		</div> <!-- END CONTAINER -->
 	</body>
 </html>
+
+
