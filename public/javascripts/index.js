@@ -1,41 +1,35 @@
 $(document).ready(function() {
-    console.log("ready!");
-
     var socketToken = $("#socketToken").html();
-    console.log(socketToken);
-    /*
-    var username = sessionStorage.getItem('username');
-    console.log(username);
-    if (username == null){
-        username = 'alwaysLoggedInOn!';
-    }*/
-    //var socket = io.connect({query: 'token=' + username, secure: true, reconneting: true});
-// secure: true, 'force new connection': true
 
     if (socketToken != ''){
+        // Host is not secure yet... connection is nog wss or secure is still on false
         var socket = io({query: 'token=' + socketToken, secure: true, reconneting: true});
 
-        console.log(Date.now());
-
         socket.on('connect', function(){
-            console.log('succes');
-            // socket connected
-            // similar behavior as an HTTP redirect
-            //window.location.replace("/berichten/");
+            //console.log('succes');
         });   
 
-        socket.on('message', function(msg){
-            console.log('incoming msg: ' + msg);
+        socket.on('message', function(body){
             var count = $("#msgCount").html();
-            $("#msgCount").html() = counter++;
-            alert('new message');
-            // socket connected
-            // similar behavior as an HTTP redirect
-            //window.location.replace("/berichten/");
+            $("#msgCount").html(parseInt(count) + 1)      
+            
+            if (typeof(addNewMessage) === typeof(Function)){
+                addNewMessage(body);
+            } else {
+                alert('Nieuw bericht in inbox');
+            }
         }); 
         
+         socket.on('disconnect', function() {
+            //console.log('Got disconnect!');
+        });
+        
         socket.on('error', function(reason){
-            console.error('Unable to connect Socket.IO', reason);
+            if (reason == 'Not authorized'){
+                window.location.replace("/sessieAfgelopen/");
+            } else {
+                console.error('Unable to connect Socket.IO', reason);
+            }
         });
     }
 });

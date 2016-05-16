@@ -1,7 +1,9 @@
+var request = require('request');
+
 module.exports = {
     // Return the list below
     getMessages: function(username){
-        var filteredMessages = [{}];
+        var filteredMessages = [];
         // Retrieve only messages with username
         messages.forEach(function(element) {
             if (element.to == username)
@@ -14,10 +16,11 @@ module.exports = {
             return new Date(b.date) - new Date(a.date);
         });
     },
+    // Add new message
     addMessage: function(msg){
         messages.push(msg);
     },
-    // Get ammount of messages (will be unread eventually)
+    // Get ammount of messages
     getMessageCount: function(username){
         var count = 0;
         messages.forEach(function(element) {
@@ -25,6 +28,17 @@ module.exports = {
                 count++;
         }, this);
         return count;
+    }, sendMessage: function(data){       
+        // Send reqeust to api
+        var url = "http://localhost:3000/message"
+        request({
+            url: url,
+            method: "POST",
+            json: true,  
+            body: data
+        }, function (error, response, body){
+            console.log("incoming: ", response.body);
+        });
     }
 };
 

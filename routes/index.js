@@ -1,5 +1,6 @@
 var express = require('express');
 var auth = require('../modules/auth');
+var config = require('../modules/config');
 var router = express.Router();
 var participantInfoController = require('../controllers/participantInfoController');
 var rankingsController = require('../controllers/rankingsController');
@@ -11,16 +12,17 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(io) {
     // User is now detault loggedIn
-
+ 
     // GET data page with id, participants handles everything and renders the page
     router.get('/deelnemers/:id/gegevens', auth.requireLoggedIn, messageController.getMessageCount(), participantInfoController.getChildInformationPage);
 
     // The ranking page
-    router.get('/ranglijst/', auth.requireLoggedIn, messageController.getMessageCount(),  rankingsController.getRankingsPage);
+    router.get('/ranglijst', auth.requireLoggedIn, messageController.getMessageCount(),  rankingsController.getRankingsPage);
 
     // The message page
-    router.get('/berichten/', auth.requireLoggedIn, messageController.getMessageCount(), messageController.getMessagePage())
-        .post('/berichten/', auth.requireLoggedIn, messageController.sendMessage(io));
+    router.get('/berichten', auth.requireLoggedIn, messageController.getMessageCount(), messageController.getMessagePage());
+        
+    router.post('/berichten', auth.requireLoggedIn, messageController.sendMessage(io));    
 
     // Main page
     router.get('/', messageController.getMessageCount(), function(req, res, next) {
@@ -58,12 +60,19 @@ module.exports = function(io) {
             
             req.flash('message', 'U bent ingelogd.');
 
-            var token = jwt.sign({username: req.session.username}, "desecretmoethetzelfdezijnalsopdeinlogpostroute", { expiresIn: 60*5 });
+            var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
             req.session.socketToken = token;
             
             res.redirect('/');
             return;
         });
+    });
+
+    router.get('/sessieAfgelopen', auth.requireLoggedIn, function(req, res, next) {
+        auth.logout(req);
+        
+        req.flash('message', 'Uw sessie is verlopen, log opnieuw in.');
+        res.redirect('/inloggen');
     });
 
     router.get('/uitloggen', auth.requireLoggedIn, function(req, res, next) {

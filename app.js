@@ -11,7 +11,8 @@ var bodyParser = require('body-parser');
 var socketIo = require('socket.io');
 var clientIo = require("socket.io-client");
 
-
+var config = require('./modules/config');
+var jwt = require('jsonwebtoken');
 
 // Custom modules
 var config = require('./modules/config');
@@ -53,10 +54,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(csrf);
 
 //// For testing purposes, user is always logged in.
-// app.use(function(req, res, next) {
-//     req.session.authenticated = true;
-//     return next();
-// });
+app.use(function(req, res, next) {
+    req.session.authenticated = true;
+    req.session.username = "piet";
+    var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
+    req.session.socketToken = token;
+    return next();
+});
 
 
 app.use('/', routes);

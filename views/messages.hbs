@@ -1,21 +1,21 @@
 <div class='col-md-12'>
     <h3>Berichtenbox</h3>
     
-    <form action="/berichten" method="post" id="msgForm">
-        <input type="hidden" name="_csrf" value="{{csrf}}">                
-        <p><label for="to">Aan</label><input class="form-control" type="text" name="name" placeholder="Naam"></p>
+    <form id="msgForm">
+        <input type="hidden" name="_csrf" id="csrf" value="{{csrf}}">                
+        <p><label for="to">Aan</label><input class="form-control" id="sendToField" type="text" name="name" placeholder="Naam"></p>
     </form>
     <p><label for="msg">Bericht</label>
-    <textarea class="form-control" form="msgForm" rows="5" name="msg" placeholder="Bericht"></textarea></p>
+    <textarea class="form-control" form="msgForm" rows="5" id="msgField" name="msg" placeholder="Bericht"></textarea></p>
     
     <span class="error-block">{{errors.name}}</span><span class="error-block">{{errors.message}}</span>
     
-    <input form="msgForm" type="submit" class="btn btn-default" value="Send">
+    <button id="sendMsgBtn" class="btn btn-default">Verstuur</button>
     <hr>
 
-    <lu class="list-group">
+    <lu class="list-group" id="messageList">
     {{#each messages}}
-        <li class="list-group-item">{{ this.from }} {{ this.msg }} {{this.date}}</li>
+        <li class="list-group-item">{{ this.from }}: {{ this.msg }}</li>
     {{/each}}
     </lu>
 </div>

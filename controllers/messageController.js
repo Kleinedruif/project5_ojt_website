@@ -2,35 +2,6 @@ var mainController = require('./mainController');
 var messageRepo = require('../repository/messages');
 var request = require('request');
 
-/*
-var redis = require("redis"),
-    client = redis.createClient();
-*/
-//https://github.com/NodeRedis/node_redis
-//http://stackoverflow.com/questions/6186305/using-redis-giving-error
-// Kan ook met redit maar dan moet er ook een redis server draaien
-       /*
-       
-        // Promote this socket as master
-        socket.on("I'm the master", function() {
-
-            // Save the socket id to Redis so that all processes can access it.
-            client.set("mastersocket", socket.id, function(err) {
-            if (err) throw err;
-                console.log("Master socket is now" + socket.id);
-            });
-        });
-
-        socket.on("message to master", function(msg) {
-
-            // Fetch the socket id from Redis
-            client.get("mastersocket", function(err, socketId) {
-            if (err) throw err;
-                io.sockets.socket(socketId).emit(msg);
-            });
-        });
-*/
-
 // Stores all the connections and tokens
 var connectionList = {};
 
@@ -60,20 +31,19 @@ exports.getMessageCount = function(){
     };
 };
 
-exports.registerSocket = function(req){
-    tokenList[req.session.socketToken] = { username: req.session.username };
-}
+// // Register new socket afther being created
+// exports.registerSocket = function(req){
+//     tokenList[req.session.socketToken] = { username: req.session.username };
+// }
 
 // When news messages comes in, this will handle it
 exports.recieveMessage = function(io, data){
     var nameTo = data.to;
-    console.log('message recieved?');
-    console.log(connectionList);
     if (connectionList[data.to] != undefined){
         console.log(connectionList[nameTo]);
         var socketId = connectionList[nameTo].socketId;
         if (io.sockets.connected[socketId]) {
-            io.sockets.connected[socketId].emit('message', data.msg);
+            io.sockets.connected[socketId].emit('message', data);
         }
     }
 }
@@ -81,11 +51,8 @@ exports.recieveMessage = function(io, data){
 // Send message to the server
 exports.sendMessage = function(io){
     return function(req, res, next) {
-        
-        console.log('to: ' + req.body.name);
-        console.log('msg: ' + req.body.msg);
-        
         var errors = {};
+        // Check if form filled corretly
         if (!req.body.hasOwnProperty('name') || req.body.name.trim() == '') {
             errors.name = 'Vul alstublieft een naam in.';
         }
@@ -98,20 +65,13 @@ exports.sendMessage = function(io){
             return res.redirect('/berichten');
         }
         
+        // Create request
         var data = {from: req.session.username, to: req.body.name, msg: req.body.msg, date: Date.now()}
         messageRepo.addMessage(data);
-        
-        var url = "http://localhost:3000/message"
-        request({
-            url: url,
-            method: "POST",
-            json: true,  
-            body: data
-        }, function (error, response, body){
-            console.log(response.body);
-        });
+        messageRepo.sendMessage(data);
+        return res.json({msg: 'succes', csrf: req.session.csrf});
 
-        return res.redirect("/berichten");       
+        //return res.redirect("/berichten");       
     };
 };
 
