@@ -1,4 +1,4 @@
-var config = require('./config');
+var authRepo = require('../repository/auth');
 
 module.exports = {
     // The user must be logged in to access this route.
