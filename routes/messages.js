@@ -48,7 +48,7 @@ module.exports = function(io) {
         });  
 
         socketClient.on('message', function(msg){
-            console.log('incoming msg: ' + msg);
+            console.log(msg);
             messageController.recieveMessage(io, msg);
         }); 
     });

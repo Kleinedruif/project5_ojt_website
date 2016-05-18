@@ -37,7 +37,8 @@ module.exports = {
             json: true,  
             body: data
         }, function (error, response, body){
-            console.log("incoming: ", response.body);
+            if (error) {console.log("error with sending: ", oerr, response.body);}
+            // else message send          
         });
     }
 };

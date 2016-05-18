@@ -9,9 +9,6 @@ var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 
 var socketIo = require('socket.io');
-var clientIo = require("socket.io-client");
-
-var config = require('./modules/config');
 var jwt = require('jsonwebtoken');
 
 // Custom modules

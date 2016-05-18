@@ -1,5 +1,3 @@
-var express = require('express');
-
 module.exports = {
     // Renders certain view, with csrf, loggedIn and flash message already given.
     render: function(view, req, res, variables) {

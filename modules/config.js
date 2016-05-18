@@ -2,12 +2,13 @@ var apiconfig = {};
 
 try {
     apiconfig = require('../config/api.json');
+    socketconfig = require('../config/socket.json');
 }
 catch (error) {}
 
 module.exports = {
     api_key: process.env.api_key || apiconfig.api_key || '',
     api_host: process.env.api_host || apiconfig.api_host || '',
-    socket_secret: 'desecretmoethetzelfdezijnalsopdeinlogpostroute',
-    socket_client_token:'VbMCxsAxBNtsJlr4keGpKSkp6Ov95gEqbJkxkdkKkEkpeDrpuEp5TiHf2bK0yo9wmwrK80ZzFWqIDt8UvMIAKnVhLddcaSy2TdRxhVqxF8Vrp7JWcweao9v3zUcqN73MUDofRHkVcBp4WnRJGdNkLc'
+    socket_secret: process.env.socket_secret || socketconfig.socket_secret || '', 
+    socket_client_token: process.env.socket_client_token || socketconfig.socket_client_token || ''
 };

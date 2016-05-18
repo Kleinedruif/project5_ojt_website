@@ -1,4 +1,6 @@
 var express = require('express');
+var jwt = require('jsonwebtoken');
+
 var auth = require('../modules/auth');
 var config = require('../modules/config');
 var router = express.Router();
@@ -6,9 +8,6 @@ var participantInfoController = require('../controllers/participantInfoControlle
 var rankingsController = require('../controllers/rankingsController');
 var messageController = require('../controllers/messageController');
 var mainController = require('../controllers/mainController');
-var request = require('request');
-var jwt = require('jsonwebtoken');
-
 
 module.exports = function(io) {
     // User is now detault loggedIn
@@ -68,6 +67,7 @@ module.exports = function(io) {
         });
     });
 
+    // Route to handle session ended
     router.get('/sessieAfgelopen', auth.requireLoggedIn, function(req, res, next) {
         auth.logout(req);
         
@@ -84,5 +84,3 @@ module.exports = function(io) {
 
     return router;
 }
-
-//module.exports = router;
