@@ -39,7 +39,7 @@ router.post('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
         return;
     }
     
-    auth.login(req, res, req.body.username.trim(), req.body.password.trim(), function(success) {
+    auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {
         if (!success) {
             req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
             res.redirect('/inloggen');
