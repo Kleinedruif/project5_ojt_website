@@ -66,12 +66,13 @@ exports.sendMessage = function(io){
         }
         
         // Create request
-        var data = {from: req.session.username, to: req.body.name, msg: req.body.msg, date: Date.now()}
+        var data = {from: req.session.username, to: req.body.name, msg: req.body.msg, date: Date.now()};
+        // Temp
         messageRepo.addMessage(data);
+        
+        // Send message to api via repo
         messageRepo.sendMessage(data);
-        return res.json({msg: 'succes', csrf: req.session.csrf});
-
-        //return res.redirect("/berichten");       
+        return res.json({msg: 'succes', csrf: req.session.csrf});   
     };
 };
 

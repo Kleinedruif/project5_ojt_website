@@ -65,21 +65,6 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 
-// socket.io events
-// app.io.sockets.on("connection", function(socket){
-//     console.log("A user connected, add it to list");
-//     console.log(socket.handshake.query.token);
-//     console.log(socket.id);
-//     socket.emit('succes', 'succes');
-//     socket.on('disconnect', function(){console.log('remove it from list');});
-// });
-
-// var socketClient = clientIo.connect('http://localhost:3000', {reconnect: true});
-// socketClient.connect('http://localhost:3000/socket.io/socket.io.js', {query: 'token=webserverToken'});
-// //var socket = io.connect('http://localhost:3000/socket.io/socket.io.js', {query: 'token=mooietoken'});
-// socketClient.on('connect', function(){ console.log('Connect to api')});
-// socketClient.on('event', function(data){console.log('handle messages here')});
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('De pagina is niet gevonden');
