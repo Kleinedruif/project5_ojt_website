@@ -15,7 +15,7 @@
                     
                     <div class="form-group {{#if errors.username}}error-block{{/if}}">
                         <label for="username">Gebruikersnaam</label>
-                        <input class="form-control" type="text" name="username" placeholder="Gebruikersnaam">
+                        <input class="form-control" id="username" type="text" name="username" placeholder="Gebruikersnaam">
                         
                         <span>{{{ errors.username }}}</span>
                     </div>
@@ -33,3 +33,4 @@
         </div>
     </div>
 </div>
+<script src="/javascripts/login.js"></script>     

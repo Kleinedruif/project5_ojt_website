@@ -1,4 +1,5 @@
 var config = require('./config');
+var crypto = require('crypto');
 
 module.exports = {
     // The user must be logged in to access this route.
@@ -6,7 +7,7 @@ module.exports = {
         if (req.session.authenticated) {
             return next();
         }
-        
+
         res.render('error', {message: 'U moet ingelogd zijn om deze pagina te bezoeken.'});
     },
     
