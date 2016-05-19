@@ -1,4 +1,5 @@
 var request = require('request');
+var config = require('../modules/config');
 
 module.exports = {
     // Return the list below
@@ -30,7 +31,7 @@ module.exports = {
         return count;
     }, sendMessage: function(data){       
         // Send reqeust to api
-        var url = "http://localhost:3000/message"
+        var url = "http://" + config.api_host + "/message"
         request({
             url: url,
             method: "POST",
