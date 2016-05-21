@@ -25,9 +25,13 @@ module.exports = {
         username = username.trim();
         password = password.trim();
         
-        req.session.authenticated = true;       // TODO change from testing
-        
-        callback(true);                         // TODO change from testing
+        authRepo.login(username, password, function(authInfo) {
+            var success = authInfo !== false;
+            req.session.authenticated = success;
+            req.session.auth = authInfo;                // session.user is a user if authenticated, else it's false
+            
+            callback(success);
+        });
     },
     
     // Logs the user out.
