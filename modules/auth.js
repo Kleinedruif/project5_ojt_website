@@ -28,7 +28,7 @@ module.exports = {
         authRepo.login(username, password, function(authInfo) {
             var success = authInfo !== false;
             req.session.authenticated = success;
-            req.session.auth = authInfo;                // session.user is a user if authenticated, else it's false
+            req.session.auth = authInfo;            // session.auth contains authToken and role if authenticated, else it's false
             
             callback(success);
         });
