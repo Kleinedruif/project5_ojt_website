@@ -1,6 +1,15 @@
+var api = require('../modules/api');
+
 module.exports = {
     // Return the list below
     getChildInformationList: function(){
+        
+        // api.get("/user/1", '', function(body){
+        //     console.log('user retrieved succes', body);
+        // }, function(body){
+        //     console.log('user retrieved failed', body);
+        // });
+        
         return childInformationList;
     }, 
 };

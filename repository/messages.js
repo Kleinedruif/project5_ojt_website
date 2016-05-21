@@ -1,9 +1,18 @@
 var request = require('request');
-var config = require('../modules/config');
+//var config = require('../modules/config');
+var api = require('../modules/api');
 
 module.exports = {
     // Return the list below
     getMessages: function(username){
+        
+        api.get("/messages", '', function(body){
+            console.log('message retrieved succes', body);
+        }), function(body){
+            console.log('message retrieved failed', body);
+        };
+        
+        
         var filteredMessages = [];
         // Retrieve only messages with username
         messages.forEach(function(element) {
@@ -29,18 +38,26 @@ module.exports = {
                 count++;
         }, this);
         return count;
-    }, sendMessage: function(data){       
-        // Send reqeust to api
-        var url = "http://" + config.api_host + "/message"
-        request({
-            url: url,
-            method: "POST",
-            json: true,  
-            body: data
-        }, function (error, response, body){
-            if (error) {console.log("error with sending: ", oerr, response.body);}
-            // else message send          
+    }, sendMessage: function(data){     
+        
+        var url = "/message";
+        api.post("/message", '', data, function(body){
+            console.log('message send succes', body);
+        }, function(body){
+            console.log('message send failed', body);
         });
+          
+        // // Send reqeust to api
+        // var url = config.api_host + "/message"
+        // request({
+        //     url: url,
+        //     method: "POST",
+        //     json: true,  
+        //     body: data
+        // }, function (error, response, body){
+        //     if (error) {console.log("error with sending: ", oerr, response.body);}
+        //     // else message send          
+        // });
     }
 };
 

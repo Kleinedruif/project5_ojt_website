@@ -1,10 +1,10 @@
 var apiconfig = {};
-
+var socketconfig = {};
 try {
     apiconfig = require('../config/api.json');
     socketconfig = require('../config/socket.json');
 }
-catch (error) {}
+catch (error) {console.log('failed to load configs');}
 
 module.exports = {
     api_key: process.env.api_key || apiconfig.api_key || '',
