@@ -4,26 +4,14 @@ var routes = {
 }
 
 module.exports = {
-    //test: function(res) {
-        //api.get('/team', null,
-            //function(result) {
-                //console.log(result);
-                //res.json(result);
-            //},
-            //function(error) {
-                //console.log(error);
-                //res.json(error);
-            //}
-        //)
-    //},
-    //login: function(username, password) {
-        //api.post(routes.login, null, {username: username, password: password}, 
-            //function() {
-                
-            //},
-            //function() {
-                
-            //}
-        //);
-    //}
+    login: function(username, password, callback) {
+        api.post(routes.login, null, {email: username, password}, 
+            function(response) {
+                callback(response);
+            },
+            function(error) {
+                callback(false);
+            }
+        );
+    }
 }

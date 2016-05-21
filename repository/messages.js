@@ -5,13 +5,14 @@ var api = require('../modules/api');
 module.exports = {
     // Return the list below
     getMessages: function(username){
+        var hardcodeUserId = 4;
         
-        api.get("/messages", '', function(body){
+        // Waiting for functionalities from api
+        api.get("/messages/" + hardcodeUserId, '', function(body){
             console.log('message retrieved succes', body);
-        }), function(body){
+        }, function(body){
             console.log('message retrieved failed', body);
-        };
-        
+        });    
         
         var filteredMessages = [];
         // Retrieve only messages with username
@@ -40,33 +41,12 @@ module.exports = {
         return count;
     }, sendMessage: function(data){     
         
+        // Send message to api
         var url = "/message";
-        api.post("/message", '', data, function(body){
+        api.post("/message", null, data, function(body){
             console.log('message send succes', body);
         }, function(body){
             console.log('message send failed', body);
-        });
-          
-        // // Send reqeust to api
-        // var url = config.api_host + "/message"
-        // request({
-        //     url: url,
-        //     method: "POST",
-        //     json: true,  
-        //     body: data
-        // }, function (error, response, body){
-        //     if (error) {console.log("error with sending: ", oerr, response.body);}
-        //     // else message send          
-        // });
+        });       
     }
 };
-
-var messages = [
-    {from: 'geert', to: 'piet', msg: 'hoi1', date: 1462982483357},
-    {from: 'geert', to: 'piet', msg: 'hoi2', date: 1462982483358},
-    {from: 'geert', to: 'piet', msg: 'hoi3', date: 1462982483359},
-    {from: 'geert', to: 'piet', msg: 'hoi4', date: 1462982483356},
-    {from: 'geert', to: 'piet', msg: 'hoi5', date: 1462982483354},
-    {from: 'geert', to: 'piet', msg: 'hoi6', date: 1462982483353},
-];
-    

@@ -54,9 +54,14 @@ module.exports = {
             if (!err && response.statusCode === 200) {
                 success(body);                                      // Let the success callback handle the response
             } else {
+                var message = '';
+                if (body && body.message) {
+                    message = body.message
+                }
                 error({                                             // Let the error callback handle the error
                     status_code: response.statusCode,
-                    error: err
+                    error: err,
+                    message: message
                 });
             }
         });
@@ -67,25 +72,31 @@ module.exports = {
      * 
      * api_route: URL that gets called on the API. in the form of: /team/:id/participants?gender=male
      * params: URL parameters that gets replaced in the URL: :id --> the value of "id" property in params object
-     * body: The information that gets posted.
+     * form: The information that gets posted.
      * success: Callback that gets called on a successful request. Parameter = response body
      * error: Callback that gets called when an error happened. Parameter = {status_code, error}
      */
-    post: function(api_route, params, body, success, error) {
+    post: function(api_route, params, form, success, error) {
         var url = parseUrl(api_route, params);
         
         request({
             url: url,
             method: "POST",
             json: true,
-            body: body
+            method: 'POST',
+            form: form
         }, function (err, response, body) {
             if (!err && response.statusCode === 200) {
                 success(body);                                      // Let the success callback handle the response
             } else {
+                var message = '';
+                if (body && body.message) {
+                    message = body.message
+                }
                 error({                                             // Let the error callback handle the error
                     status_code: response.statusCode,
-                    error: err
+                    error: err,
+                    message: message
                 });
             }
         });

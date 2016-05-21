@@ -2,8 +2,9 @@ var api = require('../modules/api');
 
 module.exports = {
     // Returns sorted rankings
-    getSortedRankings: function(sortOrder, sortGender, cb){             
-        api.get("/ranking?type=participants", '', function(body){
+    getSortedRankings: function(sortOrder, sortGender, callback){   
+        var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};          
+        api.get("/ranking?type=participants", null, function(body){
             console.log('ranking retrieved succes');
             
             var rankings = getRankings(body, sortGender);
@@ -24,12 +25,12 @@ module.exports = {
                 genderRankings.sort(sort_by('score', false, parseInt));
             }
 
-            return cb({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });
+            return callback({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });
             
         }, function(body){
             console.log('ranking retrieved failed', body);
             
-            return cb(null);
+            return callback(defaultReturn);
         });                   
     }   
 };
@@ -97,18 +98,3 @@ var sort_by = function(field, reverse, primer){
         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
     };
 };
-
-// Dummy ranking data
-var dummyRankings = [{name: 'Piet', gender: 'male', id: 1, score: 14, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Geert', gender: 'male', id: 2, score: 13, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Klaas', gender: 'male', id: 3, score: 9, teamName: 'Team Groen', teamId: '2'},
-    {name: 'Anne', gender: 'female', id: 4, score: 20, teamName: 'Team  Groen', teamId: '2'},
-    {name: 'Myrthe', gender: 'female', id: 5, score: 18, teamName: 'Team Blauw', teamId: '3'},
-    {name: 'Paula', gender: 'female', id: 6, score: 2, teamName: 'Team Blauw', teamId: '3'},
-    {name: 'Sam', gender: 'male', id: 7, score: 3, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Paul', gender: 'male', id: 8, score: 8, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Kees', gender: 'male', id: 9, score: 12, teamName: 'Team Groen', teamId: '2'},
-    {name: 'Maria', gender: 'female', id: 10, score: 21, teamName: 'Team  Groen', teamId: '2'},
-    {name: 'Myrthe', gender: 'female', id: 11, score: 22, teamName: 'Team Blauw', teamId: '3'},
-    {name: 'Miep', gender: 'female', id: 12, score: 1, teamName: 'Team Blauw', teamId: '3'},
-];
