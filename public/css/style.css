@@ -2,9 +2,13 @@
 body {
     font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color: #E8E8E8;
-   /* background-image: url("../images/background.jpg");
+    background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
-    background-attachment: fixed;*/
+    background-attachment: fixed;
+}
+
+#header {
+    padding-top: 110px;
 }
 
 #header #mainTitle{

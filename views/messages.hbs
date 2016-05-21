@@ -1,0 +1,24 @@
+<div class='col-md-12'>
+    <h3>Berichtenbox</h3>
+    
+    <h4>Nieuw bericht</h4>
+    <form id="msgForm">
+        <input type="hidden" name="_csrf" id="csrf" value="{{csrf}}">                
+        <p><label for="to">Aan</label><input class="form-control" id="sendToField" type="text" name="name" placeholder="Naam"></p>
+    </form>
+    <p><label for="msg">Bericht</label>
+    <textarea class="form-control" form="msgForm" rows="5" id="msgField" name="msg" placeholder="Bericht"></textarea></p>
+    
+    <span class="error-block">{{errors.name}}</span><span class="error-block">{{errors.message}}</span>
+    
+    <button id="sendMsgBtn" class="btn btn-default">Verstuur</button>
+    <hr>
+
+    <h4>Inbox</h4>
+    <lu class="list-group" id="messageList">
+    {{#each messages}}
+        <li class="list-group-item">{{ this.from }}: {{ this.msg }}</li>
+    {{/each}}
+    </lu>
+</div>
+
