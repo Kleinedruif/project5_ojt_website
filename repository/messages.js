@@ -1,5 +1,4 @@
 var request = require('request');
-//var config = require('../modules/config');
 var api = require('../modules/api');
 
 module.exports = {
@@ -42,7 +41,6 @@ module.exports = {
     }, sendMessage: function(data){     
         
         // Send message to api
-        var url = "/message";
         api.post("/message", null, data, function(body){
             console.log('message send succes', body);
         }, function(body){

@@ -39,12 +39,7 @@ module.exports = {
                 var name = information.first_name + " " + information.last_name;
                 req.session.selectedChild = {id: childId, name: name};
             }
-            // Render the page
-            // pageRoute - needed to show in menu bar what page is active
-            // logedIn is if logedin or not to show login form or logout button
-            // childlist shows the dropdown menu with all the childs, hold dummy data with name and id
-            // information is array holding all the childs information
-            // selectedChild is the child selected, holds name and id
+            // Render participantInfo page
             mainController.render('participantInfo', req, res, {pageRoute: 'participantInfo', data: information, childs: childInformationList });
         });    
     }

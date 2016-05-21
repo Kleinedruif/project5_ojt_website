@@ -3,10 +3,11 @@ var api = require('../modules/api');
 module.exports = {
     // Returns sorted rankings
     getSortedRankings: function(sortOrder, sortGender, callback){   
+        // To prevent undefined
         var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};          
         api.get("/ranking?type=participants", null, function(body){
-            console.log('ranking retrieved succes');
-            
+ 
+            // Sort all rankings           
             var rankings = getRankings(body, sortGender);
             var teamRankings = rankings.team;
             var genderRankings = rankings.gender;
