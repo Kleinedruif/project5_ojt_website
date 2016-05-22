@@ -7,19 +7,24 @@ var connectionList = {};
 module.exports = {
         
     // Add connection
-    addConnection: function(username, socketId){
-        return connectionList[username] = { socketId: socketId };
+    addConnection: function(userid, socketId){
+        return connectionList[userid] = { socketId: socketId };
     },
 
     // Remove conection
-    removeConnection: function(username){
-        return delete connectionList[username]; 
+    removeConnection: function(userid){
+        return delete connectionList[userid]; 
     },
 
     // Get message page
     getMessagePage: function(){
-        return function(req, res, next) {      
-            return mainController.render('messages', req, res, {pageRoute: 'messages', messages: messageRepo.getMessages(req.session.username) });      
+        return function(req, res, next) {    
+            messageRepo.getMessages(req.session.userid, function(messages){
+                if (messages == null){
+                    messages = [];
+                }
+                return mainController.render('messages', req, res, {pageRoute: 'messages', messages: messages });      
+            });       
         };
     },
 
@@ -27,17 +32,17 @@ module.exports = {
     getMessageCount: function(){
         return function(req, res, next) {   
             // Needs to be unread messages eventually    
-            req.msgCount = messageRepo.getMessageCount(req.session.username);
+            req.msgCount = messageRepo.getMessageCount(req.session.userid);
             return next();        
         };
     },
 
     // When news messages comes in, this will handle it
     recieveMessage: function(io, data){
-        var nameTo = data.to;
-        if (connectionList[data.to] != undefined){
+        var userid = data.receiver_guid;
+        if (connectionList[userid] != undefined){
             // Retrieve socket id
-            var socketId = connectionList[nameTo].socketId;
+            var socketId = connectionList[userid].socketId;
             if (io.sockets.connected[socketId]) {
                 // Emit the message to the user with the id
                 io.sockets.connected[socketId].emit('message', data);
@@ -57,15 +62,22 @@ module.exports = {
                 errors.message = 'Vul alstublieft een bericht in.';
             }
             
+            if (!req.body.hasOwnProperty('title') || req.body.title.trim() == '') {
+                errors.message = 'Vul alstublieft een title in.';
+            }
+            
             if (Object.keys(errors).length > 0) {
                 req.flash('errors', errors);
                 return res.redirect('/berichten');
             }
             
+            // hardcode send to self id
+            var hardcodeId = 4;
+            var data = {senderId: req.session.userid, receiverId: hardcodeId, body: req.body.msg, title: req.body.title, date: Date.now()};
             // Create request
-            var data = {from: req.session.username, to: req.body.name, msg: req.body.msg, date: Date.now()};
+            //var data = {from: req.session.username, to: req.body.name, body: req.body.msg, date: Date.now()};
             // Temp
-            messageRepo.addMessage(data);
+            //messageRepo.addMessage(data);
             
             // Send message to api via repo
             messageRepo.sendMessage(data);

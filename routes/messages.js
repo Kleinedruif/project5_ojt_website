@@ -19,9 +19,9 @@ module.exports = function(io) {
     
     // Socket connection to clients
     io.sockets.on('connection', function(socket) {
-        messageController.addConnection(socket.client.request.decoded_token.username, socket.id);      
+        messageController.addConnection(socket.client.request.decoded_token.userid, socket.id);      
         socket.on('disconnect', function(){
-            messageController.removeConnection(socket.client.request.decoded_token.username)
+            messageController.removeConnection(socket.client.request.decoded_token.userid)
         });
     });
 
@@ -47,9 +47,9 @@ module.exports = function(io) {
             console.log('some event came in');
         });  
 
-        socketClient.on('message', function(msg){
-            console.log(msg);
-            messageController.recieveMessage(io, msg);
+        socketClient.on('message', function(data){
+            console.log('new message recieved');
+            messageController.recieveMessage(io, data);
         }); 
     });
     

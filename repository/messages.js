@@ -5,16 +5,18 @@ var messages = [];
 
 module.exports = {
     // Return the list below
-    getMessages: function(username){
+    getMessages: function(username, callback){
         var hardcodeUserId = 4;
         
         // Waiting for functionalities from api
         api.get('/messages/' + hardcodeUserId, '', function(body){
-            console.log('message retrieved succes', body);
+            console.log('message retrieved succes');
+            return callback(body);
         }, function(body){
             console.log('message retrieved failed', body);
+            return callback(null);
         });    
-        
+        /*
         var filteredMessages = [];
         // Retrieve only messages with username
         messages.forEach(function(element) {
@@ -26,7 +28,7 @@ module.exports = {
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
             return new Date(b.date) - new Date(a.date);
-        });
+        });*/
     },
     // Add new message
     addMessage: function(msg){
@@ -43,7 +45,7 @@ module.exports = {
     }, sendMessage: function(data){     
         
         // Send message to api
-        api.post('/message', null, data, function(body){
+        api.post('/messages/', null, data, function(body){
             console.log('message send succes', body);
         }, function(body){
             console.log('message send failed', body);
