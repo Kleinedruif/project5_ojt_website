@@ -13,9 +13,9 @@ $(document).ready(function() {
             var count = $('#msgCount').html();
             $('#msgCount').html(parseInt(count) + 1)      
             
-            if (typeof(addNewMessage) === typeof(Function)){
-                console.log('New message added');
+            if (typeof(addNewMessage) === typeof(Function)){        
                 addNewMessage(body);
+                console.log('New message added');
             } else {
                 alert('Nieuw bericht in inbox');
             }

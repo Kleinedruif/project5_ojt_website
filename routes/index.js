@@ -56,10 +56,12 @@ module.exports = function(io) {
             }
             
             req.session.username = req.body.username.trim();
+            // HARDCODE TEMP ID
+            req.session.userid = 4;
             
             req.flash('message', 'U bent ingelogd.');
 
-            var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
+            var token = jwt.sign({username: req.session.username, userid: req.session.userid}, config.socket_secret, { expiresIn: '1 days' });
             req.session.socketToken = token;
 
             res.redirect('/');

@@ -4,7 +4,8 @@
     <h4>Nieuw bericht</h4>
     <form id="msgForm">
         <input type="hidden" name="_csrf" id="csrf" value="{{csrf}}">                
-        <p><label for="to">Aan</label><input class="form-control" id="sendToField" type="text" name="name" placeholder="Naam"></p>
+        <p><label for="to">Aan</label><input class="form-control" id="sendToField" type="text" name="name" placeholder="Naam"></p>               
+        <p><label for="title">Titel</label><input class="form-control" id="sendTitleField" type="text" name="title" placeholder="Titel"></p>
     </form>
     <p><label for="msg">Bericht</label>
     <textarea class="form-control" form="msgForm" rows="5" id="msgField" name="msg" placeholder="Bericht"></textarea></p>
@@ -17,7 +18,7 @@
     <h4>Inbox</h4>
     <lu class="list-group" id="messageList">
     {{#each messages}}
-        <li class="list-group-item">{{ this.from }}: {{ this.msg }}</li>
+        <li class="list-group-item">{{ this.sender_guid }}: {{ this.title }} {{ this.body }}</li>
     {{/each}}
     </lu>
 </div>
