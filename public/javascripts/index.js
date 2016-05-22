@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var socketToken = $("#socketToken").html();
+    var socketToken = $('#socketToken').html();
 
     if (socketToken != ''){
         // Host is not secure yet... connection is nog wss or secure is still on false
@@ -10,8 +10,8 @@ $(document).ready(function() {
         });   
 
         socket.on('message', function(body){
-            var count = $("#msgCount").html();
-            $("#msgCount").html(parseInt(count) + 1)      
+            var count = $('#msgCount').html();
+            $('#msgCount').html(parseInt(count) + 1)      
             
             if (typeof(addNewMessage) === typeof(Function)){
                 console.log('New message added');
@@ -27,7 +27,7 @@ $(document).ready(function() {
         
         socket.on('error', function(reason){
             if (reason == 'Not authorized'){
-                window.location.replace("/sessieAfgelopen/");
+                window.location.replace('/sessieAfgelopen/');
             } else {
                 console.error('Unable to connect Socket.IO', reason);
             }

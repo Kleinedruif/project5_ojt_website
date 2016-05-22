@@ -46,7 +46,7 @@ module.exports = {
      */
     get: function(api_route, params, success, error) {
         var url = parseUrl(api_route, params);
-        
+
         request({
             url: url,
             json: true

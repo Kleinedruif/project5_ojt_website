@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var clientIo = require("socket.io-client");
+var clientIo = require('socket.io-client');
 var socketioJwt = require('socketio-jwt');
 var ursa = require('ursa');
 var fs = require('fs');

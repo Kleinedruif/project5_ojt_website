@@ -22,5 +22,5 @@ $(document).ready(function() {
 
 
 function addNewMessage(message){
-    $("#messageList").prepend("<li class='list-group-item'>" + message.from + ": " + message.msg + "</li>")
+    $('#messageList').prepend("<li class='list-group-item'>" + message.from + ": " + message.msg + "</li>")
 }
