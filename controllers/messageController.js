@@ -63,7 +63,7 @@ module.exports = {
             }
             
             if (!req.body.hasOwnProperty('title') || req.body.title.trim() == '') {
-                errors.message = 'Vul alstublieft een title in.';
+                errors.message = 'Vul alstublieft een titel in.';
             }
             
             if (Object.keys(errors).length > 0) {
@@ -75,9 +75,6 @@ module.exports = {
             var hardcodeId = 4;
             var data = {senderId: req.session.userid, receiverId: hardcodeId, body: req.body.msg, title: req.body.title, date: Date.now()};
             // Create request
-            //var data = {from: req.session.username, to: req.body.name, body: req.body.msg, date: Date.now()};
-            // Temp
-            //messageRepo.addMessage(data);
             
             // Send message to api via repo
             messageRepo.sendMessage(data);
