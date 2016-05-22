@@ -61,7 +61,7 @@ module.exports = function(io) {
 
             var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
             req.session.socketToken = token;
-            
+
             res.redirect('/');
             return;
         });

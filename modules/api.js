@@ -81,7 +81,6 @@ module.exports = {
         
         request({
             url: url,
-            method: "POST",
             json: true,
             method: 'POST',
             form: form

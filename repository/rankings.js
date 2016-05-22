@@ -5,7 +5,7 @@ module.exports = {
     getSortedRankings: function(sortOrder, sortGender, callback){   
         // To prevent undefined
         var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};          
-        api.get("/ranking?type=participants", null, function(body){
+        api.get('/ranking?type=participants', null, function(body){
  
             // Sort all rankings           
             var rankings = getRankings(body, sortGender);
@@ -13,8 +13,8 @@ module.exports = {
             var genderRankings = rankings.gender;
             var participantsRankings = rankings.participants;
 
-            // Check if sort is set to "aflopend"
-            if (sortOrder == undefined || sortOrder == "aflopend"){
+            // Check if sort is set to 'aflopend'
+            if (sortOrder == undefined || sortOrder == 'aflopend'){
                 participantsRankings.sort(sort_by('score', true, parseInt));
                 teamRankings.sort(sort_by('score', true, parseInt));
                 genderRankings.sort(sort_by('score', true, parseInt));
@@ -40,7 +40,7 @@ module.exports = {
 function getRankings(rankings, gender){
     var participantsRankings = [];
     var teamRankings = [];
-    var genderRankings = [{id: "1", name: "Jongens", score: 0}, {id: "2", name: "Meisjes", score: 0}];
+    var genderRankings = [{id: '1', name: 'Jongens', score: 0}, {id: '2', name: 'Meisjes', score: 0}];
     // Loop over all the individual participants
     rankings.forEach(function(element) {
         // Check for what gender to sort in
@@ -49,7 +49,7 @@ function getRankings(rankings, gender){
             participantsRankings.push(element);
 
             // Calcultate score male/female
-            if (element.gender == "1"){
+            if (element.gender == '1'){
                 var genderScore1 = genderRankings[0].score + element.score;
                 genderRankings[0].score = genderScore1;
             } else {

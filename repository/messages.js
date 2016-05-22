@@ -1,13 +1,15 @@
 var request = require('request');
 var api = require('../modules/api');
 
+var messages = [];
+
 module.exports = {
     // Return the list below
     getMessages: function(username){
         var hardcodeUserId = 4;
         
         // Waiting for functionalities from api
-        api.get("/messages/" + hardcodeUserId, '', function(body){
+        api.get('/messages/' + hardcodeUserId, '', function(body){
             console.log('message retrieved succes', body);
         }, function(body){
             console.log('message retrieved failed', body);
@@ -41,7 +43,7 @@ module.exports = {
     }, sendMessage: function(data){     
         
         // Send message to api
-        api.post("/message", null, data, function(body){
+        api.post('/message', null, data, function(body){
             console.log('message send succes', body);
         }, function(body){
             console.log('message send failed', body);

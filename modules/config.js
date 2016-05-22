@@ -4,7 +4,7 @@ try {
     apiconfig = require('../config/api.json');
     socketconfig = require('../config/socket.json');
 }
-catch (error) {console.log('failed to load configs');}
+catch (error) {console.log('ERROR: Failed to load config files.');}
 
 module.exports = {
     api_key: process.env.api_key || apiconfig.api_key || '',

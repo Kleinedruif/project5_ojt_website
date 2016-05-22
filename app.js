@@ -28,14 +28,14 @@ var messages = require('./routes/messages')(io);
 var helpers = require('./modules/hbs-helpers');
 
 // Set the engine
-app.engine("hbs", exphbs({
-    defaultLayout: "main",
-    extname: ".hbs",
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
     helpers: helpers,
-    partialsDir: "views/partials/",
-    layoutsDir: "views/layouts/"
+    partialsDir: 'views/partials/',
+    layoutsDir: 'views/layouts/'
 }));
-app.set("view engine", "hbs");
+app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -53,7 +53,7 @@ app.use(csrf);
 //// For testing purposes, user is always logged in.
 // app.use(function(req, res, next) {
 //     req.session.authenticated = true;
-//     req.session.username = "piet";
+//     req.session.username = 'piet';
 //     var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
 //     req.session.socketToken = token;
 //     return next();
