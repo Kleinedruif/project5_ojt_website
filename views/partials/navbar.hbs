@@ -23,8 +23,9 @@
                     
                     <!-- only show this when loggedin -->
                     {{#if loggedIn}}                                   
-                        <li class="{{#if (if_ql pageRoute "participantInfo")}}active{{/if}}"><a href="/deelnemers/0/gegevens" id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
-                        <li class="{{#if (if_ql pageRoute "ranking")}}active{{/if}}"><a href="/ranglijst" id="navData">Ranglijst <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "participantInfo")}}active{{/if}}"><a href="/deelnemers/0/gegevens">Gegevens <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "ranking")}}active{{/if}}"><a href="/ranglijst">Ranglijst <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "messages")}}active{{/if}}"><a href="/berichten">Berichten <!--<span id="msgCount" >{{msgCount}}</span>--><span class="sr-only">(current)</span></a></li>
                     {{/if}}
                 
                 </ul>

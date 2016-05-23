@@ -1,4 +1,4 @@
-var config = require('./config');
+var authRepo = require('../repository/auth');
 
 module.exports = {
     // The user must be logged in to access this route.
@@ -6,7 +6,7 @@ module.exports = {
         if (req.session.authenticated) {
             return next();
         }
-        
+
         res.render('error', {message: 'U moet ingelogd zijn om deze pagina te bezoeken.'});
     },
     
@@ -25,9 +25,13 @@ module.exports = {
         username = username.trim();
         password = password.trim();
         
-        req.session.authenticated = true;       // TODO change from testing
-        
-        callback(true);                         // TODO change from testing
+        authRepo.login(username, password, function(authInfo) {
+            var success = authInfo !== false;
+            req.session.authenticated = success;
+            req.session.auth = authInfo;            // session.auth contains authToken and role if authenticated, else it's false
+            
+            callback(success);
+        });
     },
     
     // Logs the user out.

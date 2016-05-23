@@ -31,7 +31,6 @@
                 {{/if}}
             </select>
         </div>
-        <button id='sortButton' class='btn-info btn-sm floatLeft'>Verversen</button>
     </div>
     <br><br>
     <hr>
@@ -54,8 +53,8 @@
             <tbody>
                 {{#each participantsRanking}}
                     <tr>
-                        <td class="tableRow">{{this.name}}</td>
-                        <td class="tableRow">{{this.teamName}}</td>
+                        <td class="tableRow">{{this.first_name}} {{this.last_name}}</td>
+                        <td class="tableRow">{{this.team_guid}}</td>
                         <td class="tableRow">{{this.score}}</td>
                     </tr>
                 {{/each}}

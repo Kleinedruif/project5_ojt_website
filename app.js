@@ -8,7 +8,8 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var socketIo = require('socket.io');
+var jwt = require('jsonwebtoken');
 
 // Custom modules
 var config = require('./modules/config');
@@ -16,22 +17,29 @@ var csrf = require('./modules/csrf');
 
 var app = express();
 
+// Socket.io
+var io = socketIo();
+app.io = io;
+
+var routes = require('./routes/index')(io);
+var messages = require('./routes/messages')(io);
+
 // This modules holds the helper functions for hbs
 var helpers = require('./modules/hbs-helpers');
 
 // Set the engine
-app.engine("hbs", exphbs({
-    defaultLayout: "main",
-    extname: ".hbs",
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
     helpers: helpers,
-    partialsDir: "views/partials/",
-    layoutsDir: "views/layouts/"
+    partialsDir: 'views/partials/',
+    layoutsDir: 'views/layouts/'
 }));
-app.set("view engine", "hbs");
+app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('rvVMGxB3axNvTJ9wA3LKKA4X'));
@@ -39,15 +47,18 @@ app.use(session({secret: 'rvVMGxB3axNvTJ9wA3LKKA4X', resave: false, saveUninitia
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Validate CSRF token
 app.use(csrf);
 
 //// For testing purposes, user is always logged in.
-//app.use(function(req, res, next) {
-    //req.session.authenticated = true;
-    //return next();
-//})
+// app.use(function(req, res, next) {
+//     req.session.authenticated = true;
+//     req.session.username = 'piet';
+//     var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
+//     req.session.socketToken = token;
+//     return next();
+// });
+
 
 app.use('/', routes);
 

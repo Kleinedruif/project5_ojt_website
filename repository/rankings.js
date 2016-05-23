@@ -1,25 +1,38 @@
+var api = require('../modules/api');
+
 module.exports = {
     // Returns sorted rankings
-    getSortedRankings: function(sortOrder, sortGender){
-        var rankings = getRankings(dummyRankings, sortGender);
-        var teamRankings = rankings.team;
-        var genderRankings = rankings.gender;
-        var participantsRankings = rankings.participants;
+    getSortedRankings: function(sortOrder, sortGender, callback){   
+        // To prevent undefined
+        var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};          
+        api.get('/ranking?type=participants', null, function(body){
+ 
+            // Sort all rankings           
+            var rankings = getRankings(body, sortGender);
+            var teamRankings = rankings.team;
+            var genderRankings = rankings.gender;
+            var participantsRankings = rankings.participants;
 
-        // Check if sort is set to "aflopend"
-        if (sortOrder == undefined || sortOrder == "aflopend"){
-            participantsRankings.sort(sort_by('score', true, parseInt));
-            teamRankings.sort(sort_by('score', true, parseInt));
-            genderRankings.sort(sort_by('score', true, parseInt));
-        }
-        // In al other cases sort ascending
-        else {
-            participantsRankings.sort(sort_by('score', false, parseInt));
-            teamRankings.sort(sort_by('score', false, parseInt));
-            genderRankings.sort(sort_by('score', false, parseInt));
-        }
+            // Check if sort is set to 'aflopend'
+            if (sortOrder == undefined || sortOrder == 'aflopend'){
+                participantsRankings.sort(sort_by('score', true, parseInt));
+                teamRankings.sort(sort_by('score', true, parseInt));
+                genderRankings.sort(sort_by('score', true, parseInt));
+            }
+            // In al other cases sort ascending
+            else {
+                participantsRankings.sort(sort_by('score', false, parseInt));
+                teamRankings.sort(sort_by('score', false, parseInt));
+                genderRankings.sort(sort_by('score', false, parseInt));
+            }
 
-        return { participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings }
+            return callback({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });
+            
+        }, function(body){
+            console.log('ranking retrieved failed', body);
+            
+            return callback(defaultReturn);
+        });                   
     }   
 };
 
@@ -27,16 +40,16 @@ module.exports = {
 function getRankings(rankings, gender){
     var participantsRankings = [];
     var teamRankings = [];
-    var genderRankings = [{id: "male", name: "Jongens", score: 0}, {id: "female", name: "Meisjes", score: 0}];
+    var genderRankings = [{id: '1', name: 'Jongens', score: 0}, {id: '2', name: 'Meisjes', score: 0}];
     // Loop over all the individual participants
     rankings.forEach(function(element) {
         // Check for what gender to sort in
-        if (gender == 'beide' || (gender == 'jongens' && element.gender == 'male') || (gender == 'meisjes' && element.gender == 'female')){
+        if (gender == 'beide' || (gender == 'jongens' && element.gender == '1') || (gender == 'meisjes' && element.gender == '2')){
             // Add child to the list
             participantsRankings.push(element);
 
             // Calcultate score male/female
-            if (element.gender == "male"){
+            if (element.gender == '1'){
                 var genderScore1 = genderRankings[0].score + element.score;
                 genderRankings[0].score = genderScore1;
             } else {
@@ -45,10 +58,10 @@ function getRankings(rankings, gender){
             }
 
             // Check if team is already added
-            var team = checkIfTeamExists(teamRankings, element.teamId);
+            var team = checkIfTeamExists(teamRankings, element.team_guid);
             if (team === null){
                 // Push the new team to the list
-                teamRankings.push({name: element.teamName, score: element.score, id: element.teamId});
+                teamRankings.push({name: element.team_guid, score: element.score, id: element.team_guid});
             } else {
                 // Add extra scores
                 team.score = team.score + element.score;
@@ -86,18 +99,3 @@ var sort_by = function(field, reverse, primer){
         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
     };
 };
-
-// Dummy ranking data
-var dummyRankings = [{name: 'Piet', gender: 'male', id: 1, score: 14, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Geert', gender: 'male', id: 2, score: 13, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Klaas', gender: 'male', id: 3, score: 9, teamName: 'Team Groen', teamId: '2'},
-    {name: 'Anne', gender: 'female', id: 4, score: 20, teamName: 'Team  Groen', teamId: '2'},
-    {name: 'Myrthe', gender: 'female', id: 5, score: 18, teamName: 'Team Blauw', teamId: '3'},
-    {name: 'Paula', gender: 'female', id: 6, score: 2, teamName: 'Team Blauw', teamId: '3'},
-    {name: 'Sam', gender: 'male', id: 7, score: 3, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Paul', gender: 'male', id: 8, score: 8, teamName: 'Team Geel', teamId: '1'},
-    {name: 'Kees', gender: 'male', id: 9, score: 12, teamName: 'Team Groen', teamId: '2'},
-    {name: 'Maria', gender: 'female', id: 10, score: 21, teamName: 'Team  Groen', teamId: '2'},
-    {name: 'Myrthe', gender: 'female', id: 11, score: 22, teamName: 'Team Blauw', teamId: '3'},
-    {name: 'Miep', gender: 'female', id: 12, score: 1, teamName: 'Team Blauw', teamId: '3'},
-];

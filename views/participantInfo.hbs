@@ -1,12 +1,12 @@
 <div class='row col-md-12'>         
-    <h3>Gegevens pagina van {{data.firstName}} {{ data.lastName }}</h3> 
+    <h3>Gegevens pagina van {{data.first_name}} {{ data.last_name }}</h3> 
     <div>
         <div class='floatLeft'>Verander via wie u de gegevens wilt inzien</div>
         <div class='styled-select slate floatLeft'>  
             <select id="selectChild" onchange="javascript:location.href = '/deelnemers/' + this.value + '/gegevens';">
                 <option value="" disabled selected>Selecteer kind</option>
                 {{#each childs}}
-                    <option value="{{this.id}}">{{ this.firstName }} {{ this.lastName }}</option>
+                    <option value="{{this.guid}}">{{ this.first_name }} {{ this.last_name }}</option>
                 {{/each}}
             </select>
         </div>
@@ -23,15 +23,21 @@
         <tbody>
             <tr>
                 <td>Naam</td>
-                <td>{{ data.firstName }} {{ data.lastName }}</td>
-            </tr>
-            <tr>
-                <td>Leeftijd</td>
-                <td>{{ data.age }}</td>
+                <td>{{ data.first_name }} {{ data.last_name }}</td>
             </tr>
             <tr>
                 <td>Startnummer</td>
-                <td>{{ data.startNumber }}</td>
+                <td>{{ data.start_nr }}</td>
+            </tr>
+            <tr>
+                <td>Registratie nummer</td>
+                <td>{{ data.registration_nr }}</td>
+            </tr>
+            <!--
+                We are still missing some data in request, so i commoneted it out
+            <tr>
+                <td>Leeftijd</td>
+                <td>{{ data.age }}</td>
             </tr>
             <tr>
                 <td>Adres</td>
@@ -48,7 +54,7 @@
             <tr>
                 <td>Telefoonnummer ouders</td>
                 <td>{{ data.phoneNumber }}</td>
-            </tr>
+            </tr>-->
         </tbody>
     </table>
 
@@ -61,15 +67,15 @@
         <tbody>
             <tr>
                 <td>Classificaties</td>
-                <td>{{ data.classifications }}</td>
+                <td class='dataTableSecondRow'>{{#each data.classifications}}{{this}}&nbsp;&nbsp;{{/each}}</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td>Medicatie</td>
-                <td class='dataTableSecondRow'>{{ data.medication }}</td>
-            </tr>
+                <td class='dataTableSecondRow'>{{#each data.trais}}{{this}}&nbsp;&nbsp;{{/each}}</td>
+            </tr>-->
             <tr>
                 <td>Bijzonderheden</td>
-                <td class='dataTableSecondRow'>{{ data.extra }}</td>
+                <td class='dataTableSecondRow'>{{#each data.traits}}{{this}}&nbsp;&nbsp;{{/each}}</td>
             </tr>
         </tbody>
     </table>

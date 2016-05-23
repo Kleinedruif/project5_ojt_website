@@ -1,5 +1,9 @@
 <div class="row" id="body">
-
+    
+    {{#if loggedIn}}
+        <div id="socketToken" style="display: none;">{{socketToken}}</div>
+    {{/if}}
+    
     {{#if message}}
         <div class="row">
             <div class="col-md-12">
