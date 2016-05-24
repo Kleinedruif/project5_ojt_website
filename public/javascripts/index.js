@@ -15,7 +15,7 @@ $(document).ready(function() {
             
             if (typeof(addNewMessage) === typeof(Function)){        
                 addNewMessage(body);
-                console.log('New message added');
+                alert('Nieuw bericht in inbox');
             } else {
                 alert('Nieuw bericht in inbox');
             }

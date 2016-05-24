@@ -29,12 +29,14 @@ module.exports = function(io) {
     var key = ursa.createPublicKey(fs.readFileSync('./public_key.pem'));
     // Encrypt token
     var webToken = key.encrypt(config.socket_client_token, 'utf8', 'base64');
-
+    //http://tour-api.herokuapp.com/socket.io/socket.io.js
     // Create socket client for the server to connect to the api
-    var socketClient = clientIo.connect('http://localhost:3000/', {query: 'token=' + webToken, reconnect: true, secure: true});
+    var socketClient = clientIo.connect(config.api_host, {query: 'token=' + webToken, reconnect: true, secure: true});
 
     // Socket evens
-    socketClient.on('connect', function(){ console.log('Connect to api')
+    socketClient.on('connect', function(){ 
+        console.log('Connect to api');
+        
         socketClient.on('reconnect_attempt', function() {
             console.log('connect attempted');
         });
@@ -42,13 +44,9 @@ module.exports = function(io) {
         socketClient.on('disconnect', function(){
             console.log('Disconnected from api');
         });  
-        
-        socketClient.on('event', function(){
-            console.log('some event came in');
-        });  
 
         socketClient.on('message', function(data){
-            console.log('new message recieved');
+            console.log('new message recieved', data);
             messageController.recieveMessage(io, data);
         }); 
     });
