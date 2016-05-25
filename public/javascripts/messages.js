@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $(".messageBox").scrollTop($(document).height());
+
    $('#sendMsgBtn').on('click', function(){
         var sendTo = $('#sendToField').val();
         var msg = $('#msgField').val();
@@ -23,5 +25,5 @@ $(document).ready(function() {
 });
 
 function addNewMessage(message){
-    $('#messageList').prepend("<li class='list-group-item'>" + message.sender_guid + ": " + message.title + " " + message.body + "</li>")
+    $('#messageList').prepend("<li class='list-group-item'>" + message.body + "</li>")
 }

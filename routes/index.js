@@ -25,7 +25,11 @@ module.exports = function(io) {
 
     // Main page
     router.get('/', messageController.getMessageCount(), function(req, res, next) {
-        mainController.render('index', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
+        if (req.session.authenticated) {
+            mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
+        } else {
+            mainController.render('index', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
+        }    
     });
 
     router.get('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
@@ -48,7 +52,7 @@ module.exports = function(io) {
             return;
         }
         
-        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {
+        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {              
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
                 res.redirect('/inloggen');
