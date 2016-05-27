@@ -253,6 +253,20 @@ body {
 
 .messageBox {
     padding-top: 10px;
+    max-height: 580px;
+    overflow-y: auto;
+}
+
+.contactPanelActive {
+    background-color: lightsalmon;
+}
+
+.contactPanelNotActive {
+    background-color: lightgreen;
+}
+
+.contactList {
+        margin-right: 20px; 
     max-height: 500px;
     overflow-y: auto;
 }

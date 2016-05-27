@@ -13,18 +13,22 @@ module.exports = function(io) {
     // User is now detault loggedIn
  
     // GET data page with id, participants handles everything and renders the page
-    router.get('/deelnemers/:id/gegevens', auth.requireLoggedIn, messageController.getMessageCount(), participantInfoController.getChildInformationPage);
+    router.get('/deelnemers/:id/gegevens', auth.requireLoggedIn, participantInfoController.getChildInformationPage);
 
     // The ranking page
-    router.get('/ranglijst', auth.requireLoggedIn, messageController.getMessageCount(),  rankingsController.getRankingsPage);
+    router.get('/ranglijst', auth.requireLoggedIn, rankingsController.getRankingsPage);
 
     // The message page
-    router.get('/berichten', auth.requireLoggedIn, messageController.getMessageCount(), messageController.getMessagePage());
+    router.get('/berichten', auth.requireLoggedIn, messageController.getMessagePage());
+    router.get('/berichten/:id', auth.requireLoggedIn, messageController.getMessagePage());
         
-    router.post('/berichten', auth.requireLoggedIn, messageController.sendMessage(io));    
+    router.post('/berichten', auth.requireLoggedIn, messageController.sendMessage(io));  
+    
+    router.get('/contacten/', auth.requireLoggedIn, messageController.getContactList());  
+    router.get('/contacten/:id', auth.requireLoggedIn, messageController.newConverstation());  
 
     // Main page
-    router.get('/', messageController.getMessageCount(), function(req, res, next) {
+    router.get('/', function(req, res, next) {
         if (req.session.authenticated) {
             mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
         } else {
@@ -52,16 +56,18 @@ module.exports = function(io) {
             return;
         }
         
-        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {              
+        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {          
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
                 res.redirect('/inloggen');
                 return;
-            }
+            } else if (req.session.auth.role == 'ouder'){
+                req.flash('message', 'Deze website kan alleen gebruikt worden door ouders.');
+                res.redirect('/inloggen');
+                return;
+            }  
             
             req.session.username = req.body.username.trim();
-            // HARDCODE TEMP ID
-            req.session.userid = 4;
             
             req.flash('message', 'U bent ingelogd.');
 

@@ -1,4 +1,4 @@
 {
     "api_key": "nokey",
-    "api_host": "https://tour-api.herokuapp.com"
+    "api_host": "http://localhost:3000"
 }

@@ -10,9 +10,9 @@ $(document).ready(function() {
         });   
 
         socket.on('message', function(body){
-            var count = $('#msgCount').html();
-            $('#msgCount').html(parseInt(count) + 1)      
-            
+           // var count = $('#msgCount').html();
+            //$('#msgCount').html(parseInt(count) + 1)      
+            console.log('new message');
             if (typeof(addNewMessage) === typeof(Function)){        
                 addNewMessage(body);
                 alert('Nieuw bericht in inbox');

@@ -1,40 +1,38 @@
 <div class='col-md-12'>
     <h3>Berichtenbox</h3>
 </div>
-<div class='col-md-4'>    
+<div class='col-md-4' id="leftSideMessage">    
     
-    <select class="selectpicker" data-live-search="true" data-show-subtext="true">
-        <option data-subtext="Teambegeleider">Vrijwilliger1</option>
-        <option data-subtext="Orgainsator">Ome Joop</option>
-        <option>Geert</option>
-    </select>
-    <button id="startChat" class="btn btn-default">Start chat</button>
-    nog js achterhangen met startchat, opvragen naar wie de gebruiker kan sturen en huidige gesprekken opahelen
+    <div class='row'>
+        <select class="selectpicker" id="newContactList" data-live-search="true" data-show-subtext="true">
+        </select>
+        <button id="startChat" class="btn btn-default">Nieuw bericht</button>
+    </div>
     <br>
-    berichten versturen is momenteel kapot
-    <br>
-    consoller en alles nog aanpassen geen titel meer en naar wie het nu gaat uit url halen?
+    <div class='row contactList'>
+        {{#each conversations}}
+            <div class="panel contactPanel {{#if (if_ql this.id ../chatid )}} contactPanelActive {{else}} contactPanelNotActive {{/if}}" ref="{{ this.id }}">
+                <div class="panel-body contactBody">{{ this.name }} <br> {{ this.role }}</div>
+            </div>    
+        {{/each}}
+    </div>
 </div>
 <div class='col-md-8 messageBox'>   
-    <div class="row messages">
-        <!--<lu class="list-group" id="messageList">-->
+    <div class="row messages" id="messageList">
             {{#each messages}}
                 <div class="panel col-md-12 messagePanel">
-                    <div class="col-md-12 row panel-body message {{#if (if_ql this.sender_guid "4" )}} ownMessage {{else}} recievedMessage {{/if}}">{{ this.body }}</div>
+                    <div class="col-md-12 row panel-body message {{#if (if_ql this.sender_guid ../ownid )}} ownMessage {{else}} recievedMessage {{/if}}">{{ this.body }}</div>
                 </div>
             {{/each}}
-        <!--</lu>-->
     </div>
     <div class="row">
         <span class="error-block">{{errors.name}}</span><span class="error-block">{{errors.message}}</span>
         <form id="msgForm">
             <input type="hidden" name="_csrf" id="csrf" value="{{csrf}}">                
-        <!-- <p><label for="to">Aan</label><input class="form-control" id="sendToField" type="text" name="name" placeholder="Naam"></p>               
-            <p><label for="title">Titel</label><input class="form-control" id="sendTitleField" type="text" name="title" placeholder="Titel"></p>-->
         </form>
         <textarea class="form-control floatLeft" form="msgForm" rows="5" id="msgField" name="msg" placeholder="Bericht"></textarea>
         
-        <button id="sendMsgBtn" class="btn btn-success floatRight">Verstuur</button>
+        <button id="sendMsgBtn" class="btn btn-default floatRight">Verstuur</button>
     </div>
 </div>
 

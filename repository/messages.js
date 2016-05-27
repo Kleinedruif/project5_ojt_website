@@ -5,50 +5,56 @@ var messages = [];
 
 module.exports = {
     // Return the list below
-    getMessages: function(username, callback){
-        var hardcodeUserId = 4;
-        
-        // Waiting for functionalities from api
-        api.get('/messages/' + hardcodeUserId, '', function(body){
+    getMessages: function(userid, callback){     
+        api.get('/messages/' + userid, null, function(body){
             console.log('message retrieved succes');
-            return callback(body);
+            
+            var conversations = {};
+
+            // Filter the conversations
+            body.forEach(function(element) {
+                if (conversations[element.sender_guid] != undefined && element.sender_guid != userid){
+                     conversations[element.sender_guid].messages.push(element);
+                } else if (conversations[element.receiver_guid] != undefined && element.receiver_guid != userid){
+                     conversations[element.receiver_guid].messages.push(element);
+                } else {
+                    if (element.receiver_guid == userid){
+                        conversations[element.sender_guid] = {name: element.sendFName + " " + element.sendLName, id: element.sender_guid, role: element.sendRole, messages: [element]};
+                    } else {
+                        conversations[element.receiver_guid] = {name: element.recFName + " " + element.recLName, id: element.receiver_guid, role: element.recRole, messages: [element]};
+                    }               
+                }
+             
+            }, this);
+            
+            return callback(conversations);
         }, function(body){
             console.log('message retrieved failed', body);
             return callback(null);
         });    
-        /*
-        var filteredMessages = [];
-        // Retrieve only messages with username
-        messages.forEach(function(element) {
-            if (element.to == username)
-                filteredMessages.push(element);
-        }, this);
-        
-        return filteredMessages.sort(function(a,b){
-            // Turn your strings into dates, and then subtract them
-            // to get a value that is either negative, positive, or zero.
-            return new Date(b.date) - new Date(a.date);
-        });*/
     },
-    // Add new message
-    addMessage: function(msg){
-        messages.push(msg);
+    getContacts: function(role, callback){                    
+        api.get('/messages/' + role + '/contacts', null, function(body){
+            console.log('contactlist retrieved succes');
+            callback(body);
+        }, function(body){
+            console.log('contactlist retrieved failed', body);
+            callback(null);
+        });    
     },
-    // Get ammount of messages
-    getMessageCount: function(username){
-        var count = 0;
-        messages.forEach(function(element) {
-            if (element.to == username)
-                count++;
-        }, this);
-        return count;
-    }, sendMessage: function(data){     
-        
+    sendMessage: function(data){       
         // Send message to api
         api.post('/messages/', null, data, function(body){
             console.log('message send succes', body);
         }, function(body){
             console.log('message send failed', body);
         });       
+    }, 
+    intializeChat: function(userId, contactId){
+        api.post('/messages/' + userid, null, contactId, function(body){
+            console.log('chat intialize succes', body);
+        }, function(body){
+            console.log('chat intialize failed', body);
+        });  
     }
 };

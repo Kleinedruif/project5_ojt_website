@@ -16,27 +16,70 @@ module.exports = {
         return delete connectionList[userid]; 
     },
 
+    newConverstation: function(){
+         return function(req, res, next) {   
+            console.log('test');         
+            messageRepo.getMessages(req.session.userid, function(conversations){
+                if (conversations == null){
+                    conversations = [];
+                }
+                
+                var chatid = req.params.id;
+                var messages = [];
+                if (conversations[chatid] != undefined){
+                    messages = conversations[chatid].messages
+                } else {
+                    conversations[chatid] = {name: req.query.contactName, id: req.query.contactId, role: req.query.role, messages: []};
+                    //messageRepo.intializeChat(req.session.userid, req.query.contactId)
+                }               
+                    
+                req.session.chatId = chatid;  
+                return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
+            });        
+        };
+    },
+
     // Get message page
     getMessagePage: function(){
         return function(req, res, next) {    
-            messageRepo.getMessages(req.session.userid, function(messages){
-                if (messages == null){
-                    messages = [];
+            messageRepo.getMessages(req.session.userid, function(conversations){
+                if (conversations == null){
+                    conversations = [];
                 }
-                return mainController.render('messages', req, res, {pageRoute: 'messages', messages: messages });      
+                
+                var chatid;
+
+                if (req.params.id != undefined){
+                    chatid = req.params.id;
+                } else {
+                    for (first in conversations) break;
+                    chatid = first;
+                }
+                
+                var messages = [];
+                if (conversations[chatid] != undefined){
+                    messages = conversations[chatid].messages
+                } 
+
+                req.session.chatId = chatid;  
+                return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
             });       
         };
     },
-
-    // Get total message from users
-    getMessageCount: function(){
-        return function(req, res, next) {   
-            // Needs to be unread messages eventually    
-            req.msgCount = messageRepo.getMessageCount(req.session.userid);
-            return next();        
+    
+    getContactList: function(){
+        return function(req, res, next) {    
+            messageRepo.getContacts(req.session.auth.role_name, function(contacts){
+                if (contacts == null){
+                    contacts = [];
+                }
+                var chatid;
+       
+                res.json({list: contacts, userid: req.session.userid});
+           });       
         };
     },
-
+    
     // When news messages comes in, this will handle it
     recieveMessage: function(io, data){
         var userid = data.receiver_guid;
@@ -55,26 +98,16 @@ module.exports = {
         return function(req, res, next) {
             var errors = {};
             // Check if form filled corretly
-            if (!req.body.hasOwnProperty('name') || req.body.name.trim() == '') {
-                errors.name = 'Vul alstublieft een naam in.';
-            }
             if (!req.body.hasOwnProperty('msg') || req.body.msg.trim() == '') {
                 errors.message = 'Vul alstublieft een bericht in.';
             }
-            
-            if (!req.body.hasOwnProperty('title') || req.body.title.trim() == '') {
-                errors.message = 'Vul alstublieft een titel in.';
-            }
-            
+
             if (Object.keys(errors).length > 0) {
                 req.flash('errors', errors);
                 return res.redirect('/berichten');
             }
-            
-            // hardcode send to self id
-            var hardcodeId = 4;
-            var data = {senderId: req.session.userid, receiverId: hardcodeId, body: req.body.msg, title: req.body.title, date: Date.now()};
-            // Create request
+
+            var data = {senderId: req.session.userid, receiverId: req.session.chatId, body: req.body.msg};
             
             // Send message to api via repo
             messageRepo.sendMessage(data);
