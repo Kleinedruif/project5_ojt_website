@@ -39,6 +39,10 @@ body {
     color: white;
 }
 
+.footertext {
+    text-align: center;
+}
+
 .singleLine {
     display: inline-block;
 }
@@ -198,7 +202,6 @@ body {
 
 .highLighted {
     color: red;
-    text-
 }
 
 /* end css ranking.hbs

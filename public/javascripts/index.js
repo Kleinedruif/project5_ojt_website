@@ -29,18 +29,15 @@ function getScore(){
                 // Check if there is a thirt
                 $(object).append(response[0].score);
                 
-                var imgUrl = null;
-                if (response[0].shirt == 'yellow'){
-                    imgUrl = '../images/shirts/yellow.svg.png';
-                } else if (response[0].shirt == 'dots'){
-                    imgUrl = '../images/shirts/polkadot.svg.png';
-                } else if (response[0].shirt == 'rainbow'){
-                    imgUrl = '../images/shirts/rainbow.svg.png';
-                } else if (response[0].shirt == 'white'){
-                    imgUrl = '../images/shirts/white.svg.png';
+                var imageName = null;
+                switch(response[0].shirt){
+                    case 'yellow': imageName = 'yellow'; break;
+                    case 'dots': imageName = 'polkadot'; break;
+                    case 'rainbow': imageName = 'rainbow'; break;
+                    case 'white': imageName = 'white'; break;
                 }
                 
-                if (imgUrl) $(object).append(" <img class='shirtImg rankingsPage' src='" + imgUrl + "'>");
+                if (imageName) $(object).append(" <img class='shirtImg rankingsPage' src='../images/shirts/" + imageName + ".svg.png'>");
                 
                 $('.rankingsPage').on('click', function(){
                     console.log('test');

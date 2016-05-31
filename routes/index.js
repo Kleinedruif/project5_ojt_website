@@ -36,19 +36,15 @@ module.exports = function(io) {
         
         if (Object.keys(errors).length > 0) {
             req.flash('errors', errors);
-            res.redirect('/inloggen');
-            return;
+            return res.redirect('/inloggen');
         }
         
         auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {          
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
-                res.redirect('/inloggen');
-                return;
-            } else if (req.session.auth.role == 'ouder'){
-                req.flash('message', 'Deze website kan alleen gebruikt worden door ouders.');
-                res.redirect('/inloggen');
-                return;
+                return res.redirect('/inloggen');
+            } else if (!auth.checkRole(req)){
+                return res.redirect('/inloggen');
             }  
             
             req.session.username = req.body.username.trim();
@@ -59,8 +55,7 @@ module.exports = function(io) {
             var token = jwt.sign({username: req.session.username, userid: req.session.userid}, config.socket_secret, { expiresIn: '1 days' });
             req.session.socketToken = token;
 
-            res.redirect('/');
-            return;
+            return res.redirect('/');
         });
     });
 

@@ -35,6 +35,14 @@ module.exports = {
         });
     },
     
+    checkRole: function(req){
+        if (req.session.auth.role_name !== 'ouder'){
+            req.flash('message', 'Deze website kan alleen gebruikt worden door ouders.');
+            return false;
+        }  
+        return true;
+    },
+    
     // Logs the user out.
     logout: function(req) {
         req.session.authenticated = false;
