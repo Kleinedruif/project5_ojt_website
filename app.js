@@ -21,8 +21,14 @@ var app = express();
 var io = socketIo();
 app.io = io;
 
+// Setup sockets
+var socket = require('./modules/socket')(io);
+
 var routes = require('./routes/index')(io);
 var messages = require('./routes/messages')(io);
+var contacts = require('./routes/contacts')();
+var rankings = require('./routes/rankings')();
+var participants = require('./routes/participants')();
 
 // This modules holds the helper functions for hbs
 var helpers = require('./modules/hbs-helpers');
@@ -39,7 +45,7 @@ app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-//app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('rvVMGxB3axNvTJ9wA3LKKA4X'));
@@ -62,7 +68,10 @@ app.use(function(req, res, next) {
     return next();
 });
 
-
+app.use('/berichten', messages);
+app.use('/contacten', contacts);
+app.use('/ranglijst', rankings);
+app.use('/deelnemers', participants);
 app.use('/', routes);
 
 // catch 404 and forward to error handler

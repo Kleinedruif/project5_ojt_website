@@ -192,6 +192,15 @@ body {
     white-space: nowrap;
 }
 
+.shirtImg {
+    width: 30px;
+}
+
+.highLighted {
+    color: red;
+    text-
+}
+
 /* end css ranking.hbs
 
 /* end css data.hbs */
@@ -251,14 +260,14 @@ body {
     width: 19%;
 }
 
-.messageBox {
+#messageList {
     padding-top: 10px;
     max-height: 580px;
     overflow-y: auto;
 }
 
 .contactPanelActive {
-    background-color: lightsalmon;
+    background-color: lightblue;
 }
 
 .contactPanelNotActive {

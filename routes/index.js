@@ -1,36 +1,20 @@
 var express = require('express');
+var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 var auth = require('../modules/auth');
 var config = require('../modules/config');
-var router = express.Router();
-var participantInfoController = require('../controllers/participantInfoController');
-var rankingsController = require('../controllers/rankingsController');
-var messageController = require('../controllers/messageController');
+
 var mainController = require('../controllers/mainController');
+var participantRepo = require('../repository/participantsInfo');
 
 module.exports = function(io) {
-    // User is now detault loggedIn
- 
-    // GET data page with id, participants handles everything and renders the page
-    router.get('/deelnemers/:id/gegevens', auth.requireLoggedIn, participantInfoController.getChildInformationPage);
-
-    // The ranking page
-    router.get('/ranglijst', auth.requireLoggedIn, rankingsController.getRankingsPage);
-
-    // The message page
-    router.get('/berichten', auth.requireLoggedIn, messageController.getMessagePage());
-    router.get('/berichten/:id', auth.requireLoggedIn, messageController.getMessagePage());
-        
-    router.post('/berichten', auth.requireLoggedIn, messageController.sendMessage(io));  
-    
-    router.get('/contacten/', auth.requireLoggedIn, messageController.getContactList());  
-    router.get('/contacten/:id', auth.requireLoggedIn, messageController.newConverstation());  
-
     // Main page
     router.get('/', function(req, res, next) {
         if (req.session.authenticated) {
-            mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
+            participantRepo.getChildInformationList(req.session.userid, function(childInformationList){
+                mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, childs: childInformationList, message: req.flash('message') });
+            });
         } else {
             mainController.render('index', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
         }    
@@ -71,6 +55,7 @@ module.exports = function(io) {
             
             req.flash('message', 'U bent ingelogd.');
 
+            // Create new token for socket connection and store it
             var token = jwt.sign({username: req.session.username, userid: req.session.userid}, config.socket_secret, { expiresIn: '1 days' });
             req.session.socketToken = token;
 

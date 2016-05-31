@@ -3,7 +3,6 @@ var mainController = require('./mainController');
 var api = require('../modules/api');
 
 module.exports = {
-    // Retrieve participants page
     getChildInformationPage: function(req, res, next){
         var childId = parseInt(req.params.id);
 
@@ -11,20 +10,10 @@ module.exports = {
         if (childId == 0 && req.session.selectedChild !== undefined && req.session.selectedChild.id != 0){
             childId = req.session.selectedChild.id;
         }
-       
-        // API call not returning enough data       
-        // api.get('/participant/' + 3 + '/team', null, function(body){
-        //     console.log('team retrieved succes');
-        //     console.log(body);
-        // }, function(body){
-        //     console.log('team retrieved failed', body);
-        //     callback(null);
-        // });
 
-        participantRepo.getChildInformationList(req.session.userid, function(childInformationList){
-            // Default firstchild of the list           
+        participantRepo.getChildInformationList(req.session.userid, function(childInformationList){       
             var information;
-                           console.log('aw;undauwndiuawnd');
+
             if (childInformationList != null){
                 if (childId == 0){
                     // On id 0, take first child

@@ -4,7 +4,6 @@ module.exports = {
     // Return the list below
     getChildInformationList: function(userid, callback){
         api.get('/user/' + userid + '/children', null, function(body){
-            console.log('user retrieved succes');
             callback(body);
         }, function(body){
             console.log('user retrieved failed', body);

@@ -6,12 +6,12 @@ var connectionList = {};
 
 module.exports = {
         
-    // Add connection
+    // Add a socket connection
     addConnection: function(userid, socketId){
         return connectionList[userid] = { socketId: socketId };
     },
 
-    // Remove conection
+    // Remove a socket conection
     removeConnection: function(userid){
         return delete connectionList[userid]; 
     },
@@ -30,7 +30,6 @@ module.exports = {
                     messages = conversations[chatid].messages
                 } else {
                     conversations[chatid] = {name: req.query.contactName, id: req.query.contactId, role: req.query.role, messages: []};
-                    //messageRepo.intializeChat(req.session.userid, req.query.contactId)
                 }               
                     
                 req.session.chatId = chatid;  

@@ -4,11 +4,8 @@ var api = require('../modules/api');
 var messages = [];
 
 module.exports = {
-    // Return the list below
     getMessages: function(userid, callback){     
-        api.get('/messages/' + userid, null, function(body){
-            console.log('message retrieved succes');
-            
+        api.get('/messages/' + userid, null, function(body){          
             var conversations = {};
 
             // Filter the conversations
@@ -35,7 +32,6 @@ module.exports = {
     },
     getContacts: function(role, callback){                    
         api.get('/messages/' + role + '/contacts', null, function(body){
-            console.log('contactlist retrieved succes');
             callback(body);
         }, function(body){
             console.log('contactlist retrieved failed', body);
@@ -43,18 +39,10 @@ module.exports = {
         });    
     },
     sendMessage: function(data){       
-        // Send message to api
+        // Callback is via socket connection
         api.post('/messages/', null, data, function(body){
-            console.log('message send succes', body);
         }, function(body){
             console.log('message send failed', body);
         });       
-    }, 
-    intializeChat: function(userId, contactId){
-        api.post('/messages/' + userid, null, contactId, function(body){
-            console.log('chat intialize succes', body);
-        }, function(body){
-            console.log('chat intialize failed', body);
-        });  
     }
 };
