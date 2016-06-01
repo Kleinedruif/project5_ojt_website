@@ -1,14 +1,13 @@
 var api = require('../modules/api');
 
 module.exports = {
-    // Returns sorted rankings
-    getSortedRankings: function(sortOrder, sortGender, callback){   
-        // To prevent undefined
-        var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};          
+    getSortedRankings: function(sortOrder, sortGender, deelnemer, callback){   
+        var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};
+                  
         api.get('/ranking?type=participants', null, function(body){
  
             // Sort all rankings           
-            var rankings = getRankings(body, sortGender);
+            var rankings = filterRankings(body, sortGender, deelnemer);
             var teamRankings = rankings.team;
             var genderRankings = rankings.gender;
             var participantsRankings = rankings.participants;
@@ -19,33 +18,39 @@ module.exports = {
                 teamRankings.sort(sort_by('score', true, parseInt));
                 genderRankings.sort(sort_by('score', true, parseInt));
             }
-            // In al other cases sort ascending
             else {
                 participantsRankings.sort(sort_by('score', false, parseInt));
                 teamRankings.sort(sort_by('score', false, parseInt));
                 genderRankings.sort(sort_by('score', false, parseInt));
             }
 
-            return callback({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });
-            
+            return callback({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });         
         }, function(body){
-            console.log('ranking retrieved failed', body);
-            
+            console.log('ranking retrieved failed', body);           
             return callback(defaultReturn);
         });                   
+    },
+    getRankings: function(id, callback){
+        api.get('/ranking/' + id, null, function(body){
+            callback(body);
+        }, function(body){
+            console.log('ranking retrieved failed', body);           
+            return callback(null);
+        });   
     }   
 };
 
-// Retrieve team rankings
-function getRankings(rankings, gender){
+function filterRankings(rankings, gender, deelnemer){
     var participantsRankings = [];
     var teamRankings = [];
     var genderRankings = [{id: '1', name: 'Jongens', score: 0}, {id: '2', name: 'Meisjes', score: 0}];
-    // Loop over all the individual participants
+
     rankings.forEach(function(element) {
         // Check for what gender to sort in
         if (gender == 'beide' || (gender == 'jongens' && element.gender == '1') || (gender == 'meisjes' && element.gender == '2')){
-            // Add child to the list
+            var highLightedDeelnemer = element.guid == deelnemer ? true : false;
+            element.highLightedDeelnemer = highLightedDeelnemer;
+            if (element.score == null || element.score == 0) element.score = 0;
             participantsRankings.push(element);
 
             // Calcultate score male/female
@@ -60,24 +65,18 @@ function getRankings(rankings, gender){
             // Check if team is already added
             var team = checkIfTeamExists(teamRankings, element.team_guid);
             if (team === null){
-                // Push the new team to the list
-                teamRankings.push({name: element.team_guid, score: element.score, id: element.team_guid});
+                teamRankings.push({name: element.name, score: element.score, id: element.team_guid, highLightedDeelnemer: highLightedDeelnemer});
             } else {
-                // Add extra scores
                 team.score = team.score + element.score;
             }
         }
     }, this);
 
-    // Return both scores
     return {team: teamRankings, gender: genderRankings, participants: participantsRankings};
 }
 
-// Check if team already exists in the list with the id
 function checkIfTeamExists(rankings, id){
-    // Loop over all the items
     for (var i = 0; i < rankings.length; i++) {
-        // If id matches, return that team
         if (rankings[i].id == id) {
             return rankings[i];
         }

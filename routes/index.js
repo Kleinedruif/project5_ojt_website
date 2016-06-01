@@ -1,31 +1,23 @@
 var express = require('express');
+var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 var auth = require('../modules/auth');
 var config = require('../modules/config');
-var router = express.Router();
-var participantInfoController = require('../controllers/participantInfoController');
-var rankingsController = require('../controllers/rankingsController');
-var messageController = require('../controllers/messageController');
+
 var mainController = require('../controllers/mainController');
+var participantRepo = require('../repository/participantsInfo');
 
 module.exports = function(io) {
-    // User is now detault loggedIn
- 
-    // GET data page with id, participants handles everything and renders the page
-    router.get('/deelnemers/:id/gegevens', auth.requireLoggedIn, messageController.getMessageCount(), participantInfoController.getChildInformationPage);
-
-    // The ranking page
-    router.get('/ranglijst', auth.requireLoggedIn, messageController.getMessageCount(),  rankingsController.getRankingsPage);
-
-    // The message page
-    router.get('/berichten', auth.requireLoggedIn, messageController.getMessageCount(), messageController.getMessagePage());
-        
-    router.post('/berichten', auth.requireLoggedIn, messageController.sendMessage(io));    
-
     // Main page
-    router.get('/', messageController.getMessageCount(), function(req, res, next) {
-        mainController.render('index', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
+    router.get('/', function(req, res, next) {
+        if (req.session.authenticated) {
+            participantRepo.getChildInformationList(req.session.userid, function(childInformationList){
+                mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, childs: childInformationList, message: req.flash('message') });
+            });
+        } else {
+            mainController.render('index', req, res, { pageRoute: 'index', mainActive: true, message: req.flash('message') });
+        }    
     });
 
     router.get('/inloggen', auth.requireNotLoggedIn, function(req, res, next) {
@@ -44,28 +36,26 @@ module.exports = function(io) {
         
         if (Object.keys(errors).length > 0) {
             req.flash('errors', errors);
-            res.redirect('/inloggen');
-            return;
+            return res.redirect('/inloggen');
         }
         
-        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {
+        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {          
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
-                res.redirect('/inloggen');
-                return;
-            }
+                return res.redirect('/inloggen');
+            } else if (!auth.checkRole(req)){
+                return res.redirect('/inloggen');
+            }  
             
             req.session.username = req.body.username.trim();
-            // HARDCODE TEMP ID
-            req.session.userid = 4;
             
             req.flash('message', 'U bent ingelogd.');
 
+            // Create new token for socket connection and store it
             var token = jwt.sign({username: req.session.username, userid: req.session.userid}, config.socket_secret, { expiresIn: '1 days' });
             req.session.socketToken = token;
 
-            res.redirect('/');
-            return;
+            return res.redirect('/');
         });
     });
 

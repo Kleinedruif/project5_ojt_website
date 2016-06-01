@@ -36,46 +36,60 @@
     <hr>
 </div>
 <div class='row'>
-    <div class="col-md-6">
+    <div class="col-md-7">
         <h4>Ranglijst deelnemers</h4>
         <div id="scrollContainer">
         <table id='rankingTable' class="table table-striped">
             <thead>
+                <th>#</th>
                 <th>Naam</th>
                 <th>Team</th>
                 <th>Punten</th>
+                <th>Shirt</th>
             </thead>
             <colgroup>
-                <col style="width:44%" />
-                <col style="width:44%" />
+                <col style="width:8%" />
+                <col style="width:40%" />
+                <col style="width:32%" />
                 <col style="width:12%" />
+                <col style="width:8%" />
             </colgroup>
             <tbody>
                 {{#each participantsRanking}}
-                    <tr>
+                    <tr {{#if this.highLightedDeelnemer}}class='highLighted'{{/if}}>                         
+                        <td class="tableRow">{{#if (if_ql ../sortOrder "aflopend")}}{{add @index 1}}{{else}}{{min ../participantsRanking.length @index}}{{/if}}</td>
                         <td class="tableRow">{{this.first_name}} {{this.last_name}}</td>
-                        <td class="tableRow">{{this.team_guid}}</td>
+                        <td class="tableRow">{{this.name}}</td>
                         <td class="tableRow">{{this.score}}</td>
+                        <td class="tableRow">
+                            {{#if (if_ql this.shirt 'yellow')}}<img class="shirtImg" src="../images/shirts/yellow.svg.png">
+                            {{else if (if_ql this.shirt 'dots')}}<img class="shirtImg" src="../images/shirts/polkadot.svg.png">
+                            {{else if (if_ql this.shirt 'rainbow')}}<img class="shirtImg" src="../images/shirts/rainbow.svg.png">
+                            {{else if (if_ql this.shirt 'white')}}<img class="shirtImg" src="../images/shirts/white.svg.png">{{/if}}                       
+                        </td>
                     </tr>
                 {{/each}}
             </tbody>
         </table>
         </div>
     </div>
-     <div class="col-md-6">
+     <div class="col-md-5">
         <h4>Ranglijst teams</h4>
         <table id='teamRankingTable' class="table table-striped">
             <thead>
+                <th>#</th>
                 <th>Teamnaam</th>
                 <th>Punten</th>
             </thead>
             <colgroup>
-                <col style="width:88%" />
+            <col style="width:8%" />
+                <col style="width:80%" />
                 <col style="width:12%" />
             </colgroup>
             <tbody>
                 {{#each teamRanking}}
-                    <tr>
+                    <tr {{#if this.highLightedDeelnemer}}class='highLighted'{{/if}}>
+                        <td class="tableRow">{{#if (if_ql ../sortOrder "aflopend")}}{{add @index 1}}{{else}}{{min ../participantsRanking.length @index}}{{/if}}</td>
                         <td class="tableRow">{{this.name}}</td>
                         <td class="tableRow">{{this.score}}</td>
                     </tr>

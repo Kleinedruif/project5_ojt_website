@@ -29,9 +29,18 @@ module.exports = {
             var success = authInfo !== false;
             req.session.authenticated = success;
             req.session.auth = authInfo;            // session.auth contains authToken and role if authenticated, else it's false
+            req.session.userid = authInfo.guid;
             
             callback(success);
         });
+    },
+    
+    checkRole: function(req){
+        if (req.session.auth.role_name !== 'ouder'){
+            req.flash('message', 'Deze website kan alleen gebruikt worden door ouders.');
+            return false;
+        }  
+        return true;
     },
     
     // Logs the user out.

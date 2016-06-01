@@ -39,6 +39,10 @@ body {
     color: white;
 }
 
+.footertext {
+    text-align: center;
+}
+
 .singleLine {
     display: inline-block;
 }
@@ -77,8 +81,12 @@ body {
 /* class to float left */
 .floatLeft{
     float: left;
-    margin-right: 10px;
 }
+
+.floatRight{
+    float: right;
+}
+
 
 /* navbar css */
 .container-fluid {
@@ -188,6 +196,14 @@ body {
     white-space: nowrap;
 }
 
+.shirtImg {
+    width: 30px;
+}
+
+.highLighted {
+    color: red;
+}
+
 /* end css ranking.hbs
 
 /* end css data.hbs */
@@ -211,3 +227,58 @@ body {
 }
 
 /* end css index.hbs */
+
+/* begin css inbox */
+.recievedMessage {
+    background-color: ghostwhite;
+}
+
+.message {
+    margin-top: -10px;
+    max-width: 80%;
+    width: auto;
+    display: inline-block;
+    height: auto;
+    border-radius: 10px;
+}
+
+.messagePanel {
+    border: 0;
+    box-shadow: none;
+}
+
+.ownMessage {
+    float: right;
+    text-align: right;
+    background-color: lightgreen;
+}
+
+#msgField{
+     width: 80%;
+     resize: none;
+}
+
+#sendMsgBtn {
+    height: 115px;
+    width: 19%;
+}
+
+#messageList {
+    padding-top: 10px;
+    max-height: 580px;
+    overflow-y: auto;
+}
+
+.contactPanelActive {
+    background-color: lightblue;
+}
+
+.contactPanelNotActive {
+    background-color: lightgreen;
+}
+
+.contactList {
+    margin-right: 20px; 
+    max-height: 500px;
+    overflow-y: auto;
+}
