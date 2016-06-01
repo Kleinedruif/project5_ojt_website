@@ -12,7 +12,7 @@ var socketIo = require('socket.io');
 var jwt = require('jsonwebtoken');
 
 // Custom modules
-var config = require('./modules/config');
+var config = require('./config/config');
 var csrf = require('./modules/csrf');
 
 var app = express();

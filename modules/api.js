@@ -1,5 +1,5 @@
 var request = require('request');
-var config = require('../modules/config');
+var config = require('../config/config');
 
 /**
  * Parse the url, adding host, api key, and chaning :id and other parameters in the url to the ones given in params

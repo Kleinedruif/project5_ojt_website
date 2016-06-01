@@ -3,7 +3,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 var auth = require('../modules/auth');
-var config = require('../modules/config');
+var config = require('../config/config');
 
 var mainController = require('../controllers/mainController');
 var participantRepo = require('../repository/participantsInfo');

@@ -16,7 +16,7 @@ function bindIcons(){
 }
 
 function getScore(){
-     $('.scoreTD').each(function(index, object) {
+     $('.individualScore').each(function(index, object) {
         var childId = $(object).attr('ref');
         
           $.ajax({
@@ -24,19 +24,13 @@ function getScore(){
             url: '/ranglijst/' + childId,
             dataType: 'JSON'
         }).done(function(response) {
-            if (response != null && response.length > 0){
+            if (response != null){
                 // Check if there is a thirt
-                $(object).append(response[0].score);
+                $(object).append(response.score);
+
+                if (response.shirt) $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/" + response.shirt + ".svg.png'>");
                 
-                var imageName = null;
-                switch(response[0].shirt){
-                    case 'yellow': imageName = 'yellow'; break;
-                    case 'dots': imageName = 'polkadot'; break;
-                    case 'rainbow': imageName = 'rainbow'; break;
-                    case 'white': imageName = 'white'; break;
-                }
-                
-                if (imageName) $(object).append(" <img class='shirtImg rankingsPage' src='../images/shirts/" + imageName + ".svg.png'>");
+                $('#teamScore' + childId).append(response.team_score);
                 
                 $('.rankingsPage').on('click', function(){
                     location.href = '/ranglijst/?deelnemer=' + childId;
