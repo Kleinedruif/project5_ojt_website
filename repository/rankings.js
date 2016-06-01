@@ -1,13 +1,13 @@
 var api = require('../modules/api');
 
 module.exports = {
-    getSortedRankings: function(sortOrder, sortGender, highLight, callback){   
+    getSortedRankings: function(sortOrder, sortGender, deelnemer, callback){   
         var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};
                   
         api.get('/ranking?type=participants', null, function(body){
  
             // Sort all rankings           
-            var rankings = filterRankings(body, sortGender, highLight);
+            var rankings = filterRankings(body, sortGender, deelnemer);
             var teamRankings = rankings.team;
             var genderRankings = rankings.gender;
             var participantsRankings = rankings.participants;
@@ -40,7 +40,7 @@ module.exports = {
     }   
 };
 
-function filterRankings(rankings, gender, highLight){
+function filterRankings(rankings, gender, deelnemer){
     var participantsRankings = [];
     var teamRankings = [];
     var genderRankings = [{id: '1', name: 'Jongens', score: 0}, {id: '2', name: 'Meisjes', score: 0}];
@@ -48,8 +48,9 @@ function filterRankings(rankings, gender, highLight){
     rankings.forEach(function(element) {
         // Check for what gender to sort in
         if (gender == 'beide' || (gender == 'jongens' && element.gender == '1') || (gender == 'meisjes' && element.gender == '2')){
-            var highLighted = element.guid == highLight ? true : false;
-            element.highLighted = highLighted;
+            var highLightedDeelnemer = element.guid == deelnemer ? true : false;
+            element.highLightedDeelnemer = highLightedDeelnemer;
+            if (element.score == null || element.score == 0) element.score = 0;
             participantsRankings.push(element);
 
             // Calcultate score male/female
@@ -64,7 +65,7 @@ function filterRankings(rankings, gender, highLight){
             // Check if team is already added
             var team = checkIfTeamExists(teamRankings, element.team_guid);
             if (team === null){
-                teamRankings.push({name: element.name, score: element.score, id: element.team_guid, highLighted: highLighted});
+                teamRankings.push({name: element.name, score: element.score, id: element.team_guid, highLightedDeelnemer: highLightedDeelnemer});
             } else {
                 team.score = team.score + element.score;
             }

@@ -17,7 +17,6 @@ function bindIcons(){
 
 function getScore(){
      $('.scoreTD').each(function(index, object) {
-        console.log();
         var childId = $(object).attr('ref');
         
           $.ajax({
@@ -40,8 +39,7 @@ function getScore(){
                 if (imageName) $(object).append(" <img class='shirtImg rankingsPage' src='../images/shirts/" + imageName + ".svg.png'>");
                 
                 $('.rankingsPage').on('click', function(){
-                    console.log('test');
-                    location.href = '/ranglijst/?highlight=' + childId;
+                    location.href = '/ranglijst/?deelnemer=' + childId;
                 });
             }
         });       

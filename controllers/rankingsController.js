@@ -6,14 +6,14 @@ module.exports = {
         // Default values
         var sortOrder = 'aflopend';
         var sortGender = 'beide';
-        var highLight = '';
+        var deelnemer = '';
         
         if (req.query.sorteer){ sortOrder = req.query.sorteer; }
         if (req.query.geslacht){ sortGender = req.query.geslacht; }
-        if (req.query.highlight){ highLight = req.query.highlight; }
+        if (req.query.deelnemer){ deelnemer = req.query.deelnemer; }
 
         // Retrieve rankings from repo and render it
-        rankingsRepo.getSortedRankings(sortOrder, sortGender, highLight, function(rankings){
+        rankingsRepo.getSortedRankings(sortOrder, sortGender, deelnemer, function(rankings){
             mainController.render('ranking', req, res, {pageRoute: 'ranking', participantsRanking: rankings.participantsRanking, teamRanking: rankings.teamRanking, genderRanking: rankings.genderRanking, sortOrder: sortOrder, sortGender: sortGender});
         });
        
