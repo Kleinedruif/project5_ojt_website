@@ -12,7 +12,7 @@ module.exports = function(io) {
     // Main page
     router.get('/', function(req, res, next) {
         if (req.session.authenticated) {
-            participantRepo.getChildInformationList(req.session.userid, function(childInformationList){
+            participantRepo.getChildInformationList(res, req.session.userid, req.session.auth.auth_token, function(childInformationList){
                 mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, childs: childInformationList, message: req.flash('message') });
             });
         } else {
@@ -39,13 +39,13 @@ module.exports = function(io) {
             return res.redirect('/inloggen');
         }
         
-        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {          
+        auth.login(req, res, req.body.username.trim(), req.body.password.trim(), function(success) {          
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
                 return res.redirect('/inloggen');
-            } else if (!auth.checkRole(req)){
+            } /*else if (!auth.checkRole(req)){
                 return res.redirect('/inloggen');
-            }  
+            }  */
             
             req.session.username = req.body.username.trim();
             

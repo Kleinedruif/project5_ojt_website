@@ -2,7 +2,7 @@ var rankingsRepo = require('../repository/rankings');
 var mainController = require('./mainController');
 
 module.exports = {
-    getRankingsPage: function(req, res, next){
+    getRankingsPage: function(req, res, next){        
         // Default values
         var sortOrder = 'aflopend';
         var sortGender = 'beide';
@@ -13,15 +13,13 @@ module.exports = {
         if (req.query.deelnemer){ deelnemer = req.query.deelnemer; }
 
         // Retrieve rankings from repo and render it
-        rankingsRepo.getSortedRankings(sortOrder, sortGender, deelnemer, function(rankings){
+        rankingsRepo.getSortedRankings(res, sortOrder, sortGender, deelnemer, req.session.auth.auth_token, function(rankings){
             mainController.render('ranking', req, res, {pageRoute: 'ranking', participantsRanking: rankings.participantsRanking, teamRanking: rankings.teamRanking, genderRanking: rankings.genderRanking, sortOrder: sortOrder, sortGender: sortGender});
         });
        
     },
     getRankings: function(req, res, next){
-        var id = req.params.id;
-        
-        rankingsRepo.getRankings(id, function(ranking){
+        rankingsRepo.getRankings(res, req.params.id, req.session.auth.auth_token, function(ranking){
            res.json(ranking); 
         });
     }

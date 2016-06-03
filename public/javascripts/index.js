@@ -6,20 +6,22 @@ $(document).ready(function() {
 function bindIcons(){
     $('.messageTeamleader').on('click', function(){
         var teamleaderId = $(this).attr('ref');
-        location.href = '/berichten/' + teamleaderId;
+        if (teamleaderId != '')
+            location.href = '/berichten/' + teamleaderId;
     });
     
     $('.childInfoPage').on('click', function(){
         var childId = $(this).attr('ref');
-        location.href = '/deelnemers/' + childId;
+        if (childId != '')
+            location.href = '/deelnemers/' + childId;
     });     
 }
 
 function getScore(){
      $('.individualScore').each(function(index, object) {
         var childId = $(object).attr('ref');
-        
-          $.ajax({
+        if (childId != '')
+        $.ajax({
             type: 'GET',
             url: '/ranglijst/' + childId,
             dataType: 'JSON'

@@ -4,8 +4,8 @@ var api = require('../modules/api');
 var messages = [];
 
 module.exports = {
-    getMessages: function(userid, callback){     
-        api.get('/messages/' + userid, null, function(body){          
+    getMessages: function(res, userid, authToken, callback){     
+        api.get('/messages/' + userid  + '?authToken=' + authToken, null, function(body){          
             var conversations = {};
 
             // Filter the conversations
@@ -25,24 +25,38 @@ module.exports = {
             }, this);
             
             return callback(conversations);
-        }, function(body){
-            console.log('message retrieved failed', body);
+        }, function(error){
+            // Token expires afther 1 day
+            if (error.statusCode === 417){
+                return res.redirect('/sessieAfgelopen');
+            } else {
+                console.log('message retrieved failed', error);
+            }
             return callback(null);
         });    
     },
-    getContacts: function(role, callback){                    
-        api.get('/messages/' + role + '/contacts', null, function(body){
+    getContacts: function(res, role, authToken, callback){                    
+        api.get('/messages/' + role + '/contacts?authToken=' + authToken, null, function(body){
             callback(body);
-        }, function(body){
-            console.log('contactlist retrieved failed', body);
+        }, function(error){          
+            // Token expires afther 1 day
+            if (error.statusCode === 417){
+                return res.redirect('/sessieAfgelopen');
+            } else {
+                console.log('contactlist retrieved failed', error);
+            }
             callback(null);
         });    
     },
-    sendMessage: function(data){       
+    sendMessage: function(res, data, authToken){       
         // Callback is via socket connection
-        api.post('/messages/', null, data, function(body){
-        }, function(body){
-            console.log('message send failed', body);
+        api.post('/messages?authToken=' + authToken, null, data, function(body){
+        }, function(error){
+            if (error.statusCode === 417){
+                return res.redirect('/sessieAfgelopen');
+            } else {
+                console.log('message send failed', error);
+            }
         });       
     }
 };

@@ -9,7 +9,7 @@ $(document).ready(function() {
 function scrollMessageListToButton(){
     
     // Scroll downn to list
-    $('#messageList').scrollTop($(document).height());
+    $('#messageList').scrollTop($('#messageList')[0].scrollHeight);
 }
 
 function openChat(){
@@ -66,6 +66,7 @@ function sendMessage(){
             if (response.msg == 'succes'){
                 $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='col-md-12 row panel-body message ownMessage'>" + msg + "</div></div>");
                 $('#msgField').val('');
+                scrollMessageListToButton();
             }
             // Retrieve new csrf for next message
             $('#csrf').val(response.csrf);

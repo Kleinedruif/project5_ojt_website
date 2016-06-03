@@ -10,11 +10,11 @@ module.exports = {
         if (childId == 0 && req.session.selectedChild !== undefined && req.session.selectedChild.id != 0){
             childId = req.session.selectedChild.id;
         }
-
-        participantRepo.getChildInformationList(req.session.userid, function(childInformationList){       
+        
+        participantRepo.getChildInformationList(res, req.session.userid, req.session.auth.auth_token, function(childInformationList){       
             var information;
 
-            if (childInformationList != null){
+            if (childInformationList != null && childInformationList.length > 0){
                 if (childId == 0){
                     // On id 0, take first child
                     information = childInformationList[0];
@@ -23,7 +23,7 @@ module.exports = {
                     childInformationList.forEach(function(element) {
                         if (element.guid == childId){
                             information = element;
-                        }
+                        } 
                     }, this);
                 }                
 

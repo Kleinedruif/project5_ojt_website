@@ -17,10 +17,9 @@ module.exports = {
     },
 
     newConverstation: function(){
-         return function(req, res, next) {   
-            console.log('test');         
-            messageRepo.getMessages(req.session.userid, function(conversations){
-                if (conversations == null){
+         return function(req, res, next) {       
+            messageRepo.getMessages(res, req.session.userid, req.session.auth.auth_token, function(conversations){
+                if (conversations == null || conversations.lenght == 0){
                     conversations = [];
                 }
                 
@@ -41,24 +40,28 @@ module.exports = {
     // Get message page
     getMessagePage: function(){
         return function(req, res, next) {    
-            messageRepo.getMessages(req.session.userid, function(conversations){
-                if (conversations == null){
+            messageRepo.getMessages(res, req.session.userid, req.session.auth.auth_token, function(conversations){
+                if (conversations == undefined || conversations == null){
                     conversations = [];
                 }
                 
-                var chatid;
-
-                if (req.params.id != undefined){
-                    chatid = req.params.id;
-                } else {
-                    for (first in conversations) break;
-                    chatid = first;
-                }
-                
+                var chatid = null;
                 var messages = [];
-                if (conversations[chatid] != undefined){
-                    messages = conversations[chatid].messages
-                } 
+                console.log(conversations.lenght)
+                if (conversations.lenght != 0){
+                    if (req.params.id != undefined){
+                        chatid = req.params.id;
+                    } else {
+                        for (first in conversations) break;
+                        chatid = first;
+                    }
+          
+                
+                    var messages = [];
+                    if (conversations[chatid] != undefined){
+                        messages = conversations[chatid].messages
+                    } 
+                }
 
                 req.session.chatId = chatid;  
                 return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
@@ -68,7 +71,7 @@ module.exports = {
     
     getContactList: function(){
         return function(req, res, next) {    
-            messageRepo.getContacts(req.session.auth.role_name, function(contacts){
+            messageRepo.getContacts(res, req.session.auth.role_name, req.session.auth.auth_token, function(contacts){
                 if (contacts == null){
                     contacts = [];
                 }
@@ -109,7 +112,7 @@ module.exports = {
             var data = {senderId: req.session.userid, receiverId: req.session.chatId, body: req.body.msg};
             
             // Send message to api via repo
-            messageRepo.sendMessage(data);
+            messageRepo.sendMessage(data, req.session.auth.auth_token);
             return res.json({msg: 'succes', csrf: req.session.csrf});   
         };
     }

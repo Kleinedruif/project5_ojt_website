@@ -87,7 +87,7 @@ module.exports = {
         }, function (err, response, body) {
             if (!err && response.statusCode === 200) {
                 success(body);                                      // Let the success callback handle the response
-            } else {
+            } else {           
                 var message = '';
                 if (body && body.message) {
                     message = body.message
