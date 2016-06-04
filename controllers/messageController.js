@@ -52,8 +52,7 @@ module.exports = {
                     if (req.params.id != undefined){
                         chatid = req.params.id;
                     } else {
-                        for (first in conversations) break;
-                        chatid = first;
+                        chatid = Object.keys(conversations[0])
                     }
           
                 
