@@ -19,7 +19,7 @@ module.exports = {
     newConverstation: function(){
          return function(req, res, next) {       
             messageRepo.getMessages(req, res, function(conversations){
-                if (conversations == null || conversations.lenght == 0){
+                if (conversations == null){
                     conversations = [];
                 }
                 
@@ -47,13 +47,11 @@ module.exports = {
                 
                 var chatid = null;
                 var messages = [];
-                console.log(conversations.lenght)
-                if (conversations.lenght != 0){
+                if (conversations.length != 0){
                     if (req.params.id != undefined){
                         chatid = req.params.id;
                     } else {
-                        for (first in conversations) break;
-                        chatid = first;
+                        chatid = Object.keys(conversations)[0];
                     }
           
                 
