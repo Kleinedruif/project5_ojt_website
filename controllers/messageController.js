@@ -47,7 +47,7 @@ module.exports = {
                 
                 var chatid = null;
                 var messages = [];
-                console.log(conversations.lenght)
+
                 if (conversations.lenght != 0){
                     if (req.params.id != undefined){
                         chatid = req.params.id;
