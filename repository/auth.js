@@ -4,7 +4,7 @@ var routes = {
 }
 
 module.exports = {
-    login: function(username, password, res, callback) {
+    login: function(res, username, password, callback) {
         api.post(routes.login, null, {email: username, password}, 
             function(response) {
                 callback(response);

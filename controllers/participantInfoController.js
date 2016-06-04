@@ -11,7 +11,7 @@ module.exports = {
             childId = req.session.selectedChild.id;
         }
         
-        participantRepo.getChildInformationList(res, req.session.userid, req.session.auth.auth_token, function(childInformationList){       
+        participantRepo.getChildInformationList(req, res, function(childInformationList){       
             var information;
 
             if (childInformationList != null && childInformationList.length > 0){

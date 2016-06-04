@@ -1,10 +1,10 @@
 var api = require('../modules/api');
 
 module.exports = {
-    getSortedRankings: function(res, sortOrder, sortGender, deelnemer, authToken, callback){   
+    getSortedRankings: function(req, res, sortOrder, sortGender, deelnemer, callback){   
         var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};
                   
-        api.get('/ranking?type=participants&authToken=' + authToken, null, function(body){
+        api.get('/ranking?type=participants&authToken=' + req.session.auth.auth_token, null, function(body){
  
             // Sort all rankings           
             var rankings = filterRankings(body, sortGender, deelnemer);
@@ -35,8 +35,8 @@ module.exports = {
             return callback(defaultReturn);
         });                   
     },
-    getRankings: function(res, id, authToken, callback){
-        api.get('/ranking/' + id + '?authToken=' + authToken, null, function(body){
+    getRankings: function(req, res, callback){
+        api.get('/ranking/' +  req.params.id + '?authToken=' + req.session.auth.auth_token, null, function(body){
             callback(body);
         }, function(error){         
             if (error.statusCode === 417){

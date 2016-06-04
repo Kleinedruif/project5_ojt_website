@@ -13,13 +13,13 @@ module.exports = {
         if (req.query.deelnemer){ deelnemer = req.query.deelnemer; }
 
         // Retrieve rankings from repo and render it
-        rankingsRepo.getSortedRankings(res, sortOrder, sortGender, deelnemer, req.session.auth.auth_token, function(rankings){
+        rankingsRepo.getSortedRankings(req, res, sortOrder, sortGender, deelnemer, function(rankings){
             mainController.render('ranking', req, res, {pageRoute: 'ranking', participantsRanking: rankings.participantsRanking, teamRanking: rankings.teamRanking, genderRanking: rankings.genderRanking, sortOrder: sortOrder, sortGender: sortGender});
         });
        
     },
     getRankings: function(req, res, next){
-        rankingsRepo.getRankings(res, req.params.id, req.session.auth.auth_token, function(ranking){
+        rankingsRepo.getRankings(req, res, function(ranking){
            res.json(ranking); 
         });
     }

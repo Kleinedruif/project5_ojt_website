@@ -25,7 +25,7 @@ module.exports = {
         username = username.trim();
         password = password.trim();
         
-        authRepo.login(username, password, res, function(authInfo) {
+        authRepo.login(res, username, password, function(authInfo) {
             var success = authInfo !== false;
             req.session.authenticated = success;
             req.session.auth = authInfo;            // session.auth contains authToken and role if authenticated, else it's false

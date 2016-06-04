@@ -12,7 +12,7 @@ module.exports = function(io) {
     // Main page
     router.get('/', function(req, res, next) {
         if (req.session.authenticated) {
-            participantRepo.getChildInformationList(res, req.session.userid, req.session.auth.auth_token, function(childInformationList){
+            participantRepo.getChildInformationList(req, res, function(childInformationList){
                 mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, childs: childInformationList, message: req.flash('message') });
             });
         } else {

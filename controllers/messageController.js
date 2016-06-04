@@ -18,7 +18,7 @@ module.exports = {
 
     newConverstation: function(){
          return function(req, res, next) {       
-            messageRepo.getMessages(res, req.session.userid, req.session.auth.auth_token, function(conversations){
+            messageRepo.getMessages(req, res, function(conversations){
                 if (conversations == null || conversations.lenght == 0){
                     conversations = [];
                 }
@@ -40,7 +40,7 @@ module.exports = {
     // Get message page
     getMessagePage: function(){
         return function(req, res, next) {    
-            messageRepo.getMessages(res, req.session.userid, req.session.auth.auth_token, function(conversations){
+            messageRepo.getMessages(req, res, function(conversations){
                 if (conversations == undefined || conversations == null){
                     conversations = [];
                 }
@@ -71,7 +71,7 @@ module.exports = {
     
     getContactList: function(){
         return function(req, res, next) {    
-            messageRepo.getContacts(res, req.session.auth.role_name, req.session.auth.auth_token, function(contacts){
+            messageRepo.getContacts(req, res, function(contacts){
                 if (contacts == null){
                     contacts = [];
                 }
@@ -112,7 +112,7 @@ module.exports = {
             var data = {senderId: req.session.userid, receiverId: req.session.chatId, body: req.body.msg};
             
             // Send message to api via repo
-            messageRepo.sendMessage(data, req.session.auth.auth_token);
+            messageRepo.sendMessage(req, res, data);
             return res.json({msg: 'succes', csrf: req.session.csrf});   
         };
     }
