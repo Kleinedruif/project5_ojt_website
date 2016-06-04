@@ -1,5 +1,5 @@
 var request = require('request');
-var config = require('../modules/config');
+var config = require('../config/config');
 
 /**
  * Parse the url, adding host, api key, and chaning :id and other parameters in the url to the ones given in params
@@ -87,7 +87,7 @@ module.exports = {
         }, function (err, response, body) {
             if (!err && response.statusCode === 200) {
                 success(body);                                      // Let the success callback handle the response
-            } else {
+            } else {           
                 var message = '';
                 if (body && body.message) {
                     message = body.message

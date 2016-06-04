@@ -62,10 +62,7 @@
                         <td class="tableRow">{{this.name}}</td>
                         <td class="tableRow">{{this.score}}</td>
                         <td class="tableRow">
-                            {{#if (if_ql this.shirt 'yellow')}}<img class="shirtImg" src="../images/shirts/yellow.svg.png">
-                            {{else if (if_ql this.shirt 'dots')}}<img class="shirtImg" src="../images/shirts/polkadot.svg.png">
-                            {{else if (if_ql this.shirt 'rainbow')}}<img class="shirtImg" src="../images/shirts/rainbow.svg.png">
-                            {{else if (if_ql this.shirt 'white')}}<img class="shirtImg" src="../images/shirts/white.svg.png">{{/if}}                       
+                            {{#if this.shirt}}<img class="shirtImg" src="../images/shirts/{{this.shirt}}.svg.png">{{/if}}                                
                         </td>
                     </tr>
                 {{/each}}

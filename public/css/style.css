@@ -229,6 +229,7 @@ body {
 /* end css index.hbs */
 
 /* begin css inbox */
+
 .recievedMessage {
     background-color: ghostwhite;
 }
@@ -238,6 +239,7 @@ body {
     max-width: 80%;
     width: auto;
     display: inline-block;
+    position:relative;
     height: auto;
     border-radius: 10px;
 }
@@ -279,6 +281,6 @@ body {
 
 .contactList {
     margin-right: 20px; 
-    max-height: 500px;
+    max-height: 580px;
     overflow-y: auto;
 }

@@ -12,7 +12,7 @@ var socketIo = require('socket.io');
 var jwt = require('jsonwebtoken');
 
 // Custom modules
-var config = require('./modules/config');
+var config = require('./config/config');
 var csrf = require('./modules/csrf');
 
 var app = express();
@@ -57,16 +57,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(csrf);
 
 // For testing purposes, user is always logged in.
-app.use(function(req, res, next) {
-    req.session.authenticated = true;
-    req.session.username = 'ralf.h.endriks@hotmail.com';
-    req.session.userid = 4;
-    req.session.auth = {};
-    req.session.auth.role_name = 'ouder';
-    var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
-    req.session.socketToken = token;
-    return next();
-});
+// app.use(function(req, res, next) {
+//     req.session.authenticated = true;
+//     req.session.username = 'ralf.h.endriks@hotmail.com';
+//     req.session.userid = 4;
+//     req.session.auth = {};
+//     req.session.auth.role_name = 'ouder';
+//     var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
+//     req.session.socketToken = token;
+//     return next();
+// });
 
 app.use('/berichten', messages);
 app.use('/contacten', contacts);

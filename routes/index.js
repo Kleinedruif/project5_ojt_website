@@ -3,7 +3,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 var auth = require('../modules/auth');
-var config = require('../modules/config');
+var config = require('../config/config');
 
 var mainController = require('../controllers/mainController');
 var participantRepo = require('../repository/participantsInfo');
@@ -12,7 +12,7 @@ module.exports = function(io) {
     // Main page
     router.get('/', function(req, res, next) {
         if (req.session.authenticated) {
-            participantRepo.getChildInformationList(req.session.userid, function(childInformationList){
+            participantRepo.getChildInformationList(req, res, function(childInformationList){
                 mainController.render('indexLoggedIn', req, res, { pageRoute: 'index', mainActive: true, childs: childInformationList, message: req.flash('message') });
             });
         } else {
@@ -39,13 +39,13 @@ module.exports = function(io) {
             return res.redirect('/inloggen');
         }
         
-        auth.login(req, req.body.username.trim(), req.body.password.trim(), function(success) {          
+        auth.login(req, res, req.body.username.trim(), req.body.password.trim(), function(success) {          
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
                 return res.redirect('/inloggen');
-            } else if (!auth.checkRole(req)){
+            } /*else if (!auth.checkRole(req)){
                 return res.redirect('/inloggen');
-            }  
+            }  */
             
             req.session.username = req.body.username.trim();
             

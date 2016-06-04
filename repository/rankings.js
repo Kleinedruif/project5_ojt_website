@@ -1,10 +1,10 @@
 var api = require('../modules/api');
 
 module.exports = {
-    getSortedRankings: function(sortOrder, sortGender, deelnemer, callback){   
+    getSortedRankings: function(req, res, sortOrder, sortGender, deelnemer, callback){   
         var defaultReturn = { participantsRanking: [], teamRanking: [], genderRanking: []};
                   
-        api.get('/ranking?type=participants', null, function(body){
+        api.get('/ranking?type=participants&authToken=' + req.session.auth.auth_token, null, function(body){
  
             // Sort all rankings           
             var rankings = filterRankings(body, sortGender, deelnemer);
@@ -25,16 +25,25 @@ module.exports = {
             }
 
             return callback({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });         
-        }, function(body){
-            console.log('ranking retrieved failed', body);           
+        }, function(error){
+            if (error.statusCode === 417){
+                return res.redirect('/sessieAfgelopen');
+            } else {
+                console.log('ranking retrieved failed', error);   
+            }  
+                   
             return callback(defaultReturn);
         });                   
     },
-    getRankings: function(id, callback){
-        api.get('/ranking/' + id, null, function(body){
+    getRankings: function(req, res, callback){
+        api.get('/ranking/' +  req.params.id + '?authToken=' + req.session.auth.auth_token, null, function(body){
             callback(body);
-        }, function(body){
-            console.log('ranking retrieved failed', body);           
+        }, function(error){         
+            if (error.statusCode === 417){
+                return res.redirect('/sessieAfgelopen');
+            } else {
+                console.log('ranking retrieved failed', error);  
+            }       
             return callback(null);
         });   
     }   

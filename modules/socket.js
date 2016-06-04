@@ -4,7 +4,7 @@ var ursa = require('ursa');
 var fs = require('fs');
 
 var auth = require('./auth');
-var config = require('./config');
+var config = require('../config/config');
 var messageController = require('../controllers/messageController');
 
 module.exports = function(io) {   

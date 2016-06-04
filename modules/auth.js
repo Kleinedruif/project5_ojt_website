@@ -21,16 +21,16 @@ module.exports = {
     },
     
     // Try to login the user. Executes callback and as parameter returns successfulness of login.
-    login: function(req, username, password, callback) {
+    login: function(req, res, username, password, callback) {
         username = username.trim();
         password = password.trim();
         
-        authRepo.login(username, password, function(authInfo) {
+        authRepo.login(res, username, password, function(authInfo) {
             var success = authInfo !== false;
             req.session.authenticated = success;
             req.session.auth = authInfo;            // session.auth contains authToken and role if authenticated, else it's false
             req.session.userid = authInfo.guid;
-            
+
             callback(success);
         });
     },
