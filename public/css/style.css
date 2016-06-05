@@ -284,3 +284,7 @@ body {
     max-height: 580px;
     overflow-y: auto;
 }
+
+.childnotes-main {
+    width: 100%;
+}
