@@ -22,14 +22,17 @@ module.exports = {
                 if (conversations == null){
                     conversations = [];
                 }
-                
+
                 var chatid = req.params.id;
                 var messages = [];
                 if (conversations[chatid] != undefined){
                     messages = conversations[chatid].messages
                 } else {
-                    conversations[chatid] = {name: req.query.contactName, id: req.query.contactId, role: req.query.role, messages: []};
-                }               
+                    conversations[chatid] = {name: req.query.contact_naam, id: req.query.contactId, role: req.query.rol, messages: []};
+                }                   
+                    
+                if (chatid == req.session.userid)
+                    return res.redirect('/berichten');
                     
                 req.session.chatId = chatid;  
                 return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
@@ -53,14 +56,16 @@ module.exports = {
                     } else {
                         chatid = Object.keys(conversations)[0];
                     }
-          
-                
+                    
                     var messages = [];
                     if (conversations[chatid] != undefined){
                         messages = conversations[chatid].messages
                     } 
                 }
-
+ 
+                if (chatid == req.session.userid)
+                    return res.redirect('/berichten');
+                
                 req.session.chatId = chatid;  
                 return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
             });       
