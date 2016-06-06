@@ -79,7 +79,7 @@ function filterRankings(rankings, gender, deelnemer){
                 team.score = team.score + element.score;
             }
             
-            if (highLightedDeelnemer)
+            if (team != null && highLightedDeelnemer)
                 team.highLightedDeelnemer = highLightedDeelnemer;
         }
     }, this);

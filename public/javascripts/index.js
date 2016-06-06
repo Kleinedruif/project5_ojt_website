@@ -36,7 +36,7 @@ function getScore(){
                     $('#teamScore' + childId).append(response.team_score);
                     
                     $('.rankingsPage').on('click', function(){
-                        location.href = '/ranglijst/?deelnemer=' + childId;
+                        location.href = '/ranglijst?deelnemer=' + childId;
                     });
                 }
             });    
