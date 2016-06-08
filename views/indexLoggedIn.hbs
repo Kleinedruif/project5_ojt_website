@@ -1,41 +1,47 @@
 <div class='col-md-12'>
     <h2>Welkom op de website van Ome Joop's Tour</h2>
-    
-    <div class='col-md-6'>
-        {{#each childs}}       
-            <table class="table table-striped table-bordered">
-                <colgroup>
-                    <col style="width:30%" />
-                    <col style="width:70%" />
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td>Naam</td>
-                        <td>{{ this.first_name }} {{ this.last_name }} <span class="glyphicon glyphicon-share-alt childInfoPage" aria-hidden="true" ref="{{this.guid}}"</td>
-                    </tr>
-                    <tr>
-                        <td>Teamnaam</td>                 
-                        <td>{{ this.name }}</td>
-                    </tr>              
-                    <tr>
-                        <td>Individuele punten</td>                 
-                        <td class='individualScore' ref='{{this.guid}}'></td>
-                    </tr>
-                    <tr>
-                        <td>Team punten</td>                 
-                        <td id='teamScore{{this.guid}}'></td>
-                    </tr>
-                    <tr>
-                        <td>Teamleider</td>
-                        <td>{{ this.first_name_teamleader }} {{ this.last_name_teamleader }} <span class="glyphicon glyphicon-envelope messageTeamleader" aria-hidden="true" ref="{{this.guid_teamleader}}"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-        {{/each}}
-    </div>
-    
-     <div class='col-md-6'>
-        notities/nieuwe foto's
-    </div>
 </div>
+<div class='col-md-6'>
+	{{#each childs}}       
+		<table class="table table-striped table-bordered overview-table">
+			<colgroup>
+				<col style="width:30%" />
+				<col style="width:70%" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<td>Naam</td>
+					<td>
+						<span>{{ this.first_name }} {{ this.last_name }}</span>
+						<span class="glyphicon glyphicon-share-alt child-info-page" aria-hidden="true" ref="{{this.guid}}"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>Team</td>                 
+					<td>{{ this.name }}</td>
+				</tr>              
+				<tr>
+					<td>Individuele punten</td>                 
+					<td class='individualScore' ref='{{this.guid}}'></td>
+				</tr>
+				<tr>
+					<td>Team punten</td>                 
+					<td id='teamScore{{ this.guid }}'></td>
+				</tr>
+				<tr>
+					<td>Teamleider</td>
+					<td>
+						<span>{{ this.first_name_teamleader }} {{ this.last_name_teamleader }}</span>
+						<span class="glyphicon glyphicon-envelope message-team-leader" aria-hidden="true" ref="{{this.guid_teamleader}}"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	{{/each}}
+</div>
+
+<div class='col-md-6'>
+	notities/nieuwe foto's
+</div>
+
 <script src="/javascripts/index.js"></script>   

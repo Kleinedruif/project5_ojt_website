@@ -8,6 +8,18 @@ body {
 	padding: 0px;
 	margin: 0px;
 
+	.page-header{
+		>a,
+		>a:link,
+		>a:visited,
+		>a:hover,
+		>a:active {
+			color: inherit;
+			text-decoration: inherit;
+			font-weight: inherit;
+		}
+	}
+
 	#header {
 		padding: 0px;
 
@@ -32,7 +44,24 @@ body {
 		min-height: 500px;		
 
 		h2{
-			margin: 20px 15px;
+			margin: 20px 0px;
+		}
+
+		.col-centered{
+			float: none;
+			margin: 0 auto;
+		}
+
+		.login-container{
+			margin-top: 40px;
+		}
+
+		.overview-table{
+			.child-info-page,
+			.shirtImg,
+			.message-team-leader{
+				margin-left: 5px;
+			}
 		}
 	}
 
@@ -80,6 +109,11 @@ body {
 		   font-size: 16px;
 		   height: 34px;
 		   width: 268px;
+
+			>option{
+				width: 206px;
+				overflow: hidden;
+			}
 		}
 	}
 	/* end css for select */
