@@ -31,11 +31,12 @@ function getScore(){
                     $(object).append(response.score);
 
                     if (response.shirt) $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/" + response.shirt + ".svg.png'>");
+                    else $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/white.svg.png'>");
                     
                     $('#teamScore' + childId).append(response.team_score);
                     
                     $('.rankingsPage').on('click', function(){
-                        location.href = '/ranglijst/?deelnemer=' + childId;
+                        location.href = '/ranglijst?deelnemer=' + childId;
                     });
                 }
             });    

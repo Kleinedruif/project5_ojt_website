@@ -30,17 +30,16 @@ module.exports = {
                 if (conversations[chatId] != undefined){
                     messages = conversations[chatId].messages
                 } else {
-					var id = req.query.contactId;
-
-					conversations[chatId] = {
-						id: id, 
-						name: req.query.contactName, 
-						role: req.query.role, 
+                    conversations[chatid] = {
+						name: req.query.contact_naam, 
+						id: req.query.contactId, 
+						role: req.query.rol, 
 						messages: []
 					};
-                }               
-
-				//console.log(conversations);
+                }                   
+                    
+                if (chatId == req.session.userid)
+                    return res.redirect('/berichten');
                     
                 req.session.chatId = chatId;  
 
@@ -79,12 +78,11 @@ module.exports = {
     getMessagePage: function(){
         return function(req, res, next) {    
             messageRepo.getMessages(req, res, function(conversations){
-                if (conversations == undefined || conversations == null){
-                    conversations = [];
-                }
+                if (conversations == null) conversations = [];
                 
                 var chatId = null;
                 var messages = [];
+
                 if (conversations.length!=0){
 					chatId = req.params.id!=undefined ? req.params.id : Object.keys(conversations)[0];
                 
@@ -93,13 +91,24 @@ module.exports = {
                         messages = conversations[chatId].messages
                     } 
                 }
+ 
+                if (chatid == req.session.userid) return res.redirect('/berichten');
 
                 req.session.chatId = chatId;  
 
-				//imageRepo.getAvatar(chatId, function(url){
-					//conversations[chatId].image = url;
-					return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatId, ownid: req.session.userid });      
-				//});				
+				imageRepo.getAvatar(chatId, function(url){
+					conversations[chatId].image = url;
+
+					return mainController.render('messages', req, res, 
+						{
+							pageRoute: 'messages', 
+							conversations: conversations, 
+							messages: messages, 
+							chatid: chatId, 
+							ownid: req.session.userid 
+						}
+					);      
+				});				
             });       
         };
     },

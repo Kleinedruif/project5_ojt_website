@@ -8,10 +8,10 @@ function bindSortButtons(){
         deelnemer = location.search.split('deelnemer=')[1];
 
     $('#selectSort').on('change', function() {
-        location.href = '/ranglijst/?sorteer=' + this.value + '&geslacht=' + $('#selectGender option:selected').val() + "&deelnemer=" + deelnemer;
+        location.href = '/ranglijst?sorteer=' + this.value + '&geslacht=' + $('#selectGender option:selected').val() + "&deelnemer=" + deelnemer;
     });
     
     $('#selectGender').on('change', function() {
-        location.href = '/ranglijst/?sorteer=' + $('#selectSort option:selected').val() + '&geslacht=' + this.value + "&deelnemer=" + deelnemer;
+        location.href = '/ranglijst?sorteer=' + $('#selectSort option:selected').val() + '&geslacht=' + this.value + "&deelnemer=" + deelnemer;
     });
 }

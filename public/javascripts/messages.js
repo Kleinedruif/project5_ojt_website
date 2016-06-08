@@ -26,7 +26,7 @@ function startChat(){
         var contactName = $('#newContactList option:selected').text();
         
         // Redirect to start new chat
-        location.href = '/contacten/' + contactId + "?role=" + role + "&contactName=" + contactName;
+        location.href = '/contacten/' + contactId + "?rol=" + role + "&contact_naam=" + contactName;
     });
 }
 
@@ -75,5 +75,7 @@ function sendMessage(){
 }
 
 function addNewMessage(message){
-    $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='col-md-12 row panel-body message recievedMessage'>" + message.body + "</div></div>");
+    if (message.sender_guid === $('#chatid').html()){
+        $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='col-md-12 row panel-body message recievedMessage'>" + message.body + "</div></div>");
+    }     
 }

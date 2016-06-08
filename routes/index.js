@@ -43,9 +43,9 @@ module.exports = function(io) {
             if (!success) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
                 return res.redirect('/inloggen');
-            } /*else if (!auth.checkRole(req)){
+            } else if (!auth.checkRole(req)){
                 return res.redirect('/inloggen');
-            }  */
+            }  
             
             req.session.username = req.body.username.trim();
             
