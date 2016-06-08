@@ -1,0 +1,322 @@
+/* css mainPage main.hbs */
+body {
+    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: #E8E8E8;
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+	#header {
+		padding-top: 110px;
+
+		#mainTitle{
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 50px;
+			font-weight: bold;
+			color: red;
+		}
+
+		#subTitle{
+			color: red;
+		}
+	}
+
+	#body {
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		background-color: white;
+	}
+
+	#footer {
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		background-color: #C92828;
+		color: white;
+	}
+
+	.footertext {
+		text-align: center;
+	}
+
+	.singleLine {
+		display: inline-block;
+	}
+
+	/* css for select */
+	.styled-select {
+	   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+	   height: 29px;
+	   overflow: hidden;
+	   width: 240px;
+
+		select {
+		   background: transparent;
+		   border: none;
+		   font-size: 14px;
+		   height: 29px;
+		   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+		   width: 268px;
+		}
+	}
+
+	.styled-select.slate {
+	   background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+	   height: 34px;
+	   width: 240px;
+
+		select {
+		   border: 1px solid #ccc;
+		   font-size: 16px;
+		   height: 34px;
+		   width: 268px;
+		}
+	}
+	/* end css for select */
+
+	/* class to float left */
+	.floatLeft{
+		float: left;
+	}
+
+	.floatRight{
+		float: right;
+	}
+
+
+	/* navbar css */
+	.container-fluid {
+		background-color: #C92828;
+	}
+
+	.navbar-default {
+		background-color: #C92828;
+		border-color: #C92828;
+
+		/* title */
+		.navbar-brand {
+			color: white;
+			font-size: 30px;
+
+			&:hover, &:focus {
+				background-color: darkred;
+				color: white;
+			}
+		}
+
+		/* link */
+		.navbar-nav{
+			%active{
+				color: darkred;
+				background-color: white;
+				border-bottom: 2px solid black;
+			}
+
+			> li > a {
+				color: white;
+
+				&:hover, 
+				&:focus {
+					background-color: darkred;
+					color: white;
+				}
+			}
+
+			> .active{ 
+				>a, 
+				>a:hover , 
+				>a:focus {
+					@extend %active;
+				}
+			}
+
+			> .open{
+				> a,
+				> a:hover,
+				> a:focus {
+					@extend %active;
+				}
+			}
+
+			/* caret */
+			%caret{
+				border-top-color: black;
+				border-bottom-color: black;
+			}
+
+			> .dropdown > a{
+				.caret,
+				&:hover .caret,
+				&:focus .caret {
+					@extend %caret;
+				}
+			}
+
+			> .open > a{
+				.caret,
+				&:hover .caret,
+				&:focus .caret {
+					@extend %caret;
+				}
+			}
+		}
+
+		/* mobile version */
+		.navbar-toggle {
+			border-color: #DDD;
+
+			&:hover, &:focus {
+				background-color: #DDD;
+			}
+
+			.icon-bar {
+				background-color: #CCC;
+			}
+		}
+	}
+
+	.active {
+		color: darkred;
+		background-color: white;
+	}
+
+	/* end navbar css */
+	/* end css main.hbs */
+
+	/* css data.hbs */
+	#medicalTable td, #generalTable td {
+		overflow: hidden;
+	}
+
+	/* end css data.hbs
+
+	/* css ranking.hbs */
+	#rankingTable, #teamRankingTable {
+		table-layout: fixed;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	.tableRow {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	.shirtImg {
+		width: 30px;
+	}
+
+	.highLighted {
+		color: red;
+	}
+
+	/* end css ranking.hbs
+
+	/* end css data.hbs */
+
+	.error-block {
+		color: red;
+	}
+
+	.message-block {
+		background: #EEF;
+		border: #AAF 1px solid;
+		border-radius: 4px;
+		padding: 4px;
+		margin-bottom: 15px;
+	}
+
+	/* css index.hbs */
+	#imgIndex {
+		width: 100%;
+		height: 100%;
+	}
+
+	/* end css index.hbs */
+
+	/* begin css inbox */
+
+	.recievedMessage {
+		background-color: ghostwhite;
+	}
+
+	.message {
+		margin-top: -10px;
+		max-width: 80%;
+		width: auto;
+		display: inline-block;
+		position:relative;
+		height: auto;
+		border-radius: 10px;
+	}
+
+	.panel{
+		position: relative;
+
+		> img{
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+		}
+	}
+
+
+	.messagePanel {
+		border: 0;
+		box-shadow: none;
+	}
+
+	.ownMessage {
+		float: right;
+		text-align: right;
+		background-color: lightgreen;
+	}
+
+	#msgField{
+		 width: 80%;
+		 resize: none;
+	}
+
+	#sendMsgBtn {
+		height: 115px;
+		width: 19%;
+	}
+
+	#messageList {
+		padding-top: 10px;
+		max-height: 580px;
+		overflow-y: auto;
+	}
+
+	.contactPanelActive {
+		background-color: lightblue;
+	}
+
+	.contactPanelNotActive {
+		background-color: lightgreen;
+	}
+
+	.contactList {
+		margin-right: 20px; 
+		max-height: 580px;
+		overflow-y: auto;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #777;
+
+		&:hover,
+		&:focus {
+			color: #333;
+		}
+	}
+}
