@@ -30,7 +30,7 @@ module.exports = {
                 if (conversations[chatId] != undefined){
                     messages = conversations[chatId].messages
                 } else {
-                    conversations[chatid] = {
+                    conversations[chatId] = {
 						name: req.query.contact_naam, 
 						id: req.query.contactId, 
 						role: req.query.rol, 
@@ -92,7 +92,7 @@ module.exports = {
                     } 
                 }
  
-                if (chatid == req.session.userid) return res.redirect('/berichten');
+                if (chatId == req.session.userid) return res.redirect('/berichten');
 
                 req.session.chatId = chatId;  
 
@@ -116,12 +116,12 @@ module.exports = {
     getContactList: function(){
         return function(req, res, next) {    
             messageRepo.getContacts(req, res, function(contacts){
-                if (contacts == null){
-                    contacts = [];
-                }
-                var chatid;
+                if (contacts == null) contacts = [];
        
-                res.json({list: contacts, userid: req.session.userid});
+                res.json({
+					list: contacts, 
+					userid: req.session.userid
+				});
            });       
         };
     },

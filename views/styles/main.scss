@@ -5,9 +5,11 @@ body {
     background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
+	padding: 0px;
+	margin: 0px;
 
 	#header {
-		padding-top: 110px;
+		padding: 0px;
 
 		#mainTitle{
 			font-family: Arial, Helvetica, sans-serif;
@@ -26,7 +28,12 @@ body {
 		padding-right: 20px;
 		padding-top: 10px;
 		padding-bottom: 10px;
-		background-color: white;
+		background: white;
+		min-height: 500px;		
+
+		h2{
+			margin: 20px 15px;
+		}
 	}
 
 	#footer {
@@ -110,12 +117,17 @@ body {
 		/* link */
 		.navbar-nav{
 			%active{
-				color: darkred;
-				background-color: white;
+				color: white;
+				background: darkred;
 				border-bottom: 2px solid black;
 			}
 
-			> li > a {
+			%caret{
+				border-top-color: black;
+				border-bottom-color: black;
+			}
+
+			> li > a{
 				color: white;
 
 				&:hover, 
@@ -125,26 +137,13 @@ body {
 				}
 			}
 
-			> .active{ 
-				>a, 
-				>a:hover , 
-				>a:focus {
+			> .active > a{
+				@extend %active;
+				
+				&:hover,
+				&focus{
 					@extend %active;
 				}
-			}
-
-			> .open{
-				> a,
-				> a:hover,
-				> a:focus {
-					@extend %active;
-				}
-			}
-
-			/* caret */
-			%caret{
-				border-top-color: black;
-				border-bottom-color: black;
 			}
 
 			> .dropdown > a{
@@ -155,12 +154,8 @@ body {
 				}
 			}
 
-			> .open > a{
-				.caret,
-				&:hover .caret,
-				&:focus .caret {
-					@extend %caret;
-				}
+			&.navbar-right{
+				margin-right: -30px;
 			}
 		}
 
@@ -176,11 +171,6 @@ body {
 				background-color: #CCC;
 			}
 		}
-	}
-
-	.active {
-		color: darkred;
-		background-color: white;
 	}
 
 	/* end navbar css */
