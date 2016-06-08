@@ -2,7 +2,6 @@
     <h3>Berichtenbox</h3>
 </div>
 <div class='col-md-4' id="leftSideMessage">    
-    
     <div class='row'>
         <select class="selectpicker" id="newContactList" data-live-search="true" data-show-subtext="true">
         </select>
@@ -13,17 +12,18 @@
         {{#each conversations}}
             <div class="panel contactPanel {{#if (if_ql this.id ../chatid )}} contactPanelActive {{else}} contactPanelNotActive {{/if}}" ref="{{ this.id }}">
                 <div class="panel-body contactBody">{{ this.name }} <br> {{ this.role }}</div>
+				<img src="{{ this.image }}"/>
             </div>    
         {{/each}}
     </div>
 </div>
 <div class='col-md-8'>   
     <div class="row messages" id="messageList">
-            {{#each messages}}
-                <div class="panel col-md-12 messagePanel">
-                    <div class="col-md-12 row panel-body message {{#if (if_ql this.sender_guid ../ownid )}} ownMessage {{else}} recievedMessage {{/if}}">{{ this.body }}</div>
-                </div>
-            {{/each}}
+		{{#each messages}}
+			<div class="panel col-md-12 messagePanel">
+				<div class="col-md-12 row panel-body message {{#if (if_ql this.sender_guid ../ownid )}} ownMessage {{else}} recievedMessage {{/if}}">{{ this.body }}</div>
+			</div>
+		{{/each}}
     </div>
     <div class="row">
         <span class="error-block">{{errors.name}}</span><span class="error-block">{{errors.message}}</span>

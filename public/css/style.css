@@ -244,6 +244,19 @@ body {
     border-radius: 10px;
 }
 
+.panel{
+	position: relative;
+}
+
+.panel > img{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
 .messagePanel {
     border: 0;
     box-shadow: none;
