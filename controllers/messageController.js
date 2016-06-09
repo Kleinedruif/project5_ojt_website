@@ -46,7 +46,7 @@ module.exports = {
 				var done;
 				var loaded = 0;
 
-				if(Object.keys(conversations).length!=0){
+				if(Object.keys(conversations).length != 0){
 					for (var key in conversations) {
 						if(conversations.hasOwnProperty(key)){
 							imageRepo.getAvatar(conversations[key].id, function(url){
@@ -83,11 +83,11 @@ module.exports = {
                 var chatId = null;
                 var messages = [];
 
-                if (conversations.length!=0){
-					chatId = req.params.id!=undefined ? req.params.id : Object.keys(conversations)[0];
+                if (conversations.length != 0){
+					chatId = req.params.id != undefined ? req.params.id : Object.keys(conversations)[0];
                 
                     var messages = [];
-                    if (conversations[chatId]!=undefined){
+                    if (conversations[chatId] != undefined){
                         messages = conversations[chatId].messages
                     } 
                 }
