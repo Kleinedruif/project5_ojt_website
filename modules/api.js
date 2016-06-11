@@ -58,8 +58,10 @@ module.exports = {
                 if (body && body.message) {
                     message = body.message
                 }
+                
+                var statusCode = response ? response.statusCode : 500;
                 error({                                             // Let the error callback handle the error
-                    status_code: response.statusCode,
+                    status_code: statusCode,
                     error: err,
                     message: message
                 });
@@ -92,8 +94,10 @@ module.exports = {
                 if (body && body.message) {
                     message = body.message
                 }
+                
+                var statusCode = response ? response.statusCode : 500;
                 error({                                             // Let the error callback handle the error
-                    status_code: response.statusCode,
+                    status_code: statusCode,
                     error: err,
                     message: message
                 });
