@@ -97,7 +97,9 @@ module.exports = {
                 req.session.chatId = chatId;  
 
 				imageRepo.getAvatar(chatId, function(url){
-					conversations[chatId].image = url;
+                    if (conversations[chatId] != undefined){
+                        conversations[chatId].image = url;
+                    }
 
 					return mainController.render('messages', req, res, 
 						{

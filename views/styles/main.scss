@@ -74,6 +74,11 @@ body {
 		color: white;
 	}
 
+	.icon {
+		cursor: pointer; 
+		cursor: hand;
+	}
+
 	.copyright{
 		margin-top: 10px;
 		text-align: center;
@@ -239,7 +244,7 @@ body {
 	.shirtImg {
 		width: 30px;
 	}
-
+	
 	.highLighted {
 		color: red;
 	}
