@@ -9,14 +9,16 @@ module.exports = {
                 if (participant.notes) {
                     var i = 0;
                     participant.notes.forEach(function(note) {
-                        // Only show 5 notes
-                        if (i++ <= 5) return;
-                        
-                        filteredNotes.push(note);
+                        if (note.date) {
+                            // Only show 5 notes
+                            if (i++ > 5) return;
+                            
+                            filteredNotes.push(note);
+                        }
                     });
                 }
-                if (participant.notes) {
-                    participant.notes.forEach(function(note) {
+                if (filteredNotes.length > 0) {
+                    filteredNotes.forEach(function(note) {
                         if (note.date.length === 24) {
                             // In:  2016-06-10T22:00:00.000Z
                             // Out: 2016-06-10 22:00:00
@@ -24,6 +26,7 @@ module.exports = {
                         }
                     });
                 }
+                participant.notes = filteredNotes;
             });
             callback(body);
         }, function(error){        

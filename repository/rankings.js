@@ -74,13 +74,15 @@ function filterRankings(rankings, gender, deelnemer){
             // Check if team is already added
             var team = checkIfTeamExists(teamRankings, element.team_guid);
             if (team === null){
-                teamRankings.push({name: element.name, score: element.score, id: element.team_guid, highLightedDeelnemer: highLightedDeelnemer});
+                teamRankings.push({name: element.name, score: element.score, id: element.team_guid});
             } else {
                 team.score = team.score + element.score;
             }
+            
+            if (team != null && highLightedDeelnemer)
+                team.highLightedDeelnemer = highLightedDeelnemer;
         }
     }, this);
-
     return {team: teamRankings, gender: genderRankings, participants: participantsRankings};
 }
 

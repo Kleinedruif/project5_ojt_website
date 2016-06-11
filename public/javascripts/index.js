@@ -28,14 +28,15 @@ function getScore(){
             }).done(function(response) {
                 if (response != null){
                     // Check if there is a thirt
-                    $(object).append(response.score);
+                    $(object).append("<span>"+response.score+"</span>");
 
                     if (response.shirt) $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/" + response.shirt + ".svg.png'>");
+                    else $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/white.svg.png'>");
                     
                     $('#teamScore' + childId).append(response.team_score);
                     
                     $('.rankingsPage').on('click', function(){
-                        location.href = '/ranglijst/?deelnemer=' + childId;
+                        location.href = '/ranglijst?deelnemer=' + childId;
                     });
                 }
             });    
