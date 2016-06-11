@@ -77,5 +77,6 @@ function sendMessage(){
 function addNewMessage(message){
     if (message.sender_guid === $('#chatid').html()){
         $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='col-md-12 row panel-body message recievedMessage'>" + message.body + "</div></div>");
+        scrollMessageListToButton();
     }     
 }
