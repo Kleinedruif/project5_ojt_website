@@ -1,8 +1,8 @@
 <div class='row col-md-12'>
-    <h3>Ranglijst</h3>
+    <h2>Ranglijst</h2>
     <div>
-        <div class="styled-select slate floatLeft">
-            <select class="styled-select slate" id="selectSort">
+        <!--<div class="styled-select slate floatLeft">-->
+            <select id="selectSort">
                 {{#if (if_ql sortOrder "aflopend")}}
                     <option selected value="aflopend">Score aflopend</option>
                     <option value="oplopend">Score oplopend</option>
@@ -11,8 +11,8 @@
                     <option selected value="oplopend">Score oplopend</option>
                 {{/if}}
             </select>
-        </div>
-        <div class="styled-select slate floatLeft">
+        <!--</div>-->
+        <!--<div class="styled-select slate floatLeft">-->
             <select id="selectGender">
                 {{#if (if_ql sortGender "beide")}}
                     <option selected value="beide">Jongens/meisjes</option>
@@ -30,9 +30,8 @@
                     <option value="meisjes">Meisjes</option>
                 {{/if}}
             </select>
-        </div>
+        <!--</div>-->
     </div>
-    <br><br>
     <hr>
 </div>
 <div class='row'>

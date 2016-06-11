@@ -2,3 +2,4 @@
 .geanyprj
 /node_modules
 npm-debug.log
+public/css

@@ -1,5 +1,6 @@
 var mainController = require('./mainController');
 var messageRepo = require('../repository/messages');
+var imageRepo = require('../repository/image');
 
 // Stores all the connections and tokens
 var connectionList = {};
@@ -22,20 +23,53 @@ module.exports = {
                 if (conversations == null){
                     conversations = [];
                 }
-
-                var chatid = req.params.id;
+                
+                var chatId = req.params.id;
                 var messages = [];
-                if (conversations[chatid] != undefined){
-                    messages = conversations[chatid].messages
+
+                if (conversations[chatId] != undefined){
+                    messages = conversations[chatId].messages
                 } else {
-                    conversations[chatid] = {name: req.query.contact_naam, id: req.query.contactId, role: req.query.rol, messages: []};
+                    conversations[chatId] = {
+						name: req.query.contact_naam, 
+						id: req.query.contactId, 
+						role: req.query.rol, 
+						messages: []
+					};
                 }                   
                     
-                if (chatid == req.session.userid)
+                if (chatId == req.session.userid)
                     return res.redirect('/berichten');
                     
-                req.session.chatId = chatid;  
-                return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
+                req.session.chatId = chatId;  
+
+				var done;
+				var loaded = 0;
+
+				if(Object.keys(conversations).length != 0){
+					for (var key in conversations) {
+						if(conversations.hasOwnProperty(key)){
+							imageRepo.getAvatar(conversations[key].id, function(url){
+								loaded++;
+								conversations[key].image = url;
+
+								if(Object.keys(conversations).length==loaded) finish();
+							});
+						}
+					}
+				}else finish();
+
+				var finish = function(){
+					return mainController.render('messages', req, res, 
+						{
+							pageRoute: 'messages', 
+							conversations: conversations, 
+							messages: messages, 
+							chatid: chatId, 
+							ownid: req.session.userid 
+						}
+					);      
+				}
             });        
         };
     },
@@ -44,30 +78,37 @@ module.exports = {
     getMessagePage: function(){
         return function(req, res, next) {    
             messageRepo.getMessages(req, res, function(conversations){
-                if (conversations == undefined || conversations == null){
-                    conversations = [];
-                }
+                if (conversations == null) conversations = [];
                 
-                var chatid = null;
+                var chatId = null;
                 var messages = [];
+
                 if (conversations.length != 0){
-                    if (req.params.id != undefined){
-                        chatid = req.params.id;
-                    } else {
-                        chatid = Object.keys(conversations)[0];
-                    }
-                    
+					chatId = req.params.id != undefined ? req.params.id : Object.keys(conversations)[0];
+                
                     var messages = [];
-                    if (conversations[chatid] != undefined){
-                        messages = conversations[chatid].messages
+                    if (conversations[chatId] != undefined){
+                        messages = conversations[chatId].messages
                     } 
                 }
  
-                if (chatid == req.session.userid)
-                    return res.redirect('/berichten');
-                
-                req.session.chatId = chatid;  
-                return mainController.render('messages', req, res, {pageRoute: 'messages', conversations: conversations, messages: messages, chatid: chatid, ownid: req.session.userid });      
+                if (chatId == req.session.userid) return res.redirect('/berichten');
+
+                req.session.chatId = chatId;  
+
+				imageRepo.getAvatar(chatId, function(url){
+					conversations[chatId].image = url;
+
+					return mainController.render('messages', req, res, 
+						{
+							pageRoute: 'messages', 
+							conversations: conversations, 
+							messages: messages, 
+							chatid: chatId, 
+							ownid: req.session.userid 
+						}
+					);      
+				});				
             });       
         };
     },
@@ -75,12 +116,12 @@ module.exports = {
     getContactList: function(){
         return function(req, res, next) {    
             messageRepo.getContacts(req, res, function(contacts){
-                if (contacts == null){
-                    contacts = [];
-                }
-                var chatid;
+                if (contacts == null) contacts = [];
        
-                res.json({list: contacts, userid: req.session.userid});
+                res.json({
+					list: contacts, 
+					userid: req.session.userid
+				});
            });       
         };
     },
