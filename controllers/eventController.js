@@ -7,24 +7,24 @@ module.exports = {
        
         eventsRepo.getEvents(req, res, function(events){       
            
-           var currentEventId;
-           
-           events.forEach(function(event){
-               if (event.status == 'active'){
-                   currentEventId = event.guid;
-               }
-           });
-           
-           if (currentEventId != null){
-               eventsRepo.getActivities(req, res, currentEventId, function(activities){
-                    // Render events page
-                    mainController.render('events', req, res, {pageRoute: 'events', events: activities});
-               });
-           } else {
-                // Render events page
-                mainController.render('events', req, res, {pageRoute: 'events', eventMsg: "Er zijn geen activiteiten bescikbaar"});
-        
-           }          
+            if (events == null) return mainController.render('events', req, res, {pageRoute: 'events', eventMsg: "Er zijn geen activiteiten bescikbaar"});
+            var currentEventId;
+            
+            events.forEach(function(event){
+                // Pick an active event
+                if (event.status == 'active'){
+                    currentEventId = event.guid;
+                }
+            });
+            
+            if (currentEventId != null){
+                eventsRepo.getActivities(req, res, currentEventId, function(oldActivities, upcommingActivities){
+                        // Render events page
+                        return mainController.render('events', req, res, {pageRoute: 'events', oldActivities: oldActivities, upcommingActivities: upcommingActivities});
+                });
+            } else {
+                mainController.render('events', req, res, {pageRoute: 'events'});
+            }     
         });    
     }
 };

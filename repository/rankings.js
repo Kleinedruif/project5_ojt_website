@@ -26,7 +26,7 @@ module.exports = {
 
             return callback({ participantsRanking: participantsRankings, teamRanking: teamRankings, genderRanking: genderRankings });         
         }, function(error){
-            if (error.statusCode === 417){
+            if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
                 console.log('ranking retrieved failed', error);   
@@ -39,7 +39,7 @@ module.exports = {
         api.get('/ranking/' +  req.params.id + '?authToken=' + req.session.auth.auth_token, null, function(body){
             callback(body);
         }, function(error){         
-            if (error.statusCode === 417){
+            if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
                 console.log('ranking retrieved failed', error);  

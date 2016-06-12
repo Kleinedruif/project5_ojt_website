@@ -27,7 +27,7 @@ module.exports = {
             return callback(conversations);
         }, function(error){
             // Token expires afther 1 day
-            if (error.statusCode === 417){
+            if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
                 console.log('message retrieved failed', error);
@@ -40,7 +40,7 @@ module.exports = {
             callback(body);
         }, function(error){          
             // Token expires afther 1 day
-            if (error.statusCode === 417){
+            if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
                 console.log('contactlist retrieved failed', error);
@@ -52,7 +52,7 @@ module.exports = {
         // Callback is via socket connection
         api.post('/messages?authToken=' + req.session.auth.auth_token, null, data, function(body){
         }, function(error){
-            if (error.statusCode === 417){
+            if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
                 console.log('message send failed', error);
