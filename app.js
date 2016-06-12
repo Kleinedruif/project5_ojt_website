@@ -28,6 +28,7 @@ var routes = require('./routes/index')(io);
 var messages = require('./routes/messages')(io);
 var contacts = require('./routes/contacts')();
 var rankings = require('./routes/rankings')();
+var events = require('./routes/events')();
 var participants = require('./routes/participants')();
 
 // This modules holds the helper functions for hbs
@@ -72,6 +73,7 @@ app.use('/berichten', messages);
 app.use('/contacten', contacts);
 app.use('/ranglijst', rankings);
 app.use('/deelnemers', participants);
+app.use('/programma', events);
 app.use('/', routes);
 
 // catch 404 and forward to error handler

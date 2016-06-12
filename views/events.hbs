@@ -1,0 +1,18 @@
+<div class='col-md-12'>
+    <h3>Kalander</h3>
+    {{eventMsg}}
+    
+    {{#each events}}
+        <div class="panel">
+            <div class="panel-header">
+                {{this.date}}
+            </div>
+            <div class="panel-body">
+                {{#each this.activities}}               
+                    <p>{{this.time}} {{this.name}} </p>                  
+                {{/each}}    
+            </div>
+        </div>
+    {{/each}}
+ 
+</div>
