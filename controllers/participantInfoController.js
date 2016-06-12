@@ -26,10 +26,12 @@ module.exports = {
                         } 
                     }, this);
                 }                
-
+                
                 // Save the information in the session
-                var name = information.first_name + " " + information.last_name;
-                req.session.selectedChild = {id: childId, name: name};
+                if (information != undefined){
+                    var name = information.first_name + " " + information.last_name;
+                    req.session.selectedChild = {id: childId, name: name};
+                }
             }
              
             // Render participantInfo page

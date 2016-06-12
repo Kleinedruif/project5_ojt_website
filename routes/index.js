@@ -44,7 +44,7 @@ module.exports = function(io) {
                 req.flash('message', 'De combinatie van uw gebruikersnaam en wachtwoord kon niet gevonden worden.');
                 return res.redirect('/inloggen');
             } else if (!auth.checkRole(req)){
-                return res.redirect('/inloggen');
+                return res.redirect('/uitloggenInvalidRole');
             }  
             
             req.session.username = req.body.username.trim();
@@ -64,6 +64,14 @@ module.exports = function(io) {
         auth.logout(req);
         
         req.flash('message', 'Uw sessie is verlopen, log opnieuw in.');
+        res.redirect('/inloggen');
+    });
+    
+        // Route to handle session ended
+    router.get('/uitloggenInvalidRole', auth.requireLoggedIn, function(req, res, next) {
+        auth.logout(req);
+        
+        req.flash('message', 'U heeft niet de juiste rechten om gebruik te maken van deze website.');
         res.redirect('/inloggen');
     });
 

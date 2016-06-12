@@ -74,6 +74,11 @@ body {
 		color: white;
 	}
 
+	.icon {
+		cursor: pointer; 
+		cursor: hand;
+	}
+
 	.copyright{
 		margin-top: 10px;
 		text-align: center;
@@ -239,7 +244,7 @@ body {
 	.shirtImg {
 		width: 30px;
 	}
-
+	
 	.highLighted {
 		color: red;
 	}
@@ -287,9 +292,9 @@ body {
 		max-width: 80%;
 		width: auto;
 		display: inline-block;
-		position:relative;
+		position: relative;
 		height: auto;
-		border-radius: 10px;
+		// border-radius: 10px;
 	}
 
 	.panel{
@@ -305,10 +310,11 @@ body {
 		}
 	}
 
-
 	.messagePanel {
 		border: 0;
 		box-shadow: none;
+		overflow-x: hidden;
+		word-wrap: break-word;
 	}
 
 	.ownMessage {

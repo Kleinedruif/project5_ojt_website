@@ -34,7 +34,8 @@ module.exports = {
 						name: req.query.contact_naam, 
 						id: req.query.contactId, 
 						role: req.query.rol, 
-						messages: []
+						messages: [],
+                        readOnly: false 
 					};
                 }                   
                     
@@ -66,7 +67,8 @@ module.exports = {
 							conversations: conversations, 
 							messages: messages, 
 							chatid: chatId, 
-							ownid: req.session.userid 
+							ownid: req.session.userid,
+                            readOnly: false  
 						}
 					);      
 				}
@@ -97,7 +99,9 @@ module.exports = {
                 req.session.chatId = chatId;  
 
 				imageRepo.getAvatar(chatId, function(url){
-					conversations[chatId].image = url;
+                    if (conversations[chatId] != undefined){
+                        conversations[chatId].image = url;
+                    }
 
 					return mainController.render('messages', req, res, 
 						{
@@ -105,7 +109,8 @@ module.exports = {
 							conversations: conversations, 
 							messages: messages, 
 							chatid: chatId, 
-							ownid: req.session.userid 
+							ownid: req.session.userid,
+                            readOnly: false 
 						}
 					);      
 				});				

@@ -4,13 +4,13 @@ $(document).ready(function() {
 });
 
 function bindIcons(){
-    $('.messageTeamleader').on('click', function(){
+    $('.message-team-leader').on('click', function(){
         var teamleaderId = $(this).attr('ref');
         if (teamleaderId != '')
             location.href = '/berichten/' + teamleaderId;
     });
     
-    $('.childInfoPage').on('click', function(){
+    $('.child-info-page').on('click', function(){
         var childId = $(this).attr('ref');
         if (childId != '')
             location.href = '/deelnemers/' + childId;
@@ -28,15 +28,16 @@ function getScore(){
             }).done(function(response) {
                 if (response != null){
                     // Check if there is a thirt
-                    $(object).append("<span>"+response.score+"</span>");
+                    $(object).append("<span>" + response.score + "</span>");
 
-                    if (response.shirt) $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/" + response.shirt + ".svg.png'>");
-                    else $(object).append("<img class='shirtImg rankingsPage' src='../images/shirts/white.svg.png'>");
+                    if (response.shirt) $(object).append("<img ref='" + childId + "' class='shirtImg rankingsPage icon' src='../images/shirts/" + response.shirt + ".svg.png'>");
+                    else $(object).append("<img ref='" + childId + "' class='shirtImg rankingsPage icon' src='../images/shirts/white.svg.png'>");
                     
                     $('#teamScore' + childId).append(response.team_score);
                     
                     $('.rankingsPage').on('click', function(){
-                        location.href = '/ranglijst?deelnemer=' + childId;
+                        var goToChildId = $(this).attr('ref');
+                        location.href = '/ranglijst?deelnemer=' + goToChildId;
                     });
                 }
             });    
