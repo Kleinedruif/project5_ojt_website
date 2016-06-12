@@ -58,9 +58,9 @@ module.exports = {
 };
 
 setDatePrototypes = function(){
-    var days = ['Zondag', 'Maandag', 'Disndag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+    var days = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
 
-    var months = ['Januarie', 'Februarie', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+    var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 
     // Set prototypes for easy access getting date
     Date.prototype.getMonthName = function(){

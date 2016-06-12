@@ -10,13 +10,13 @@ module.exports = {
             if (events == null) return mainController.render('events', req, res, {pageRoute: 'events', eventMsg: "Er zijn geen activiteiten bescikbaar"});
             var currentEventId;
             
-            events.forEach(function(event){
-                // Pick an active event
-                if (event.status == 'active'){
-                    currentEventId = event.guid;
-                }
-            });
-            
+            for (var i = 0; i < events.length; i++) {
+                if (events[i].status == 'active'){
+                    currentEventId = events[i].guid;
+                    break;
+                } 
+            }
+
             if (currentEventId != null){
                 // Get the activities from an active evenets
                 eventsRepo.getActivities(req, res, currentEventId, function(oldActivities, upcommingActivities){
