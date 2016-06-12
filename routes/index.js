@@ -71,7 +71,7 @@ module.exports = function(io) {
     router.get('/uitloggenInvalidRole', auth.requireLoggedIn, function(req, res, next) {
         auth.logout(req);
         
-        req.flash('message', 'U heeft niet de juiste rechte om gebruik te maken van deze website.');
+        req.flash('message', 'U heeft niet de juiste rechten om gebruik te maken van deze website.');
         res.redirect('/inloggen');
     });
 

@@ -36,7 +36,7 @@ Als het goed is nu alles geïnstalleerd en zou het gestart kunnen worden doormid
 
 
 ### Installeren Grunt
-Run het commando “npm install -g grunt-cli”
+Run het commando “npm install -g grunt”
 Grunt wordt gebruikt voor het omzetten van SCSS en SASS naar normale CSS. Na het installeren moet naar elke keer als je de server start in een andere server “grunt watch” worden gerunt (Wordt gestart vanaf de map waar ook de server wordt gestart). Met dit commando wordt op elke file change de CSS opnieuwe gebuild.
 
 ### Extra
