@@ -1,0 +1,46 @@
+<div class='col-md-12'>
+    <h3>Programma informatie</h3>
+    {{#if eventMsg}}
+        {{eventMsg}}
+    {{else}}
+        <div class='col-md-8'>
+            <h4>Aankomende activiteiten</h4>
+            {{#if upcommingActivities}}
+                {{#each upcommingActivities}}
+                    <div class="panel panel-default eventPanel">
+                        <div class="panel-heading eventPanel">
+                            {{this.date}}
+                        </div>
+                        <div class="panel-body eventPanel">
+                            {{#each this.activities}}               
+                                <p>{{this.time}} {{this.name}} </p>                  
+                            {{/each}}    
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                Er zijn geen aankomende activteiten
+            {{/if}}
+        </div>
+        
+        <div class='col-md-4'>
+            <h4>Afgelopen activiteiten</h4>
+            {{#if oldActivities}}
+                {{#each oldActivities}}
+                    <div class="panel panel-default eventPanel">
+                        <div class="panel-heading eventPanel">
+                            {{this.date}}
+                        </div>
+                        <div class="panel-body eventPanel">
+                            {{#each this.activities}}               
+                                <p>{{this.time}} {{this.name}} </p>                  
+                            {{/each}}    
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                Er zijn geen afgelopen activteiten
+            {{/if}}
+        </div>
+    {{/if}}
+</div>
