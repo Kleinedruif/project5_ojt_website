@@ -5,7 +5,7 @@ var messages = [];
 
 module.exports = {
     getEvents: function(req, res, callback){     
-        api.get('/events/?authToken=' + req.session.auth.auth_token, null, function(body){          
+        api.get('/event/?authToken=' + req.session.auth.auth_token, null, function(body){          
             return callback(body);
         }, function(error){
             // Token expires afther 1 day
@@ -17,7 +17,7 @@ module.exports = {
             return callback(null);
         });    
     }, getActivities: function(req, res, id, callback){     
-        api.get('/events/' + id + '?status=active&authToken=' + req.session.auth.auth_token, null, function(body){          
+        api.get('/event/' + id + '?status=active&authToken=' + req.session.auth.auth_token, null, function(body){          
             setDatePrototypes();
             var oldEvents = [];
             var upcommingEvents = [];
