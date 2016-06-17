@@ -1,6 +1,5 @@
 var mainController = require('./mainController');
 var messageRepo = require('../repository/messages');
-var imageRepo = require('../repository/image');
 
 // Stores all the connections and tokens
 var connectionList = {};
@@ -44,34 +43,16 @@ module.exports = {
                     
                 req.session.chatId = chatId;  
 
-				var done;
-				var loaded = 0;
-
-				if(Object.keys(conversations).length != 0){
-					for (var key in conversations) {
-						if(conversations.hasOwnProperty(key)){
-							imageRepo.getAvatar(conversations[key].id, function(url){
-								loaded++;
-								conversations[key].image = url;
-
-								if(Object.keys(conversations).length==loaded) finish();
-							});
-						}
+				return mainController.render('messages', req, res, 
+					{
+						pageRoute: 'messages', 
+						conversations: conversations, 
+						messages: messages, 
+						chatid: chatId, 
+						ownid: req.session.userid,
+						readOnly: false  
 					}
-				}else finish();
-
-				var finish = function(){
-					return mainController.render('messages', req, res, 
-						{
-							pageRoute: 'messages', 
-							conversations: conversations, 
-							messages: messages, 
-							chatid: chatId, 
-							ownid: req.session.userid,
-                            readOnly: false  
-						}
-					);      
-				}
+				);
             });        
         };
     },
@@ -98,23 +79,15 @@ module.exports = {
 
                 req.session.chatId = chatId;  
 
-				imageRepo.getAvatar(chatId, function(url){
-                    if (conversations[chatId] != undefined){
-                        conversations[chatId].image = url;
-                    }
-
-					return mainController.render('messages', req, res, 
-						{
-							pageRoute: 'messages', 
-							conversations: conversations, 
-							messages: messages, 
-							chatid: chatId, 
-							ownid: req.session.userid,
-                            readOnly: false 
-						}
-					);      
-				});				
-            });       
+				return mainController.render('messages', req, res, {
+					pageRoute: 'messages', 
+					conversations: conversations, 
+					messages: messages, 
+					chatid: chatId, 
+					ownid: req.session.userid,
+					readOnly: false 
+				});
+            });
         };
     },
     

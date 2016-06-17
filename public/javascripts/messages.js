@@ -1,6 +1,7 @@
-$(document).ready(function() {
+$(function() {
     sendMessage();
     retrieveContacts();
+	loadImages();
     startChat();
     openChat();  
     scrollMessageListToButton();
@@ -49,6 +50,19 @@ function retrieveContacts(){
         $('#newContactList').selectpicker('refresh');;
     });    
     
+}
+
+function loadImages(){
+	var contacts = $('.contactList > .contactPanel');
+	
+	for(var i=0; i<contacts.length; i++){
+		var id = contacts[i].getAttribute('ref');
+		var url = 'http://omejoopstour.timohoff.nl/user/' + id + '.jpg';
+
+		var img = new Image;
+		img.src = url;
+		if(img.width!=0) contacts[i].querySelector('img').src = img.src 
+	};
 }
 
 function sendMessage(){
