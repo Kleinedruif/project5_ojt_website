@@ -31,8 +31,8 @@ function getScore(){
                     $(object).append("<span>" + response.score + "</span>");
 
                     if (response.shirt) $(object).append("<img ref='" + childId + "' class='shirtImg rankingsPage icon' src='../images/shirts/" + response.shirt + ".svg.png'>");
-                    else $(object).append("<img ref='" + childId + "' class='shirtImg rankingsPage icon' src='../images/shirts/white.svg.png'>");
-                    
+                    else $(object).append("<span class='glyphicon glyphicon-list-alt icon rankingsPage' aria-hidden='true' ref='" + childId + "'></span>");
+    
                     $('#teamScore' + childId).append(response.team_score);
                     
                     $('.rankingsPage').on('click', function(){

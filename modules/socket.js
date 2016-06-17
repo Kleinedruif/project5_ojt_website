@@ -32,7 +32,7 @@ module.exports = function(io) {
     var socketClient = clientIo.connect(config.api_host, {query: 'token=' + webToken, reconnect: true, secure: true});
 
     // Connect webserver socket to api
-    socketClient.on('connect', function(){ 
+    socketClient.once('connect', function(){ 
         console.log('Connect to api');
         
         socketClient.on('reconnect_attempt', function() {

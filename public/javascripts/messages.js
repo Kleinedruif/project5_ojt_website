@@ -78,7 +78,7 @@ function sendMessage(){
             dataType: 'JSON'
         }).done(function(response) {
             if (response.msg == 'succes'){
-                $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='col-md-12 row panel-body message ownMessage'>" + msg + "</div></div>");
+                $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='panel-body message ownMessage '>" + msg + "</div></div>");
                 $('#msgField').val('');
                 scrollMessageListToButton();
             }
@@ -90,7 +90,8 @@ function sendMessage(){
 
 function addNewMessage(message){
     if (message.sender_guid === $('#chatid').html()){
-        $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='col-md-12 row panel-body message recievedMessage'>" + message.body + "</div></div>");
+        $('#messageList').append("<div class='panel col-md-12 messagePanel'><div class='panel-body message recievedMessage'></div></div>");
+        $('#messageList > div:last').children().text(message.body);
         scrollMessageListToButton();
     }     
 }
