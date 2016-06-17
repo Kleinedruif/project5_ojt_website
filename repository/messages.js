@@ -30,6 +30,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('message retrieved failed', error);
             }
             return callback(null);
@@ -43,6 +46,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('contactlist retrieved failed', error);
             }
             callback(null);
@@ -55,6 +61,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('message send failed', error);
             }
         });       

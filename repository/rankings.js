@@ -29,6 +29,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('ranking retrieved failed', error);   
             }  
                    
@@ -42,6 +45,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('ranking retrieved failed', error);  
             }       
             return callback(null);

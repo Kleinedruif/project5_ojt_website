@@ -12,6 +12,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('events retrieved failed', error);
             }
             return callback(null);
@@ -50,6 +53,9 @@ module.exports = {
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
                 console.log('event activities retrieved failed', error);
             }
             return callback(null);
