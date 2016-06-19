@@ -9,27 +9,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Ome Joop's Tour</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     {{#if (if_ql pageRoute "index")}}
-                            <li class="active"><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="/">Startpagina <span class="sr-only">(current)</span></a></li>
                     {{else}}
-                        <li><a href="/">Hoofdpagina <span class="sr-only">(current)</span></a></li>           
+                        <li><a href="/">Startpagina <span class="sr-only">(current)</span></a></li>           
                     {{/if}}
                     
-                    <!-- only show this when loggedin -->
+                    <!-- Only show this when loggedin -->
                     {{#if loggedIn}}                                   
-                        <li class="{{#if (if_ql pageRoute "participantInfo")}}active{{/if}}"><a href="/deelnemers/0/gegevens" id="navData">Gegevens <span class="sr-only">(current)</span></a></li>
-                        <li class="{{#if (if_ql pageRoute "ranking")}}active{{/if}}"><a href="/ranglijst" id="navData">Ranglijst <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "participantInfo")}}active{{/if}}"><a href="/deelnemers/0">Mijn kinderen <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "ranking")}}active{{/if}}"><a href="/ranglijst">Ranglijst <span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "events")}}active{{/if}}"><a href="/programma">Programma<span class="sr-only">(current)</span></a></li>
+                        <li class="{{#if (if_ql pageRoute "messages")}}active{{/if}}"><a href="/berichten">Berichten<span class="sr-only">(current)</span></a></li>
                     {{/if}}
                 
                 </ul>
             
-                <!-- only show this when loggedin -->
+                <!-- Only show this when loggedin -->
                 <ul class="nav navbar-nav navbar-right">                        
                     {{#if loggedIn}}                       
                         <li>
@@ -48,4 +49,4 @@
             </div>
         </div>
     </nav>    
-</div> <!-- END NAVBAR -->
+</div>

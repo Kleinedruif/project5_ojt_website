@@ -1,40 +1,45 @@
+var api = require('../modules/api');
+
 module.exports = {
-    // Return the list below
-    getChildInformationList: function(){
-        return childInformationList;
-    }, 
+    getChildInformationList: function(req, res, callback){
+        api.get('/user/' + req.session.userid + '/children?authToken=' + req.session.auth.auth_token, null, function(body){
+            // Limit the list and format the dates
+            body.forEach(function(participant) {
+                var filteredNotes = [];
+                if (participant.notes) {
+                    var i = 0;
+                    participant.notes.forEach(function(note) {
+                        if (note.date) {
+                            // Only show 5 notes
+                            if (i++ > 5) return;
+                            
+                            filteredNotes.push(note);
+                        }
+                    });
+                }
+                if (filteredNotes.length > 0) {
+                    filteredNotes.forEach(function(note) {
+                        if (note.date.length === 24) {
+                            // In:  2016-06-10T22:00:00.000Z
+                            // Out: 2016-06-10 22:00:00
+                            note.date = note.date.substring(0, note.date.length - 5).replace('T', ' ');
+                        }
+                    });
+                }
+                participant.notes = filteredNotes;
+            });
+            callback(body);
+        }, function(error){        
+            if (error.status_code === 417){
+                return res.redirect('/sessieAfgelopen');
+            } else {
+                if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
+                    return res.redirect('/sessieAfgelopen');
+                }
+                console.log('user retrieved failed', error);
+            }
+            callback(null);
+        });
+    },
+    
 };
-
-var childInformationList = [{
-    // general data
-    id: 1,
-    firstName: 'Piet',
-    lastName: 'Verlouw',
-    age: 12,
-    startNumber: '12345',
-    phoneNumber: '0612345678',
-    adres: 'Achterstraat 22B',
-    city: 'Den Bosch',
-    postalCode: '1233EW',
-
-    // private data
-    medication: 'Ritalin',
-    classifications: 'Diploma A & B',
-    extra: 'Moeilijke slaper en kan last krijgen van heimwee. Als hij niet in slaap komt geef hem een glas water en het komt allemaal goed'
-}, {
-    // general data
-    id: 2,
-    firstName: 'Geert',
-    lastName: 'Verlouw',
-    age: 10,
-    startNumber: '54321',
-    phoneNumber: '0612345678',
-    adres: 'Achterstraat 22B',
-    city: 'Den Bosch',
-    postalCode: '1233EW',
-
-    // private data
-    medication: '-',
-    classifications: 'Diploma A en is bezig met B',
-    extra: '-'
-}];

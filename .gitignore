@@ -1,5 +1,4 @@
 /coverage
 .geanyprj
-/config/api.json
 /node_modules
 npm-debug.log

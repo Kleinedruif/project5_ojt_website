@@ -14,14 +14,21 @@
     "express": "~4.13.1",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
-    "jade": "~1.11.0",
+    "jsonwebtoken": "^6.2.0",
     "morgan": "~1.6.1",
+    "rebuild": "^0.1.2",
     "request": "^2.72.0",
     "serve-favicon": "~2.3.0",
-    "socket.io": "^1.4.5"
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.6",
+    "socketio-jwt": "^4.3.4",
+    "ursa": "^0.9.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^1.2.0",
     "mocha": "^2.4.5",
     "supertest": "^1.2.0"
   }

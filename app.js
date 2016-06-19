@@ -8,26 +8,41 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var socketIo = require('socket.io');
+var jwt = require('jsonwebtoken');
 
 // Custom modules
-var config = require('./modules/config');
+var config = require('./config/config');
 var csrf = require('./modules/csrf');
 
 var app = express();
+
+// Socket.io
+var io = socketIo();
+app.io = io;
+
+// Setup sockets
+var socket = require('./modules/socket')(io);
+
+var routes = require('./routes/index')(io);
+var messages = require('./routes/messages')(io);
+var contacts = require('./routes/contacts')();
+var rankings = require('./routes/rankings')();
+var events = require('./routes/events')();
+var participants = require('./routes/participants')();
 
 // This modules holds the helper functions for hbs
 var helpers = require('./modules/hbs-helpers');
 
 // Set the engine
-app.engine("hbs", exphbs({
-    defaultLayout: "main",
-    extname: ".hbs",
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
     helpers: helpers,
-    partialsDir: "views/partials/",
-    layoutsDir: "views/layouts/"
+    partialsDir: 'views/partials/',
+    layoutsDir: 'views/layouts/'
 }));
-app.set("view engine", "hbs");
+app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -39,16 +54,26 @@ app.use(session({secret: 'rvVMGxB3axNvTJ9wA3LKKA4X', resave: false, saveUninitia
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Validate CSRF token
 app.use(csrf);
 
-//// For testing purposes, user is always logged in.
-//app.use(function(req, res, next) {
-    //req.session.authenticated = true;
-    //return next();
-//})
+// For testing purposes, user is always logged in.
+// app.use(function(req, res, next) {
+//     req.session.authenticated = true;
+//     req.session.username = 'ralf.h.endriks@hotmail.com';
+//     req.session.userid = 4;
+//     req.session.auth = {};
+//     req.session.auth.role_name = 'ouder';
+//     var token = jwt.sign({username: req.session.username}, config.socket_secret, { expiresIn: '1 days' });
+//     req.session.socketToken = token;
+//     return next();
+// });
 
+app.use('/berichten', messages);
+app.use('/contacten', contacts);
+app.use('/ranglijst', rankings);
+app.use('/deelnemers', participants);
+app.use('/programma', events);
 app.use('/', routes);
 
 // catch 404 and forward to error handler
