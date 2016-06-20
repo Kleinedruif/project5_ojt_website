@@ -57,14 +57,18 @@ module.exports = {
     sendMessage: function(req, res, data){       
         // Callback is via socket connection
         api.post('/messages?authToken=' + req.session.auth.auth_token, null, data, function(body){
+            return res.json({msg: 'succes', csrf: req.session.csrf});   
         }, function(error){
             if (error.status_code === 417){
                 return res.redirect('/sessieAfgelopen');
             } else {
                 if (error.status_code === 500 && error.message === 'Deze token is niet valid') {
                     return res.redirect('/sessieAfgelopen');
+                } else if (error.status_code === 404){
+                    return res.json({msg: 'send failed', csrf: req.session.csrf});
+                } else {
+                    return res.json({msg: 'message send failed', csrf: req.session.csrf});
                 }
-                console.log('message send failed', error);
             }
         });       
     }
