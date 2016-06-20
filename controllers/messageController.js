@@ -135,7 +135,6 @@ module.exports = {
             
             // Send message to api via repo
             messageRepo.sendMessage(req, res, data);
-            return res.json({msg: 'succes', csrf: req.session.csrf});   
         };
     }
 }
